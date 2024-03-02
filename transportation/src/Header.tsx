@@ -3,14 +3,15 @@ import "./header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { CiSearch } from "react-icons/ci";
+// import { CiSearch } from "react-icons/ci";
 import {
   FaFacebookF,
   FaTwitter,
   FaYoutube,
   FaPinterestP,
 } from "react-icons/fa";
-import { Breadcrumbs, Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom"; // Đổi tên thành RouterLink
+import { Breadcrumbs, Link as MuiLink } from "@mui/material"; // Đổi tên thành MuiLink
 
 function Header() {
   return (
@@ -73,7 +74,7 @@ function Header() {
             </div>
             <div className="col-2 text-flex-nowrap p-3">
               <Breadcrumbs aria-label="breadcrumb" className="mt-1">
-                <Link
+                <MuiLink
                   underline="hover"
                   color="white"
                   href="/"
@@ -85,8 +86,8 @@ function Header() {
                   }}
                 >
                   EN
-                </Link>
-                <Link
+                </MuiLink>
+                <MuiLink
                   underline="hover"
                   color="white"
                   href="/"
@@ -98,42 +99,44 @@ function Header() {
                   }}
                 >
                   VN
-                </Link>
+                </MuiLink>
               </Breadcrumbs>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="p-3">
+      <section>
         <div className="container">
           <div className="row">
-            <div className="wrapper">
+            <div className="wrapper mt-2 p-0">
               <ul className="main-menu">
                 <li
                   id="menu-item-6"
                   className="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-6"
                 >
-                  <img
-                    src="https://demo031153.web30s.vn/datafiles/36872/upload/files/logo%20%282%29.png"
-                    alt="Transland"
-                  />
+                  <a href="/">
+                    <img
+                      src="https://demo031153.web30s.vn/datafiles/36872/upload/files/logo%20%282%29.png"
+                      alt="Transland"
+                    />
+                  </a>
                 </li>
                 <li
                   id="menu-item-75"
-                  className="ms-3 menu-item menu-item-type-post_type menu-item-object-page menu-item-75"
+                  className="ms-3 menu-item menu-item-type-post_type menu-item-object-page menu-item-75 mt-2"
                 >
                   <a href="#">Trang Chủ</a>
                 </li>
                 <li
                   id="menu-item-76"
-                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"
+                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
                   <a href="#">Giới thiệu</a>
                 </li>
                 <li
                   id="menu-item-18"
-                  className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18"
+                  className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18 mt-2"
                 >
                   <a href="#">Dịch Vụ Vận Chuyển</a>
                   <ul className="sub-menu">
@@ -165,7 +168,7 @@ function Header() {
                 </li>
                 <li
                   id="menu-item-21"
-                  className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-21"
+                  className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-21 mt-2"
                 >
                   <a href="#">Tin Tức</a>
                   <ul className="sub-menu">
@@ -185,38 +188,18 @@ function Header() {
                 </li>
                 <li
                   id="menu-item-77"
-                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"
+                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77 mt-2"
                 >
                   <a href="#">Liên Hệ Chúng Tôi</a>
                 </li>
-                <li className="mt-2 ms-5">
+                <li className="mt-3 ms-5">
                   <Breadcrumbs aria-label="breadcrumb" className="mt-1">
-                    <Link
-                      underline="hover"
-                      color="white"
-                      href="/"
-                      sx={{
-                        "&:hover": {
-                          textDecoration: "none",
-                          color: "red",
-                        },
-                      }}
-                    >
+                    <RouterLink to="/SignIn" className="RouterLink">
                       Đăng Nhập
-                    </Link>
-                    <Link
-                      underline="hover"
-                      color="white"
-                      href="/"
-                      sx={{
-                        "&:hover": {
-                          textDecoration: "none",
-                          color: "red",
-                        },
-                      }}
-                    >
+                    </RouterLink>
+                    <RouterLink to="/SignUp" className="RouterLink">
                       Đăng Ký
-                    </Link>
+                    </RouterLink>
                   </Breadcrumbs>
                 </li>
               </ul>
