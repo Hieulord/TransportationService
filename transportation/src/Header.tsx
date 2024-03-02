@@ -22,17 +22,17 @@ function Header() {
         <div className="container">
           <div className="row">
             <div className="col-8 text-flex-nowrap p-3 p-3">
-              <a href="tel:+84338553541" className="text-decoration-none">
+              <a href="tel:+842522222222" className="text-decoration-none">
                 <FaPhone className="mb-1" /> &nbsp;{" "}
-                <span className="Information text-white">0338553541</span>
+                <span className="Information text-white">0338*******</span>
               </a>
               <a
-                href="mailto:kaition79@gmail.com"
+                href="mailto:Jkeyan-kaition@gmail.com"
                 className="text-decoration-none ms-4"
               >
                 <MdEmail className="mb-1" /> &nbsp;
                 <span className="Information text-white">
-                  kaition79@gmail.com
+                  Jkeyan-Kaition@gmail.com
                 </span>
               </a>
             </div>
@@ -42,28 +42,28 @@ function Header() {
             >
               <div className="icon">
                 <a
-                  href="https://www.facebook.com/violet.nguyen.503092/"
-                  className="text-white ms-3"
+                  href="https://www.facebook.com"
+                  className="social-link-icon text-white ms-3"
                 >
                   <FaFacebookF />
                 </a>{" "}
                 &nbsp;
                 <a
-                  href="https://twitter.com/ZillNguyn1"
+                  href="https://twitter.com"
                   className="text-white ms-3"
                 >
                   <FaTwitter />
                 </a>{" "}
                 &nbsp;
                 <a
-                  href="https://www.youtube.com/channel/UC1833tstxrdf84CfN37sHng"
+                  href="https://www.youtube.com"
                   className="text-white ms-3"
                 >
                   <FaYoutube />
                 </a>{" "}
                 &nbsp;
                 <a
-                  href="https://www.pinterest.com/hiutrngdng/"
+                  href="https://www.pinterest.com"
                   className="text-white ms-3"
                 >
                   <FaPinterestP />
