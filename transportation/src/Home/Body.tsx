@@ -1,6 +1,6 @@
-import { green } from "@mui/material/colors";
-import React from "react";
-import imgurl from "./images/b1.jpg";
+// import { green } from "@mui/material/colors";
+// import React from "react";
+import imgurl from "../images/b1.jpg";
 const Body = () => {
   return (
     <>
