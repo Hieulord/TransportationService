@@ -49,24 +49,15 @@ function Header() {
                   <FaFacebookF />
                 </a>{" "}
                 &nbsp;
-                <a
-                  href="https://twitter.com"
-                  className="text-white ms-3"
-                >
+                <a href="https://twitter.com" className="text-white ms-3">
                   <FaTwitter />
                 </a>{" "}
                 &nbsp;
-                <a
-                  href="https://www.youtube.com"
-                  className="text-white ms-3"
-                >
+                <a href="https://www.youtube.com" className="text-white ms-3">
                   <FaYoutube />
                 </a>{" "}
                 &nbsp;
-                <a
-                  href="https://www.pinterest.com"
-                  className="text-white ms-3"
-                >
+                <a href="https://www.pinterest.com" className="text-white ms-3">
                   <FaPinterestP />
                 </a>{" "}
                 &nbsp;
@@ -207,6 +198,7 @@ function Header() {
           </div>
         </div>
       </section>
+
     </>
   );
 }
