@@ -2,16 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import Home from "./Home";
-import Header from "./Header";
-import Footer from "./Footer";
-
+// import Home from "./Home/Home"
+// import Header from "./Home/Header";
+// import Footer from "./Home/Footer";
+// import Body from "./Home/Body";
+import RouterGroup from "./RouterGroup";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Home />
+    <RouterGroup />
   </React.StrictMode>
 );
 
