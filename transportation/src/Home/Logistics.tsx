@@ -100,18 +100,20 @@ const Logistisc = () => {
                   <span className="text-black-50">Giá: </span>
                   <span className="text-uppercase text-danger">Liên hệ</span>
                   <br />
-                  <input
-                    className="mt-3 mb-2 advise text-uppercase"
-                    type="button"
-                    value="Tư Vấn Dịch Vụ"
-                    style={{
-                      backgroundColor: "#0b3d66",
-                      color: "white",
-                      border: 0,
-                      width: "100%",
-                      height: "50px",
-                    }}
-                  />
+                  <a href="mailto:Jkeyan-kaition@gmail.com">
+                    <input
+                      className="mt-3 mb-2 advise text-uppercase"
+                      type="button"
+                      value="Tư Vấn Dịch Vụ"
+                      style={{
+                        backgroundColor: "#0b3d66",
+                        color: "white",
+                        border: 0,
+                        width: "100%",
+                        height: "50px",
+                      }}
+                    />
+                  </a>
                   <a
                     href="mailto:Jkeyan-kaition@gmail.com"
                     className="text-decoration-none"

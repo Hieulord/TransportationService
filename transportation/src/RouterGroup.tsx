@@ -4,7 +4,8 @@ import SignUp from "./Home/SignUp";
 import Body from "./Home/Body";
 import Header from "./Home/Header";
 import Footer from "./Home/Footer";
-import Logistisc from "./Home/Logistics";
+import Logistics from "./Home/Logistics";
+import Sea from "./Home/Sea";
 function RouterGroup() {
   return (
     <>
@@ -13,7 +14,8 @@ function RouterGroup() {
           <Header />
           <Routes>
             <Route path="/" element={<Body />} />
-            <Route path="/Logistics" element={<Logistisc />} />
+            <Route path="/Logistics" element={<Logistics />} />
+            <Route path="/Sea" element={<Sea />} />
             <Route path="/SignIn" element={<SignIn />} />
             <Route path="/SignUp" element={<SignUp />} />
           </Routes>

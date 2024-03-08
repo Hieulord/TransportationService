@@ -142,7 +142,9 @@ function Header() {
                       id="menu-item-14"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-14"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Biển</a>
+                      <RouterLink to="/Sea" className="RouterLink">
+                        Vận Chuyển Đường Biển
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-16"
