@@ -11,6 +11,7 @@ const Body = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          imageRendering: "pixelated",
         }}
       >
         {/* Uncomment the pattern overlay if needed */}
@@ -24,12 +25,16 @@ const Body = () => {
                 SOLUTION FOR QUALITY TRANSPORTATION
               </h6>
               <h4 className="text-white fw-bold display-2">
-              Flexible professional services tailored to your needs.
+                Flexible professional services tailored to your needs.
               </h4>
               <p className="text-white">
-              An optimistic and effective approach to ensuring the highest quality transportation. With a team of transportation experts,
-               we commit to providing reliable transport services, from sagittis pulvinar to dis venenatis. We support Nunc vitae aliquam vestibulum,
-               delivering an Elite and secure transportation experience, not just a service but a trustworthy partner for all your needs.
+                An optimistic and effective approach to ensuring the highest
+                quality transportation. With a team of transportation experts,
+                we commit to providing reliable transport services, from
+                sagittis pulvinar to dis venenatis. We support Nunc vitae
+                aliquam vestibulum, delivering an Elite and secure
+                transportation experience, not just a service but a trustworthy
+                partner for all your needs.
               </p>
               <ul className="list-unstyled">
                 <li className="text-white fw-bold">
@@ -93,7 +98,7 @@ const Body = () => {
             </div>
             <div
               className="col-md-5 offset-md-1"
-              style={{ backgroundColor: "gray" }}
+              style={{ backgroundColor: "gray", borderRadius: "20px" }}
             >
               <form className="hero-form p-5">
                 <h3>Get started</h3>
