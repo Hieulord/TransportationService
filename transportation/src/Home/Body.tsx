@@ -105,6 +105,7 @@ const Body: React.FC = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          imageRendering: "pixelated",
         }}
       >
         <div className="container py-5 mt-5">
@@ -187,7 +188,7 @@ const Body: React.FC = () => {
             </div>
             <div
               className="col-md-5 offset-md-1"
-              style={{ backgroundColor: "gray" }}
+              style={{ backgroundColor: "gray", borderRadius: "20px" }}
             >
               <form className="hero-form p-5" onSubmit={handleFormSubmit}>
                 <h3>Ước tính phí tự động</h3>

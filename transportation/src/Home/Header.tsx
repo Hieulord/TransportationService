@@ -3,7 +3,6 @@ import "./header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-// import { CiSearch } from "react-icons/ci";
 import {
   FaFacebookF,
   FaTwitter,
@@ -135,13 +134,17 @@ function Header() {
                       id="menu-item-7"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7"
                     >
-                      <a href="/sample-page/">Vận chuyển đường bộ Logistics</a>
+                      <RouterLink to="/Logistics" className="RouterLink">
+                        Vận Chuyển Bộ Logistics
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-14"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-14"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Biển</a>
+                      <RouterLink to="/Sea" className="RouterLink">
+                        Vận Chuyển Đường Biển
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-16"
@@ -198,7 +201,6 @@ function Header() {
           </div>
         </div>
       </section>
-
     </>
   );
 }
