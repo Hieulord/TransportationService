@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import { Button, Row, Col, Carousel } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Row, Col, Carousel, Alert } from "react-bootstrap";
 import { FaCheck, FaShippingFast, FaUserShield, FaStar } from "react-icons/fa";
 import imgurl from "../images/sea2.jpeg";
 import Av from "../Avatar/avatar-1.jpg";
@@ -13,40 +13,55 @@ const Body: React.FC = () => {
   const [productWeight, setProductWeight] = useState<number>(0);
   const [priceDeclaration, setPriceDeclaration] = useState<number>(0);
   const [result, setResult] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const calculateEstimate = (): number => {
     // Kiểm tra dữ liệu đầu vào
-    if (!provinceGo || !districtGo || !provinceArrive || !districtArrive || productWeight <= 0) {
-      return 0; // Trả về 0 nếu thiếu thông tin hoặc dữ liệu không hợp lệ
+    if (
+      !provinceGo ||
+      !districtGo ||
+      !provinceArrive ||
+      !districtArrive ||
+      productWeight <= 0
+    ) {
+      setErrorMessage("Vui lòng nhập đầy đủ thông tin");
+      return 0;
     }
-  
+
     // Giá cơ bản mỗi gram và tỉ lệ phí khai báo
     const baseRatePerGram = 3000; // Giá cơ bản mỗi gram
     const declarationRate = 0.01; // Tỉ lệ phí khai báo
-  
+
     // Tính toán chi phí dựa trên trọng lượng sản phẩm và giá trị khai báo
     const weightCost = productWeight * baseRatePerGram; // Chi phí dựa trên trọng lượng
-  
+
     let declarationCost = 0;
     if (priceDeclaration > 0) {
       // Nếu có giá trị khai báo, tính thêm chi phí dựa trên giá trị này
       declarationCost = priceDeclaration * declarationRate; // Chi phí dựa trên giá trị khai báo
     }
-  
+
     // Tổng chi phí bằng tổng chi phí vận chuyển và phí khai báo
     const totalCost = weightCost + declarationCost;
-  
+
     // Trả về tổng chi phí ước tính với hai số sau dấu phẩy bị loại bỏ
     return Math.floor(totalCost / 100) * 100;
   };
-  
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const estimate = calculateEstimate();
-    setResult(`Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`);
+    if (estimate === 0) {
+      // Hiển thị thông báo lỗi nếu dữ liệu không hợp lệ
+      setErrorMessage("Vui lòng kiểm tra lại thông tin");
+    } else {
+      // Nếu dữ liệu hợp lệ, hiển thị kết quả
+      setResult(`Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`);
+      // Xóa thông báo lỗi nếu có
+      setErrorMessage(null);
+    }
   };
-  
-  
+
   return (
     <>
       <section
@@ -80,7 +95,8 @@ const Body: React.FC = () => {
               <ul className="list-unstyled">
                 <li className="text-white fw-bold">
                   <FaUserShield className="me-2" />
-                  Được cấp phép và bảo hiểm đầy đủ để bạn yên tâm về mặt pháp lý.
+                  Được cấp phép và bảo hiểm đầy đủ để bạn yên tâm về mặt pháp
+                  lý.
                 </li>
                 <li className="text-white fw-bold">
                   <FaCheck className="me-2" />
@@ -173,7 +189,9 @@ const Body: React.FC = () => {
                     className="form-control border-0"
                     id="priceDeclaration"
                     value={priceDeclaration}
-                    onChange={(e) => setPriceDeclaration(parseInt(e.target.value))}
+                    onChange={(e) =>
+                      setPriceDeclaration(parseInt(e.target.value))
+                    }
                   />
                 </div>
                 <div className="d-grid">
@@ -182,7 +200,10 @@ const Body: React.FC = () => {
                     Ước Tính Tự Động
                   </Button>
                 </div>
-                {result && <p className="mt-3">{result}</p>}
+                 {/* Hiển thị kết quả */}
+                 {result && <p className="mt-3">{result}</p>}
+                {/* Hiển thị cảnh báo lỗi */}
+                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
               </form>
             </div>
           </div>
@@ -309,40 +330,38 @@ const Body: React.FC = () => {
             </div>
           </section>
         </Carousel.Item>
-        <Carousel.Item>
-          <section
-            style={{ height: "250px", backgroundColor: "#E5E5E5" }}
-            className="justify-content-center align-items-center"
+        <Carousel.Item
+          style={{ height: "250px", backgroundColor: "#E5E5E5" }}
+          className="justify-content-center align-items-center"
+        >
+          <div
+            className="container-fluid d-flex justify-content-center align-items-center text-center"
+            style={{ height: "200px" }}
           >
-            <div
-              className="container-fluid d-flex justify-content-center align-items-center text-center"
-              style={{ height: "200px" }}
-            >
-              <div className="row row-cols-1">
-                <div className="col">
-                  <img
-                    src={Avt}
-                    alt="Avatar"
-                    className="rounded-circle me-2 mt-5"
-                    height="90px"
-                    width="90px"
-                  />
-                </div>
-                <div className="col">
-                  <h2>Kaition</h2>
-                </div>
-                <div className="col">
-                  <p>
-                    Một trong những nét độc đáo riêng biệt mà chưa đơn vị nào
-                    thực hiện. Transland có hệ thống website, <br />
-                    dịch vụ chăm sóc khách hàng tốt, chấp nhận bồi thường trong
-                    trường hợp hàng hóa bị hư hỏng. Là đơn vị uy tín tôi tin
-                    dùng nhiều năm.
-                  </p>
-                </div>
+            <div className="row row-cols-1">
+              <div className="col">
+                <img
+                  src={Avt}
+                  alt="Avatar"
+                  className="rounded-circle me-2 mt-5"
+                  height="90px"
+                  width="90px"
+                />
+              </div>
+              <div className="col">
+                <h2>Kaition</h2>
+              </div>
+              <div className="col">
+                <p>
+                  Một trong những nét độc đáo riêng biệt mà chưa đơn vị nào thực
+                  hiện. Transland có hệ thống website, <br />
+                  dịch vụ chăm sóc khách hàng tốt, chấp nhận bồi thường trong
+                  trường hợp hàng hóa bị hư hỏng. Là đơn vị uy tín tôi tin dùng
+                  nhiều năm.
+                </p>
               </div>
             </div>
-          </section>
+          </div>
         </Carousel.Item>
       </Carousel>
     </>
