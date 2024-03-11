@@ -1,6 +1,6 @@
 const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
-const { genneralAccessToken, genneralRefreshToken  } = require("./JwtService");
+const { genneralAccessToken, genneralRefreshToken } = require("./JwtService");
 
 const createUser = (newUser) => {
   return new Promise(async (resolve, reject) => {
@@ -80,7 +80,58 @@ const loginUser = (userLogin) => {
   });
 };
 
+const updateUser = (id, data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const checkUser = await User.findOne({
+        id: id,
+      });
+      if (checkUser !== null) {
+        resolve({
+          status: "OK",
+          message: "The user is not defined!!",
+        });
+      }
+      const updatedUser = await User.findByIdAndUpdate(id, data, { new: true });
+      console.log("updatedUser", updatedUser);
+      resolve({
+        staus: "OK",
+        message: "SUCCESS",
+        data: updatedUser,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const deleteUser = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const checkUser = await User.findOne({
+        id: id,
+      });
+      console.log("checkUser", checkUser);
+      if (checkUser !== null) {
+        resolve({
+          status: "OK",
+          message: "The user is not defined!!",
+        });
+      }
+      await User.findByIdAndDelete(id);
+      resolve({
+        staus: "OK",
+        message: "Delete user success",
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createUser,
   loginUser,
+  updateUser,
+  deleteUser,
 };
