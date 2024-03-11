@@ -16,7 +16,7 @@ const Logistisc = () => {
         }}
       >
         <div className="service">
-          <span>Dịch Vụ</span>
+          <span>Dịch Vụ Của Chúng Tôi</span>
         </div>
       </section>
 
