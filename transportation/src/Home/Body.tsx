@@ -3,7 +3,10 @@ import { Button, Row, Col, Carousel, Container, Image } from "react-bootstrap";
 import { FaCheck, FaShippingFast, FaUserShield, FaStar } from "react-icons/fa";
 import imgurl from "../images/b1.jpg";
 import imgurlt from "../images/2.jpg";
+import imgur from "../images/logistics-banner.jpg";
 import { ButtonBase } from "@mui/material";
+import Av from "../Avatar/avatar-1.jpg";
+import Avt from "../Avatar/avatar-11.jpg";
 
 const Body: React.FC = () => {
   // State for captcha and form data
@@ -112,29 +115,23 @@ const Body: React.FC = () => {
           <div className="row align-items-center py-5 mt-5">
             <div className="col-md-6 mb-5 mb-md-0">
               <h6 className="text-white">
-                SOLUTION FOR QUALITY TRANSPORTATION
+                GIẢI PHÁP CHẤT LƯỢNG GIẢI PHÁP VẬN CHUYỂN CHẤT LƯỢNG
               </h6>
               <h4 className="text-white fw-bold display-2">
-                Flexible professional services tailored to your needs.
+                Dịch vụ chuyên nghiệp linh hoạt phù hợp với nhu cầu của bạn.
               </h4>
               <p className="text-white">
-                An optimistic and effective approach to ensuring the highest
-                quality transportation. With a team of transportation experts,
-                we commit to providing reliable transport services, from
-                sagittis pulvinar to dis venenatis. We support Nunc vitae
-                aliquam vestibulum, delivering an Elite and secure
-                transportation experience, not just a service but a trustworthy
-                partner for all your needs.
+                Một cách tiếp cận lạc quan và hiệu quả để đảm bảo hiệu quả cao
+                nhất vận chuyển có chất lượng. Với đội ngũ chuyên gia vận tải,
+                chúng tôi cam kết cung cấp dịch vụ vận tải đáng tin cậy, từ
+                sagittis pulvinar đến dis venenatis. Chúng tôi ủng hộ Nunc vitae
+                aliquam vestibulum, mang lại sự đẳng cấp và an toàn kinh nghiệm
+                vận chuyển, không chỉ là một dịch vụ mà còn là một nơi đáng tin
+                cậy đối tác cho tất cả các nhu cầu của bạn.
               </p>
               <ul className="list-unstyled">
                 <li className="text-white fw-bold">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={23}
-                    height={23}
-                    viewBox="0 0 23 23"
-                    fill="none"
-                  >
+                  <svg width={23} height={23} viewBox="0 0 23 23" fill="none">
                     <g clipPath="url(#clip0_1_359)">
                       <path fill="white" />
                     </g>
@@ -144,45 +141,34 @@ const Body: React.FC = () => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Fully licensed and insured for legal peace of mind.
+                  Được cấp phép và bảo hiểm đầy đủ để bạn yên tâm về mặt pháp
+                  lý.
                 </li>
                 <li className="text-white fw-bold">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={23}
-                    height={23}
-                    viewBox="0 0 23 23"
-                    fill="none"
-                  >
-                    <g clipPath="url(#clip0_1_359)">
+                  <svg width={23} height={23} viewBox="0 0 23 23" fill="none">
+                    <g>
                       <path fill="white" />
                     </g>
                     <defs>
-                      <clipPath id="clip0_1_359">
+                      <clipPath>
                         <rect width={23} height={23} fill="white" />
                       </clipPath>
                     </defs>
                   </svg>
-                  A 100% reliable and transparent company you can count on.
+                  Một công ty đáng tin cậy và minh bạch 100% mà bạn có thể tin
+                  cậy.
                 </li>
                 <li className="text-white fw-bold">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={23}
-                    height={23}
-                    viewBox="0 0 23 23"
-                    fill="none"
-                  >
-                    <g clipPath="url(#clip0_1_359)">
-                      <path fill="white" />
-                    </g>
+                  <svg width={23} height={23} viewBox="0 0 23 23" fill="none">
+                    <path fill="white" />
+
                     <defs>
                       <clipPath id="clip0_1_359">
                         <rect width={23} height={23} fill="white" />
                       </clipPath>
                     </defs>
                   </svg>
-                  Genuine, transparent, and trustworthy.
+                  Chính hãng, minh bạch và đáng tin cậy.
                 </li>
               </ul>
             </div>
@@ -292,8 +278,9 @@ const Body: React.FC = () => {
       <section
         style={{
           height: "380px",
+          width: "auto",
           // backgroundColor: "#40e0d0",
-          backgroundImage: `url(${imgurl})`,
+          backgroundImage: `url(${imgur})`,
         }}
       >
         <div className="container text-white">
@@ -363,10 +350,7 @@ const Body: React.FC = () => {
                 </div>
                 {/* Các trường input khác ở đây */}
                 <div>
-                  <div
-                    className="-widget -widget-form-control -required -widget-4128292 -widget-unique-3785602"
-                    data-id="4128292"
-                  >
+                  <div>
                     <div className="input-group">
                       <input
                         value={formData.captchaInput}
@@ -398,50 +382,70 @@ const Body: React.FC = () => {
         </div>
       </section>
 
-      <section id="delivery-section" style={{ backgroundColor: "#ffa500" }}>
-        <div className="container ">
-          <Row>
+      <section
+        style={{
+          backgroundColor: "#0b3d66",
+          paddingTop: "50px",
+          paddingBottom: "50px",
+        }}
+      >
+        <div className="container">
+          <Row className="align-items-center">
             <Col
-              md={9}
-              className="#ffa500"
-              style={{ marginTop: "50px", paddingBottom: "50px" }}
+              md={3}
+              className="text-white d-flex flex-column align-items-center justify-content-center"
             >
               <h3>
-                Mạng lưới bưu cục trên <br />
-                <span className="ms-5"> 63 tỉnh thành</span>
+                Mạng lưới bưu cục <br />
+                trên 63 tỉnh thành
               </h3>
-              <a href="https://apps.apple.com/us/app/viettelpost-chuy%E1%BB%83n-ph%C3%A1t-nhanh/id1398283517">
-                <img
-                  src="https://viettelpost.com.vn/wp-content/themes/viettel/assets/images/app.png"
-                  alt="Download on the App Store"
-                  className="app-icon"
-                />
-              </a>
-              <a href="https://play.google.com/store/apps/details?id=com.viettel.ViettelPost">
-                <img
-                  src="https://viettelpost.com.vn/wp-content/themes/viettel/assets/images/gg.png"
-                  alt="Get it on Google Play"
-                  className="app-icon"
-                />
-              </a>
+              <div className="d-flex justify-content-center">
+                {" "}
+                <a
+                  style={{ marginTop: "15px" }}
+                  href="https://apps.apple.com/us/app/viettelpost-chuy%E1%BB%83n-ph%C3%A1t-nhanh/id1398283517"
+                  className="me-3"
+                >
+                  <img
+                    src="https://viettelpost.com.vn/wp-content/themes/viettel/assets/images/app.png"
+                    alt="Download on the App Store"
+                    className="app-icon"
+                  />
+                </a>
+                <a
+                  style={{ marginTop: "5px" }}
+                  href="https://play.google.com/store/apps/details?id=com.viettel.ViettelPost"
+                >
+                  <img
+                    src="https://viettelpost.com.vn/wp-content/themes/viettel/assets/images/gg.png"
+                    alt="Get it on Google Play"
+                    className="app-icon"
+                  />
+                </a>
+              </div>
             </Col>
-            <Col md={3} className=" align-items">
-              <ul className="p-4 rounded ">
-                <h3 className="">
-                  <FaUserShield className="fa-user fs-1" />
-                  <span className="ms-3">990</span>.<span>870</span>
-                  <span>+</span>
-                </h3>
-                <p>KHÁCH HÀNG TIN DÙNG</p>
-              </ul>
 
-              <ul className="p-4 rounded">
-                <h3 className="">
-                  <FaShippingFast className="fs-1" />
-                  <span className="ms-3">483</span>.<span>870</span>
-                  <span>+</span>
-                </h3>
-                <p>ĐƠN HÀNG ĐANG VẬN CHUYỂN</p>
+            <Col md={4} className="text-white">
+              <ul className="list-unstyled d-flex align-items-center">
+                <li>
+                  <FaUserShield className="fa-user fs-1 me-3" />
+                </li>
+                <li>
+                  <h3>990.870+</h3>
+                  <p className="mb-0">KHÁCH HÀNG TIN DÙNG</p>
+                </li>
+              </ul>
+            </Col>
+
+            <Col md={5} className="text-white">
+              <ul className="list-unstyled d-flex align-items-center">
+                <li>
+                  <FaShippingFast className="fs-1 me-3" />
+                </li>
+                <li>
+                  <h3>483.870+</h3>
+                  <p className="mb-0">ĐƠN HÀNG ĐANG VẬN CHUYỂN</p>
+                </li>
               </ul>
             </Col>
           </Row>
@@ -474,8 +478,7 @@ const Body: React.FC = () => {
               <div className="row row-cols-1">
                 <div className="col">
                   <img
-                    src={imgurl}
-                    alt="logo"
+                    src={Av}
                     className="rounded-circle me-2 mt-5"
                     height="90px"
                     width="90px"
@@ -510,7 +513,7 @@ const Body: React.FC = () => {
               <div className="row row-cols-1">
                 <div className="col">
                   <img
-                    src={imgurl}
+                    src={Avt}
                     alt="logo"
                     className="rounded-circle me-2 mt-5"
                     height="90px"
@@ -566,19 +569,16 @@ const Body: React.FC = () => {
                       }}
                     >
                       <div className="-widget-childs -widget-slider-item -hover">
-                        <a style={{ backgroundColor: "#40e0d0" }}>
+                        <a>
                           <Image src="./images/2.jpg" alt="Vận chuyển nhà" />
                         </a>
-
                         <div>
                           <h3
                             className="-widget -widget-title -widget-10423024 -widget-unique-1001696833752669"
                             data-widget-id="10423024"
                             data-widget-unique="1001696833752669"
                           >
-                            <a
-                             style={{backgroundImage: `url(${imgurl})`}}
-                            >
+                            <a style={{ backgroundImage: `url(${imgurl})` }}>
                               Vận chuyển nhà
                             </a>
                           </h3>
