@@ -1,104 +1,60 @@
-import React, { useState, useEffect } from "react";
-import { Button, Row, Col, Carousel, Container, Image } from "react-bootstrap";
+import React, { useState,useEffect } from "react";
+import { Button, Row, Col, Carousel } from "react-bootstrap";
 import { FaCheck, FaShippingFast, FaUserShield, FaStar } from "react-icons/fa";
-import imgurl from "../images/b1.jpg";
-import imgurlt from "../images/2.jpg";
-import imgur from "../images/logistics-banner.jpg";
-import { ButtonBase } from "@mui/material";
+import imgurl from "../images/sea2.jpeg";
 import Av from "../Avatar/avatar-1.jpg";
 import Avt from "../Avatar/avatar-11.jpg";
 
 const Body: React.FC = () => {
-  // State for captcha and form data
-  const [captcha, setCaptcha] = useState<string>("");
-  const [formData, setFormData] = useState({
-    fullname: "",
-    email: "",
-    phone: "",
-    address: "",
-    content: "",
-    captchaInput: "",
-  });
-  const handleClear = () => {
-    setFormData({
-      fullname: "",
-      email: "",
-      phone: "",
-      address: "",
-      content: "",
-      captchaInput: "",
-    });
-  };
-
-  // State for automatic estimate
-  const [activeIndex, setActiveIndex] = useState(0);
   const [provinceGo, setProvinceGo] = useState<string>("");
   const [districtGo, setDistrictGo] = useState<string>("");
   const [provinceArrive, setProvinceArrive] = useState<string>("");
   const [districtArrive, setDistrictArrive] = useState<string>("");
-  const [productCode, setProductCode] = useState<string>("");
-  const [priceDeclaration, setPriceDeclaration] = useState<string>("");
+  const [productWeight, setProductWeight] = useState<number>(0);
+  const [priceDeclaration, setPriceDeclaration] = useState<number>(0);
   const [result, setResult] = useState<string | null>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 1000);
-
-    generateCaptcha(); // Generate captcha when component mounts
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  // Function to generate captcha
-  const generateCaptcha = () => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let captcha = "";
-    for (let i = 0; i < 6; i++) {
-      captcha += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
+  const calculateEstimate = (): number => {
+    // Kiểm tra dữ liệu đầu vào
+    if (!provinceGo || !districtGo || !provinceArrive || !districtArrive || productWeight <= 0) {
+      // Gợi ý: Bạn có thể cung cấp phản hồi cho người dùng nếu dữ liệu không hợp lệ ở đây
+      return 0; // Trả về 0 nếu thiếu thông tin hoặc dữ liệu không hợp lệ
     }
-    setCaptcha(captcha);
+
+    // Giá cơ bản mỗi gram và tỉ lệ phí khai báo
+    const baseRatePerGram = 3000; // Giá cơ bản mỗi gram
+    const declarationRate = 0.01; // Tỉ lệ phí khai báo
+
+    // Tính toán chi phí dựa trên trọng lượng sản phẩm và giá trị khai báo
+    const weightCost = productWeight * baseRatePerGram; // Chi phí dựa trên trọng lượng
+
+    let declarationCost = 0;
+    if (priceDeclaration > 0) {
+      // Nếu có giá trị khai báo, tính thêm chi phí dựa trên giá trị này
+      declarationCost = priceDeclaration * declarationRate; // Chi phí dựa trên giá trị khai báo
+    }
+
+    // Tổng chi phí bằng tổng chi phí vận chuyển và phí khai báo
+    const totalCost = weightCost + declarationCost;
+
+    // Trả về tổng chi phí ước tính
+    return totalCost;
   };
 
-  // Function to handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formData.captchaInput === captcha) {
-      console.log(formData);
-    } else {
-      alert("Mã captcha không chính xác");
-      generateCaptcha();
-    }
-  };
-
-  // Function to calculate estimate
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const estimate = calculateEstimate();
-    setResult(`Ước tính chi phí của bạn là: ${estimate.toFixed(2)} VND`);
+    setResult(`Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`);
   };
 
-  const calculateEstimate = (): number => {
-    // Logic to calculate estimate goes here
-    return Math.random() * 100000;
-  };
+  useEffect(() => {
+    // Tính toán và cập nhật kết quả mỗi khi có thay đổi trong dữ liệu đầu vào
+    const estimate = calculateEstimate();
+    const roundedEstimate = Math.floor(estimate * 100) / 100; // hoặc Math.ceil() nếu muốn làm tròn lên
+    setResult(`Ước tính chi phí của bạn là: ${roundedEstimate.toLocaleString()} VND`);
+  }, [provinceGo, districtGo, provinceArrive, districtArrive, productWeight, priceDeclaration]);
 
-  // Function to handle form input changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
+  
   return (
     <>
       <section
@@ -131,50 +87,28 @@ const Body: React.FC = () => {
               </p>
               <ul className="list-unstyled">
                 <li className="text-white fw-bold">
-                  <svg width={23} height={23} viewBox="0 0 23 23" fill="none">
-                    <g clipPath="url(#clip0_1_359)">
-                      <path fill="white" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_1_359">
-                        <rect width={23} height={23} fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  Được cấp phép và bảo hiểm đầy đủ để bạn yên tâm về mặt pháp
-                  lý.
+                  <FaUserShield className="me-2" />
+                  Được cấp phép và bảo hiểm đầy đủ để bạn yên tâm về mặt pháp lý.
                 </li>
                 <li className="text-white fw-bold">
-                  <svg width={23} height={23} viewBox="0 0 23 23" fill="none">
-                    <g>
-                      <path fill="white" />
-                    </g>
-                    <defs>
-                      <clipPath>
-                        <rect width={23} height={23} fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
+                  <FaCheck className="me-2" />
                   Một công ty đáng tin cậy và minh bạch 100% mà bạn có thể tin
                   cậy.
                 </li>
                 <li className="text-white fw-bold">
-                  <svg width={23} height={23} viewBox="0 0 23 23" fill="none">
-                    <path fill="white" />
-
-                    <defs>
-                      <clipPath id="clip0_1_359">
-                        <rect width={23} height={23} fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
+                  <FaShippingFast className="me-2" />
                   Chính hãng, minh bạch và đáng tin cậy.
                 </li>
               </ul>
             </div>
             <div
-              className="col-md-5 offset-md-1"
-              style={{ backgroundColor: "gray", borderRadius: "20px" }}
+              className="col-md-5 offset-md-1 text-bg-secondary text-white"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                borderRadius: "20px",
+                fontWeight: "600",
+                backdropFilter: "blur(5px)",
+              }}
             >
               <form className="hero-form p-5" onSubmit={handleFormSubmit}>
                 <h3>Ước tính phí tự động</h3>
@@ -204,7 +138,7 @@ const Body: React.FC = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="provinceArrive" className="form-label mb-0">
-                    Quận / Huyện *
+                    Quận / Huyện gửi *
                   </label>
                   <input
                     type="text"
@@ -227,27 +161,15 @@ const Body: React.FC = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="productCode" className="form-label mb-0">
-                    Quận / Huyện *
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control border-0"
-                    id="productCode"
-                    value={productCode}
-                    onChange={(e) => setProductCode(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="productCode" className="form-label mb-0">
+                  <label htmlFor="productWeight" className="form-label mb-0">
                     Trọng lượng (Gram) *
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control border-0"
-                    id="productCode"
-                    value={productCode}
-                    onChange={(e) => setProductCode(e.target.value)}
+                    id="productWeight"
+                    value={productWeight}
+                    onChange={(e) => setProductWeight(parseInt(e.target.value))}
                   />
                 </div>
                 <div className="mb-3">
@@ -255,11 +177,11 @@ const Body: React.FC = () => {
                     Số tiền thu hộ
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control border-0"
                     id="priceDeclaration"
                     value={priceDeclaration}
-                    onChange={(e) => setPriceDeclaration(e.target.value)}
+                    onChange={(e) => setPriceDeclaration(parseInt(e.target.value))}
                   />
                 </div>
                 <div className="d-grid">
@@ -269,113 +191,6 @@ const Body: React.FC = () => {
                   </Button>
                 </div>
                 {result && <p className="mt-3">{result}</p>}
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section
-        style={{
-          height: "380px",
-          width: "auto",
-          // backgroundColor: "#40e0d0",
-          backgroundImage: `url(${imgur})`,
-        }}
-      >
-        <div className="container text-white">
-          <div className="row">
-            <div className="col-md-6">
-              <h1 className="mt-3">Yêu Cầu Một Cuộc Gọi Lại</h1>
-              <div>
-                <h6 className="mt-3">
-                  Chỉ mất 30 giây và sau đó chúng tôi sẽ gọi cho bạn trở lại, từ
-                  Thứ Hai đến Thứ Sáu, 8 giờ sáng - 5 giờ chiều. Dễ dàng.
-                </h6>
-                <h6>Hoặc liên hệ với chúng tôi</h6>
-              </div>
-            </div>
-            <div className="col-md-6 mt-3">
-              <form onSubmit={handleSubmit}>
-                {/* Các trường input ở đây */}
-                <div className="form-group">
-                  <input
-                    className="form-control"
-                    value={formData.fullname}
-                    name="fullname"
-                    type="text"
-                    placeholder="Họ và tên"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    className="form-control"
-                    value={formData.email}
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    className="form-control"
-                    value={formData.phone}
-                    name="phone"
-                    type="tel"
-                    placeholder="Số điện thoại"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    className="form-control"
-                    value={formData.address}
-                    name="address"
-                    type="text"
-                    placeholder="Địa chỉ"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <textarea
-                    className="form-control"
-                    value={formData.content}
-                    name="content"
-                    rows={3}
-                    placeholder="Nội dung"
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
-                {/* Các trường input khác ở đây */}
-                <div>
-                  <div>
-                    <div className="input-group">
-                      <input
-                        value={formData.captchaInput}
-                        name="captchaInput"
-                        type="text"
-                        className="form-control"
-                        placeholder="Mã Capcha"
-                        onChange={handleChange}
-                      />
-                      <span className="input-group-text">{captcha}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary">
-                    Gửi tin nhắn
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={handleClear}
-                  >
-                    Làm lại
-                  </button>
-                </div>
               </form>
             </div>
           </div>
@@ -482,6 +297,7 @@ const Body: React.FC = () => {
                     className="rounded-circle me-2 mt-5"
                     height="90px"
                     width="90px"
+                    alt="Avatar"
                   />
                 </div>
                 <div className="col">
@@ -514,7 +330,7 @@ const Body: React.FC = () => {
                 <div className="col">
                   <img
                     src={Avt}
-                    alt="logo"
+                    alt="Avatar"
                     className="rounded-circle me-2 mt-5"
                     height="90px"
                     width="90px"
@@ -537,100 +353,6 @@ const Body: React.FC = () => {
           </section>
         </Carousel.Item>
       </Carousel>
-
-      <section>
-        <Container>
-          <Row>
-            <Col>
-              <div>
-                Dịch vụ
-                <h2>Dịch vụ chính</h2>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div>
-                <div>
-                  <div
-                    style={{
-                      transitionDuration: "0ms",
-                      transform: "translate3d(-2033.33px, 0px, 0px)",
-                      height: "459px",
-                    }}
-                  >
-                    <div
-                      className="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev"
-                      data-swiper-slide-index="1"
-                      style={{
-                        width: "386.667px",
-                        height: "458.984px",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <div className="-widget-childs -widget-slider-item -hover">
-                        <a>
-                          <Image src="./images/2.jpg" alt="Vận chuyển nhà" />
-                        </a>
-                        <div>
-                          <h3
-                            className="-widget -widget-title -widget-10423024 -widget-unique-1001696833752669"
-                            data-widget-id="10423024"
-                            data-widget-unique="1001696833752669"
-                          >
-                            <a style={{ backgroundImage: `url(${imgurl})` }}>
-                              Vận chuyển nhà
-                            </a>
-                          </h3>
-                          <div
-                            data-widget-unique="1001696834127605"
-                            className="-widget -widget-text -widget-10423025 -widget-unique-1001696834127605 -widget-display-block"
-                            data-content_type="900"
-                          >
-                            Bạn quá mệt mỏi trong việc di chuyển đồ đạc sang nhà
-                            mới. Chúng tôi có cung cấp dịch vụ này.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Các swiper-slide khác */}
-                  </div>
-                  <div className="swiper-pagination d-none -none"></div>
-                  <div
-                    className="swiper-button-next swiper-button-white swiper-button-navi"
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Next slide"
-                  >
-                    <i className="fas fa-arrow-right"></i>
-                  </div>
-                  <div
-                    className="swiper-button-prev swiper-button-white swiper-button-navi"
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Previous slide"
-                  >
-                    <i className="fas fa-arrow-left"></i>
-                  </div>
-                  <span
-                    className="swiper-notification"
-                    aria-live="assertive"
-                    aria-atomic="true"
-                  ></span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div>
-                <div>Tìm hiểu thêm về dịch vụ của chúng tôi</div>
-                <Button>Xem thêm</Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
     </>
   );
 };

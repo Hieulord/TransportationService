@@ -6,6 +6,7 @@ import Header from "./Home/Header";
 import Footer from "./Home/Footer";
 import Logistics from "./Home/Logistics";
 import Sea from "./Home/Sea";
+import Contact from "./Home/Contact";
 function RouterGroup() {
   return (
     <>
@@ -16,6 +17,7 @@ function RouterGroup() {
             <Route path="/" element={<Body />} />
             <Route path="/Logistics" element={<Logistics />} />
             <Route path="/Sea" element={<Sea />} />
+            <Route path="/Contact" element={<Contact />} />
             <Route path="/SignIn" element={<SignIn />} />
             <Route path="/SignUp" element={<SignUp />} />
           </Routes>
