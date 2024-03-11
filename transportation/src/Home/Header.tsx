@@ -184,7 +184,9 @@ function Header() {
                   id="menu-item-77"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77 mt-2"
                 >
-                  <a href="#">Liên Hệ Chúng Tôi</a>
+                   <RouterLink to="/Contact" className="RouterLink">
+                        Liên hệ chúng tôi
+                      </RouterLink>
                 </li>
                 <li className="mt-3 ms-5">
                   <Breadcrumbs aria-label="breadcrumb" className="mt-1">
