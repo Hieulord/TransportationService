@@ -83,17 +83,14 @@ const loginUser = (userLogin) => {
 const updateUser = (id, data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const checkUser = await User.findOne({
-        id: id,
-      });
-      if (checkUser !== null) {
+      const checkUser = await User.findById(id);
+      if (!checkUser) {
         resolve({
           status: "OK",
           message: "The user is not defined!!",
         });
       }
       const updatedUser = await User.findByIdAndUpdate(id, data, { new: true });
-      console.log("updatedUser", updatedUser);
       resolve({
         staus: "OK",
         message: "SUCCESS",
@@ -108,20 +105,53 @@ const updateUser = (id, data) => {
 const deleteUser = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const checkUser = await User.findOne({
-        id: id,
-      });
-      console.log("checkUser", checkUser);
-      if (checkUser !== null) {
+      const checkUser = await User.findById(id);
+      if (!checkUser) {
         resolve({
           status: "OK",
           message: "The user is not defined!!",
         });
       }
-      // await User.findByIdAndDelete(id);
+      await User.findByIdAndDelete(id);
       resolve({
         staus: "OK",
         message: "Delete user success",
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const getAllUser = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const allUser = await User.find();
+      resolve({
+        staus: "OK",
+        message: "Success",
+        data: allUser,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const getDetailUser = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await User.findById(id);
+      if (!user) {
+        resolve({
+          status: "OK",
+          message: "The user is not defined!!",
+        });
+      }
+      resolve({
+        staus: "OK",
+        message: "Success",
+        data: user,
       });
     } catch (e) {
       reject(e);
@@ -134,4 +164,6 @@ module.exports = {
   loginUser,
   updateUser,
   deleteUser,
+  getAllUser,
+  getDetailUser,
 };
