@@ -17,43 +17,35 @@ const Body: React.FC = () => {
   const calculateEstimate = (): number => {
     // Kiểm tra dữ liệu đầu vào
     if (!provinceGo || !districtGo || !provinceArrive || !districtArrive || productWeight <= 0) {
-      // Gợi ý: Bạn có thể cung cấp phản hồi cho người dùng nếu dữ liệu không hợp lệ ở đây
       return 0; // Trả về 0 nếu thiếu thông tin hoặc dữ liệu không hợp lệ
     }
-
+  
     // Giá cơ bản mỗi gram và tỉ lệ phí khai báo
     const baseRatePerGram = 3000; // Giá cơ bản mỗi gram
     const declarationRate = 0.01; // Tỉ lệ phí khai báo
-
+  
     // Tính toán chi phí dựa trên trọng lượng sản phẩm và giá trị khai báo
     const weightCost = productWeight * baseRatePerGram; // Chi phí dựa trên trọng lượng
-
+  
     let declarationCost = 0;
     if (priceDeclaration > 0) {
       // Nếu có giá trị khai báo, tính thêm chi phí dựa trên giá trị này
       declarationCost = priceDeclaration * declarationRate; // Chi phí dựa trên giá trị khai báo
     }
-
+  
     // Tổng chi phí bằng tổng chi phí vận chuyển và phí khai báo
     const totalCost = weightCost + declarationCost;
-
-    // Trả về tổng chi phí ước tính
-    return totalCost;
+  
+    // Trả về tổng chi phí ước tính với hai số sau dấu phẩy bị loại bỏ
+    return Math.floor(totalCost / 100) * 100;
   };
-
+  
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const estimate = calculateEstimate();
     setResult(`Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`);
   };
-
-  useEffect(() => {
-    // Tính toán và cập nhật kết quả mỗi khi có thay đổi trong dữ liệu đầu vào
-    const estimate = calculateEstimate();
-    const roundedEstimate = Math.floor(estimate * 100) / 100; // hoặc Math.ceil() nếu muốn làm tròn lên
-    setResult(`Ước tính chi phí của bạn là: ${roundedEstimate.toLocaleString()} VND`);
-  }, [provinceGo, districtGo, provinceArrive, districtArrive, productWeight, priceDeclaration]);
-
+  
   
   return (
     <>
