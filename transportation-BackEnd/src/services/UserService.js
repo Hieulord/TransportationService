@@ -118,7 +118,7 @@ const deleteUser = (id) => {
           message: "The user is not defined!!",
         });
       }
-      await User.findByIdAndDelete(id);
+      // await User.findByIdAndDelete(id);
       resolve({
         staus: "OK",
         message: "Delete user success",
