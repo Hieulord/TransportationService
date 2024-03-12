@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Flyr from "../images/Flyr.jpg";
-import Fly2 from "../images/Fly2.jpg";
-import Fly3 from "../images/Fly3.jpg";
+import Raill from "../images/Raill.png";
+import Rail2 from "../images/Rail2.jpg";
+import Rail3 from "../images/Rail3.jpg";
 import logisticsBanner from "../images/banner-1.jpg";
 
-const Fly = () => {
+const Rail = () => {
   return (
     <>
       <div
@@ -30,7 +30,7 @@ const Fly = () => {
                     <a href="http:///"> Dịch Vụ Vận Chuyển</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    Vận Chuyển Hàng Không
+                    Vận Chuyển Đường Sắt
                   </li>
                 </ol>
               </nav>
@@ -42,7 +42,7 @@ const Fly = () => {
         <section style={{ maxWidth: "800px" }}>
           <section className="content">
             <div className="container mt-3 text-primary">
-              <h1>Vận Chuyển Hàng Không</h1>
+              <h1>Vận Chuyển Đường Sắt</h1>
             </div>
           </section>
         </section>
@@ -52,17 +52,17 @@ const Fly = () => {
         <div className="container mt-3">
           <div className="row">
             <div className="col-8">
-              <img className="Fly" src={Flyr} alt="Fly" />
+              <img className="Fly" src={Raill} alt="Fly" />
               <div className="information">
                 <h4 className="mt-3 text-primary-emphasis">
-                  Vận Chuyển Hàng Không
+                  Vận Chuyển Đường Sắt
                 </h4>
                 <p className="information-2 mt-3 text-black-50">
                   CARTING CAM KẾT VỚI KHÁCH HÀNG:
                 </p>
                 <p className="information-1 ms-5 mt-3 text-black-50">
                   &raquo; &nbsp; Vận chuyển hàng hóa an toàn từ Việt Nam đến các
-                  cảng hàng không chính và phụ trên thế giới hay ngược lại.
+                  cảng Đường Sắt chính và phụ trên thế giới hay ngược lại.
                   <br />
                   &raquo; &nbsp; Giá cước tốt và cạnh tranh.
                   <br />
@@ -80,16 +80,16 @@ const Fly = () => {
                   đến lúc giao hàng.
                 </p>
                 <p className="information-1 mt-3 text-black-50">
-                  Bên cạnh vận tải đường bộ và vận tải đường Biển, còn có
-                  hình thức vận tải Hàng Không. Việc khai thác thêm hình thức
-                  vận tải này nhằm đáp ứng các nhu cầu vận tải hàng hóa giúp
-                  khách hàng có thêm nhiều lựa chọn cho việc vận chuyển của mình
-                  và đảm bảo hiệu quả giao nhận tốt nhất.
+                  Bên cạnh vận tải đường bộ và vận tải đường biển, còn có hình
+                  thức vận tải Đường Sắt. Việc khai thác thêm hình thức vận tải
+                  này nhằm đáp ứng các nhu cầu vận tải hàng hóa giúp khách hàng
+                  có thêm nhiều lựa chọn cho việc vận chuyển của mình và đảm bảo
+                  hiệu quả giao nhận tốt nhất.
                 </p>
-                {/* Nội dung vận chuyển Hàng Không */}
+                {/* Nội dung vận chuyển Đường Sắt */}
                 <p className="information-1 mt-3 text-black-50">
                   &raquo; &nbsp; Vận chuyển hàng hóa an toàn bằng phương tiện và
-                  cơ sở hạ tầng Hàng Không đến mọi nơi trên thế giới.
+                  cơ sở hạ tầng Đường Sắt đến mọi nơi trên thế giới.
                   <br />
                   &raquo; &nbsp; Cam kết giá cước cạnh tranh và dịch vụ chuyên
                   nghiệp.
@@ -104,50 +104,50 @@ const Fly = () => {
                   hàng trong quá trình vận chuyển.
                 </p>
                 <p className="information-1 mt-3 text-black-50">
-                  Hình thức vận chuyển Hàng Không là một lựa chọn hiệu quả cho
+                  Hình thức vận chuyển Đường Sắt là một lựa chọn hiệu quả cho
                   việc chuyển phát nhanh và an toàn của hàng hóa, đặc biệt là
                   những loại hàng có kích thước lớn hoặc cần giao hàng đến nhanh
                   chóng.
                 </p>
 
                 <p>
-                  <img className="Fly2 ms-3" src={Fly2} alt="Fly2" />
+                  <img className="Rail2 ms-3" src={Rail2} alt="Rail2" />
                   <br />
                   <span className="ms-3">
-                    Vận tải Hàng Không sẽ thích hợp để vận chuyển hàng hóa có
+                    Vận tải Đường Sắt sẽ thích hợp để vận chuyển hàng hóa có
                     khối lượng và kích thước lớn
                   </span>
                 </p>
                 <p className="information-1 mt-3 text-black-50">
-                  <b> Vận tải Hàng Không là gì?</b> <br />
-                  Vận tải Hàng Không là hình thức vận chuyển hàng hóa sử dụng
-                  phương tiện và cơ sở hạ tầng Hàng Không để phục vụ cho mục
-                  đích vận chuyển. Phương tiện thường dùng sẽ là các tàu thuyền
-                  và phương tiện xếp, tháo gỡ hàng hóa như xe cần cẩu… Cơ sở hạ
-                  tầng để phục vụ cho vận tải Hàng Không bao gồm các cảng biển,
+                  <b> Vận tải Đường Sắt là gì?</b> <br />
+                  Vận tải Đường Sắt là hình thức vận chuyển hàng hóa sử dụng
+                  phương tiện và cơ sở hạ tầng Đường Sắt để phục vụ cho mục đích
+                  vận chuyển. Phương tiện thường dùng sẽ là các tàu thuyền và
+                  phương tiện xếp, tháo gỡ hàng hóa như xe cần cẩu… Cơ sở hạ
+                  tầng để phục vụ cho vận tải Đường Sắt bao gồm các cảng biển,
                   các cảng trung chuyển…
                 </p>
                 <p className="information-1 mt-3 text-black-50">
-                  Vận tải Hàng Không thích hợp cho những khu vực có vùng biển
+                  Vận tải Đường Sắt thích hợp cho những khu vực có vùng biển
                   liền kề và có cảng cho tàu cập bến. Có thể thực hiện vận
-                  chuyển hàng hóa bằng Hàng Không trong nước hoặc chuyển hàng
+                  chuyển hàng hóa bằng Đường Sắt trong nước hoặc chuyển hàng
                   quốc tế đều được. Vì các tàu vận chuyển thường quy mô và trọng
-                  tải lớn nên thông thường hình thức vận tải Hàng Không được áp
+                  tải lớn nên thông thường hình thức vận tải Đường Sắt được áp
                   dụng nhiều cho ngành xuất nhập khẩu để chở số lượng hàng hóa
                   có khối lượng lớn.
                 </p>
                 <p>
-                  <img className="Fly3 ms-3" src={Fly3} alt="Fly3" />
+                  <img className="Rail3 ms-3" src={Rail3} alt="Rail3" />
                   <br />
                 </p>
                 <p className="information-1 mt-3 text-black-50">
                   <span style={{ fontFamily: "sans-serif", fontWeight: "600" }}>
-                    Ưu điểm của vận tải Hàng Không
+                    Ưu điểm của vận tải Đường Sắt
                   </span>
                   <br />
                   <p className="ms-4">
                     &raquo; &nbsp; Ngoài việc đáp ứng nhu cầu vận chuyển hàng
-                    hóa thì vận tải Hàng Không còn có khá nhiều ưu điểm khác để
+                    hóa thì vận tải Đường Sắt còn có khá nhiều ưu điểm khác để
                     người gửi hàng có thể lựa chọn: <br />
                     &raquo; &nbsp; Có thể vận chuyển được những khối hàng có
                     kích thước và khối lượng lớn. <br />
@@ -161,9 +161,9 @@ const Fly = () => {
                     &raquo; &nbsp; Có tính an toàn cao do ít va chạm giữa các
                     tàu hàng. <br />
                     &raquo; &nbsp; Góp phần mở rộng giao thương quốc tế thông
-                    qua Hàng Không. <br />
-                    &raquo; &nbsp; Tuy nhiên, vận tải Hàng Không vẫn có những
-                    hạn chế như:
+                    qua Đường Sắt. <br />
+                    &raquo; &nbsp; Tuy nhiên, vận tải Đường Sắt vẫn có những hạn
+                    chế như:
                   </p>
                 </p>
                 <p className="information-1 mt-3 text-black-50">
@@ -171,16 +171,15 @@ const Fly = () => {
                   vì vậy sẽ cần kết hợp với các phương thức vận tải khác. <br />
                   &raquo; &nbsp; Thường mất khá nhiều thời gian, thế nên không
                   thật sự phù hợp cho nhu cầu chuyển phát nhanh hàng hóa. <br />
-                  &raquo; &nbsp; Những mặt hàng bạn nên vận tải Hàng Không{" "}
-                  <br />
+                  &raquo; &nbsp; Những mặt hàng bạn nên vận tải Đường Sắt <br />
                   &raquo; &nbsp; Ngoài những hàng hóa nghiêm cấm vận chuyển dưới
-                  mọi hình thức thì hầu như vận tải Hàng Không chấp nhận vận
+                  mọi hình thức thì hầu như vận tải Đường Sắt chấp nhận vận
                   chuyển đa số các loại hàng hóa. <br />
                   &raquo; &nbsp; Đây được xem là một trong những ưu điểm tuyệt
-                  vời của vận tải Hàng Không. <br />
+                  vời của vận tải Đường Sắt. <br />
                   &raquo; &nbsp; Nhờ đó, những hàng hóa mà các hình thức vận
                   chuyển khác từ chối thì người gửi có thể xem xét chuyển qua
-                  hình thức vận tải Hàng Không. <br />
+                  hình thức vận tải Đường Sắt. <br />
                   &raquo; &nbsp; Thông thường với hàng hóa chọn vận tải đường
                   biển sẽ được chia làm các chủng loại thuộc các nhóm để đơn vị
                   vận chuyển có được phương án vận chuyển tối ưu nhất.
@@ -299,4 +298,4 @@ const Fly = () => {
   );
 };
 
-export default Fly;
+export default Rail;

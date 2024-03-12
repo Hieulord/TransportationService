@@ -160,7 +160,9 @@ function Header() {
                       id="menu-item-17"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-17"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Sắt</a>
+                      <RouterLink to="/Rail" className="RouterLink">
+                        Vận Chuyển Đường Sắt
+                      </RouterLink>
                     </li>
                   </ul>
                 </li>

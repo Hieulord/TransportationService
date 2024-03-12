@@ -52,7 +52,7 @@ const Introduce = () => {
                   <Image src={Qa} />
                 </p>
                 <p className="container">
-                  Công ty Carriage có 25 năm kinh nghiệm của một doanh nghiệp
+                  Công ty chúng tôi có 25 năm kinh nghiệm của một doanh nghiệp
                   giao nhận kho vận hàng đầu Việt nam, công ty đã nhanh chóng
                   phát huy ưu thế chủ động của mô hình mới và sự năng động của
                   đội ngũ CBNV vừa có kinh nghiệm vừa có sức trẻ, liên tục phát
