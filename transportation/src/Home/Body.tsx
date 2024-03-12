@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { Button,
+import {
+  Button,
   Row,
   Col,
   Carousel,
   Alert,
   Card,
-  Container, } from "react-bootstrap";
+  Container,
+} from "react-bootstrap";
 import { FaCheck, FaShippingFast, FaUserShield, FaStar } from "react-icons/fa";
 import imgurl from "../images/sea2.jpeg";
 import Av from "../Avatar/avatar-1.jpg";
 import Avt from "../Avatar/avatar-11.jpg";
-
 
 const cardStyle = {
   border: "none",
@@ -26,8 +27,6 @@ const imgStyle = {
 const imgHoverStyle = {
   transform: "scale(1.05)",
 };
-
-
 
 const Body: React.FC = () => {
   const [provinceGo, setProvinceGo] = useState<string>("");
@@ -80,7 +79,9 @@ const Body: React.FC = () => {
       setErrorMessage("Vui lòng kiểm tra lại thông tin");
     } else {
       // Nếu dữ liệu hợp lệ, hiển thị kết quả
-      setResult(`Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`);
+      setResult(
+        `Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`
+      );
       // Xóa thông báo lỗi nếu có
       setErrorMessage(null);
     }
@@ -93,12 +94,10 @@ const Body: React.FC = () => {
         style={{
           backgroundImage: `url(${imgurl})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          imageRendering: "pixelated",
+          backgroundSize: "cover", // Thay đổi sang 'cover' để hình ảnh không bị giảm kích thước
         }}
       >
-        <div className="container py-5 mt-5">
+        <div className="container py-5 mt-2">
           <div className="row align-items-center py-5 mt-5">
             <div className="col-md-6 mb-5 mb-md-0">
               <h6 className="text-white">
@@ -224,8 +223,8 @@ const Body: React.FC = () => {
                     Ước Tính Tự Động
                   </Button>
                 </div>
-                 {/* Hiển thị kết quả */}
-                 {result && <p className="mt-3">{result}</p>}
+                {/* Hiển thị kết quả */}
+                {result && <p className="mt-3">{result}</p>}
                 {/* Hiển thị cảnh báo lỗi */}
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
               </form>

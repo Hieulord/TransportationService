@@ -122,7 +122,9 @@ function Header() {
                   id="menu-item-76"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
-                  <a href="#">Giới thiệu</a>
+                  <RouterLink to="/Introduce" className="RouterLink">
+                    Giới Thiệu
+                  </RouterLink>
                 </li>
                 <li
                   id="menu-item-18"
@@ -150,7 +152,9 @@ function Header() {
                       id="menu-item-16"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Hàng Không</a>
+                      <RouterLink to="/Fly" className="RouterLink">
+                        Vận Chuyển Hàng Không
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-17"
@@ -184,9 +188,9 @@ function Header() {
                   id="menu-item-77"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77 mt-2"
                 >
-                   <RouterLink to="/Contact" className="RouterLink">
-                        Liên hệ chúng tôi
-                      </RouterLink>
+                  <RouterLink to="/Contact" className="RouterLink">
+                    Liên hệ chúng tôi
+                  </RouterLink>
                 </li>
                 <li className="mt-3 ms-5">
                   <Breadcrumbs aria-label="breadcrumb" className="mt-1">

@@ -4,20 +4,48 @@ import "../Home/logistics.css";
 import { Link } from "react-router-dom";
 import shipping from "../images/shipping-road-1.jpg";
 import shipping1 from "../images/shipping-road.jpg";
-import logisticsBanner from "../images/logistics-banner.jpg";
+import logisticsBanner from "../images/banner-1.jpg";
 
 const Logistisc = () => {
   return (
     <>
-      <section
-        className="container-fuild banner"
+      <div
+        className="dark-overlay"
         style={{
           backgroundImage: `url(${logisticsBanner})`,
+          backgroundSize: "cover",
+          height: "300px",
         }}
-      >
-        <div className="service">
-          <span>Dịch Vụ Của Chúng Tôi</span>
+      />
+      <section style={{ backgroundColor: "#E5E5E5" }}>
+        <div className="container">
+          <div className="row text-center">
+            <div className="col mt-2">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <a href="http://localhost:3000/">Trang chủ</a>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    <a href="http:///"> Dịch Vụ Vận Chuyển</a>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    Vận Chuyển Bộ Logistics
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
         </div>
+      </section>
+      <section style={{ display: "flex", justifyContent: "center" }}>
+        <section style={{ maxWidth: "800px" }}>
+          <section className="content">
+            <div className="container mt-3 text-primary">
+              <h1>Vận Chuyển Bộ Logistics</h1>
+            </div>
+          </section>
+        </section>
       </section>
 
       <section>
