@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import imgur from "../images/logistics-banner.jpg";
-
-
 
 const Contact: React.FC = () => {
   // State for captcha and form data
@@ -34,7 +32,9 @@ const Contact: React.FC = () => {
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let captcha = "";
     for (let i = 0; i < 6; i++) {
-      captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+      captcha += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
     }
     setCaptcha(captcha);
   };
@@ -75,6 +75,25 @@ const Contact: React.FC = () => {
 
   return (
     <>
+      <section style={{ backgroundColor: "#E5E5E5" }}>
+        <div className="container">
+          <div className="row text-center">
+            <div className="col">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <a href="http://localhost:3000/">Trang chủ</a>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    Liên Hệ Chúng Tôi
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section
         style={{
           height: "380px",
@@ -89,8 +108,9 @@ const Contact: React.FC = () => {
               <h1 className="mt-3">Yêu Cầu Một Cuộc Gọi Lại</h1>
               <div>
                 <h6 className="mt-3">
-                  Chỉ mất 30 giây và sau đó chúng tôi sẽ gọi cho bạn trở lại, từ
-                  Thứ Hai đến Thứ Sáu, 8 giờ sáng - 5 giờ chiều. Dễ dàng.
+                  Chỉ mất 30 giây và sau đó chúng tôi sẽ gọi cho bạn trở lại vào
+                  <br />
+                  Thứ Hai đến Thứ Sáu, 8 giờ sáng - 5 giờ chiều.
                 </h6>
                 <h6>Hoặc liên hệ với chúng tôi</h6>
               </div>
