@@ -1,9 +1,32 @@
 import React, { useState } from "react";
-import { Button, Row, Col, Carousel, Alert } from "react-bootstrap";
+import {
+  Button,
+  Row,
+  Col,
+  Carousel,
+  Alert,
+  Card,
+  Container,
+} from "react-bootstrap";
 import { FaCheck, FaShippingFast, FaUserShield, FaStar } from "react-icons/fa";
 import imgurl from "../images/sea2.jpeg";
 import Av from "../Avatar/avatar-1.jpg";
 import Avt from "../Avatar/avatar-11.jpg";
+
+const cardStyle = {
+  border: "none",
+  padding: "2px",
+};
+
+const imgStyle = {
+  width: "80%", // Adjust the width as needed
+  height: "auto",
+  transition: "transform 0.3s ease-in-out",
+};
+
+const imgHoverStyle = {
+  transform: "scale(1.05)",
+};
 
 const Body: React.FC = () => {
   const [provinceGo, setProvinceGo] = useState<string>("");
@@ -71,12 +94,10 @@ const Body: React.FC = () => {
         style={{
           backgroundImage: `url(${imgurl})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          imageRendering: "pixelated",
+          backgroundSize: "cover", // Thay đổi sang 'cover' để hình ảnh không bị giảm kích thước
         }}
       >
-        <div className="container py-5 mt-5">
+        <div className="container py-5 mt-2">
           <div className="row align-items-center py-5 mt-5">
             <div className="col-md-6 mb-5 mb-md-0">
               <h6 className="text-white">
@@ -366,6 +387,83 @@ const Body: React.FC = () => {
           </div>
         </Carousel.Item>
       </Carousel>
+
+      <Container>
+        <Row
+          className="justify-content-center"
+          style={{
+            padding: "9px",
+          }}
+        >
+          <h4 className=" text-center text-primary">ĐỐI TÁC</h4>
+          <Col md={1} lg={2}>
+            <Card style={cardStyle}>
+              <Card.Body className="p-0">
+                <Card.Img
+                  src="https://demo031018.web30s.vn/datafiles/31255/upload/images/banner/interart.png?t=1608523041"
+                  alt="Interart"
+                  style={imgStyle}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={1} lg={2}>
+            <Card style={cardStyle}>
+              <Card.Body className="p-0">
+                <Card.Img
+                  src="https://demo031018.web30s.vn/datafiles/31255/upload/images/banner/misontrans.png?t=1608520907"
+                  alt="Misontrans"
+                  style={imgStyle}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={1} lg={2}>
+            <Card style={cardStyle}>
+              <Card.Body className="p-0">
+                <Card.Img
+                  src="https://demo031018.web30s.vn/datafiles/31255/upload/images/banner/angimex.png?t=1608522226"
+                  alt="Angimex"
+                  style={imgStyle}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={1} lg={2}>
+            <Card style={cardStyle}>
+              <Card.Body className="p-0">
+                <Card.Img
+                  src="https://demo031018.web30s.vn/datafiles/31255/upload/images/banner/misontrans.png?t=1608520907"
+                  alt="Misontrans"
+                  style={imgStyle}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={1} lg={2}>
+            <Card style={cardStyle}>
+              <Card.Body className="p-0">
+                <Card.Img
+                  src="https://demo031018.web30s.vn/datafiles/31255/upload/images/banner/royaltrans.png?t=1608521400"
+                  alt="Royaltrans"
+                  style={imgStyle}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={1} lg={2}>
+            <Card style={cardStyle}>
+              <Card.Body className="p-0">
+                <Card.Img
+                  src="https://demo031018.web30s.vn/datafiles/31255/upload/images/banner/misontrans.png?t=1608520907"
+                  alt="Misontrans"
+                  style={imgStyle}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
