@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import imgur from "../images/logistics-banner.jpg";
-
-
 
 const Contact: React.FC = () => {
   // State for captcha and form data
@@ -34,7 +32,9 @@ const Contact: React.FC = () => {
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let captcha = "";
     for (let i = 0; i < 6; i++) {
-      captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+      captcha += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
     }
     setCaptcha(captcha);
   };
@@ -77,8 +77,8 @@ const Contact: React.FC = () => {
     <>
       <section
         style={{
-          height: "380px",
-          width: "auto",
+          height: "auto",
+          width: "100%",
           // backgroundColor: "#40e0d0",
           backgroundImage: `url(${imgur})`,
         }}
@@ -100,7 +100,7 @@ const Contact: React.FC = () => {
                 {/* Các trường input ở đây */}
                 <div className="form-group">
                   <input
-                    className="form-control"
+                    className="form-control mb-3"
                     value={formData.fullname}
                     name="fullname"
                     type="text"
@@ -110,7 +110,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div className="form-group">
                   <input
-                    className="form-control"
+                    className="form-control mb-3"
                     value={formData.email}
                     name="email"
                     type="email"
@@ -120,7 +120,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div className="form-group">
                   <input
-                    className="form-control"
+                    className="form-control mb-3"
                     value={formData.phone}
                     name="phone"
                     type="tel"
@@ -130,7 +130,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div className="form-group">
                   <input
-                    className="form-control"
+                    className="form-control mb-3"
                     value={formData.address}
                     name="address"
                     type="text"
@@ -140,7 +140,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div className="form-group">
                   <textarea
-                    className="form-control"
+                    className="form-control mb-3"
                     value={formData.content}
                     name="content"
                     rows={3}
@@ -156,21 +156,21 @@ const Contact: React.FC = () => {
                         value={formData.captchaInput}
                         name="captchaInput"
                         type="text"
-                        className="form-control"
+                        className="form-control mb-3"
                         placeholder="Mã Capcha"
                         onChange={handleChange}
                       />
-                      <span className="input-group-text">{captcha}</span>
+                      <span className="input-group-text mb-3">{captcha}</span>
                     </div>
                   </div>
                 </div>
                 <div className="form-group">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary mb-3">
                     Gửi tin nhắn
                   </button>
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary ms-3 mb-3"
                     onClick={handleClear}
                   >
                     Làm lại

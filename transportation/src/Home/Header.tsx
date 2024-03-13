@@ -116,13 +116,13 @@ function Header() {
                   id="menu-item-75"
                   className="ms-3 menu-item menu-item-type-post_type menu-item-object-page menu-item-75 mt-2"
                 >
-                  <a href="#">Trang Chủ</a>
+                  <a href="/">Trang Chủ</a>
                 </li>
                 <li
                   id="menu-item-76"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
-                  <a href="#">Giới thiệu</a>
+                  <a href="#">Sản Phẩm</a>
                 </li>
                 <li
                   id="menu-item-18"

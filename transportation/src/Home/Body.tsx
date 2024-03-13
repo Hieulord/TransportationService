@@ -56,7 +56,9 @@ const Body: React.FC = () => {
       setErrorMessage("Vui lòng kiểm tra lại thông tin");
     } else {
       // Nếu dữ liệu hợp lệ, hiển thị kết quả
-      setResult(`Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`);
+      setResult(
+        `Ước tính chi phí của bạn là: ${estimate.toLocaleString()} VND`
+      );
       // Xóa thông báo lỗi nếu có
       setErrorMessage(null);
     }
@@ -200,10 +202,10 @@ const Body: React.FC = () => {
                     Ước Tính Tự Động
                   </Button>
                 </div>
-                 {/* Hiển thị kết quả */}
-                 {result && <p className="mt-3">{result}</p>}
+                {/* Hiển thị kết quả */}
+                {result && <p className="mt-3">{result}</p>}
                 {/* Hiển thị cảnh báo lỗi */}
-                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                {errorMessage && <Alert className="mt-3" variant="danger">{errorMessage}</Alert>}
               </form>
             </div>
           </div>
@@ -281,7 +283,7 @@ const Body: React.FC = () => {
       </section>
 
       <section
-        style={{ height: "250px", backgroundColor: "#E5E5E5" }}
+        style={{ height: "200px", backgroundColor: "#E5E5E5" }}
         className="text-center  "
       >
         <div className="p-5">
@@ -289,7 +291,7 @@ const Body: React.FC = () => {
             <FaStar /> Đánh giá
           </div>
           <h2>
-            <span className="-content">Khách hàng nhận xét</span>
+            <span className="content">Khách hàng nhận xét</span>
           </h2>
         </div>
       </section>
@@ -307,7 +309,7 @@ const Body: React.FC = () => {
                 <div className="col">
                   <img
                     src={Av}
-                    className="rounded-circle me-2 mt-5"
+                    className="rounded-circle me-2 mt-5 mb-5"
                     height="90px"
                     width="90px"
                     alt="Avatar"
@@ -343,7 +345,7 @@ const Body: React.FC = () => {
                 <img
                   src={Avt}
                   alt="Avatar"
-                  className="rounded-circle me-2 mt-5"
+                  className="rounded-circle me-2 mt-5 mb-5"
                   height="90px"
                   width="90px"
                 />
