@@ -4,12 +4,15 @@ import SignUp from "./Home/SignUp";
 import Body from "./Home/Body";
 import Header from "./Home/Header";
 import Footer from "./Home/Footer";
+
+import ServiceComponent from "./Home/ServiceComponent";
 import Logistics from "./Home/Logistics";
 import Sea from "./Home/Sea";
 import Fly from "./Home/Fly";
 import Rail from "./Home/Rail";
 import Contact from "./Home/Contact";
 import Introduce from "./Home/Introduce";
+
 function RouterGroup() {
   return (
     <>
@@ -18,6 +21,7 @@ function RouterGroup() {
           <Header />
           <Routes>
             <Route path="/" element={<Body />} />
+            <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/Logistics" element={<Logistics />} />
             <Route path="/Sea" element={<Sea />} />
             <Route path="/Fly" element={<Fly />} />

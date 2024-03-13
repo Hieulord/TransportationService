@@ -186,6 +186,7 @@ const Rail = () => {
                 </p>
               </div>
             </div>
+            
             <div className="col-2">
               <div className="card">
                 <div className="card-header fs-5 text-primary-emphasis">
