@@ -13,6 +13,7 @@ import Rail from "./Home/Rail";
 import Contact from "./Home/Contact";
 import Introduce from "./Home/Introduce";
 
+
 function RouterGroup() {
   return (
     <>
@@ -28,6 +29,7 @@ function RouterGroup() {
             <Route path="/Rail" element={<Rail />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Introduce" element={<Introduce />} />
+            <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/SignIn" element={<SignIn />} />
             <Route path="/SignUp" element={<SignUp />} />
           </Routes>
