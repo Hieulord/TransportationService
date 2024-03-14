@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import logisticsBanner from "../images/banner-1.jpg";
@@ -51,57 +50,51 @@ const ExampleComponent: React.FC = () => {
       <section>
         <div className="container mt-3">
           <div className="row">
-            <div className="col-6">
-              <div className="row justify-content-center">
-                <div className="col-md-4 mb-sm-5 mb-5">
-                  <div className="card">
-                    <i className="fa-solid fa-microphone-slash fa-4x text-info p-4"></i>
-                    <p className="text-capitalize">class aptent taciti</p>
-                    <p>
-                      Sociosqu ad Store sorquert per conubia nostra per inceptos
-                      himeneeos nuilam tempus erat
-                    </p>
-                    <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
-                      <button className="half-in-half-out-button btn btn-info position-absolute text-white">
-                        READ MORE
-                      </button>
-                    </div>
+            <div className="col-8 mt-3">
+              <div className="row row-cols-1">
+                <div className="col">
+                  <i className="fa-solid fa-microphone-slash fa-4x text-info p-4"></i>
+                  <p className="text-capitalize">class aptent taciti</p>
+                  <p>
+                    Sociosqu ad Store sorquert per conubia nostra per inceptos
+                    himeneeos nuilam tempus erat
+                  </p>
+                  <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
+                    <button className="half-in-half-out-button btn btn-info position-absolute text-white">
+                      READ MORE
+                    </button>
                   </div>
                 </div>
-                <div className="col-md-4 mb-sm-5 mb-5">
-                  <div className="card">
-                    <i className="fa-solid fa-seedling fa-4x p-4 text-info"></i>
-                    <p className="text-capitalize">id tortor etiam orci</p>
-                    <p>
-                      Juste lobortis in consequat ut omare vel tellus nulla
-                      e'ementum vellt pretlum ultrcies
-                    </p>
-                    <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
-                      <button className="half-in-half-out-button btn btn-info position-absolute text-white">
-                        READ MORE
-                      </button>
-                    </div>
+                <div className="col">
+                  <i className="fa-solid fa-microphone-slash fa-4x text-info p-4"></i>
+                  <p className="text-capitalize">class aptent taciti</p>
+                  <p>
+                    Sociosqu ad Store sorquert per conubia nostra per inceptos
+                    himeneeos nuilam tempus erat
+                  </p>
+                  <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
+                    <button className="half-in-half-out-button btn btn-info position-absolute text-white">
+                      READ MORE
+                    </button>
                   </div>
                 </div>
-                <div className="col-md-4 mb-sm-5 mb-5">
-                  <div className="card">
-                    <i className="fa-solid fa-ship fa-4x p-4 text-info"></i>
-                    <p className="text-capitalize">tristique nibh turpis</p>
-                    <p>
-                      Fermentum dul sit amet consequat fells arcu quis pede
-                      curabitur elit lecus consectetuer vel
-                    </p>
-                    <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
-                      <button className="half-in-half-out-button btn btn-info position-absolute text-white">
-                        READ MORE
-                      </button>
-                    </div>
+                <div className="col">
+                  <i className="fa-solid fa-microphone-slash fa-4x text-info p-4"></i>
+                  <p className="text-capitalize">class aptent taciti</p>
+                  <p>
+                    Sociosqu ad Store sorquert per conubia nostra per inceptos
+                    himeneeos nuilam tempus erat
+                  </p>
+                  <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
+                    <button className="half-in-half-out-button btn btn-info position-absolute text-white">
+                      READ MORE
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-4">
+            <div className="col-2">
               <div className="card">
                 <div className="card-header fs-5 text-primary-emphasis">
                   Hỗ Trợ Trực Tuyến

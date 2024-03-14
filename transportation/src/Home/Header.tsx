@@ -126,14 +126,7 @@ function Header() {
                     Giới Thiệu
                   </RouterLink>
                 </li>
-                <li
-                  id="menu-item-76"
-                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
-                >
-                  <RouterLink to="/ServiceComponent" className="RouterLink">
-                     Dịch Vụ
-                  </RouterLink>
-                </li>
+                
                 <li
                   id="menu-item-18"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18 mt-2"
