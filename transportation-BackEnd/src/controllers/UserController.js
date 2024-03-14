@@ -53,7 +53,6 @@ const loginUser = async (req, res) => {
         message: "The password is equal confirmPassword",
       });
     }
-    console.log("isChekEmail", isCheckEmail);
     const respone = await UserService.loginUser(req.body);
     return res.status(200).json(respone);
   } catch (e) {
