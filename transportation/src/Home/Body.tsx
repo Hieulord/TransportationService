@@ -350,7 +350,7 @@ const Body: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div>  
           </section>
         </Carousel.Item>
         <Carousel.Item

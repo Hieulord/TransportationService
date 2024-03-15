@@ -2,8 +2,12 @@ import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import logisticsBanner from "../images/banner-1.jpg";
 import { Link } from "react-router-dom";
-import Raill from "../images/Raill.png";
+import sea from "../images/sea.jpg";
+import Rail3 from "../images/Rail3.jpg";
+import Fly2 from "../images/Fly2.jpg";
+import shipper from "../images/Đường bộ.png";
 import { MdEmail } from "react-icons/md";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 const ExampleComponent: React.FC = () => {
   const handleClick = () => {
     alert("Button clicked!");
@@ -47,10 +51,7 @@ const ExampleComponent: React.FC = () => {
         </section>
       </section>
 
-      <section>
-        <div className="container mt-3">
-          <div className="row">
-            <div className="col-8 mt-3">
+      {/* <div className="col-8 mt-3">
               <div className="row row-cols-1">
                 <div className="col">
                   <i className="fa-solid fa-microphone-slash fa-4x text-info p-4"></i>
@@ -91,8 +92,151 @@ const ExampleComponent: React.FC = () => {
                     </button>
                   </div>
                 </div>
+                <div className="col">
+                  <i className="fa-solid fa-microphone-slash fa-4x text-info p-4"></i>
+                  <p className="text-capitalize">class aptent taciti</p>
+                  <p>
+                    Sociosqu ad Store sorquert per conubia nostra per inceptos
+                    himeneeos nuilam tempus erat
+                  </p>
+                  <div className="half-in-half-out-button-container d-flex justify-content-center position-relative mt-2 pb-5">
+                    <button className="half-in-half-out-button btn btn-info position-absolute text-white">
+                      READ MORE
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </div> */}
+      <section>
+        <div className="container mt-3">
+          <div className="row">
+            <article className="custom-repeater-item custom-hover col-8 mt-3">
+              <div className="row mt-3">
+                <div className="col-md-5">
+                  <img
+                    src={shipper}
+                    className="img-fluid"
+                    alt="Vận chuyển vật liệu xây dựng"
+                    style={{ height: '500px", width: "900px' }}
+                  />
+                </div>
+                <div className="col mt-5">
+                  <div className="card-body">
+                    <h3 className="card-title">Vận chuyển bộ Logistics</h3>
+                    <p className="card-text">
+                      Dịch vụ vận chuyển logistics của chúng tôi cung cấp giải
+                      pháp vận chuyển toàn diện, cam kết đảm bảo hàng hóa của
+                      khách hàng được vận chuyển an toàn, nhanh chóng và hiệu
+                      quả.
+                    </p>
+                    <div className="custom-widget-button">
+                      <a
+                        href="/Logistics"
+                        className="btn btn-primary"
+                        title="Xem thêm"
+                      >
+                        Xem thêm <FaArrowAltCircleRight />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-3">
+                <div className="col-md-5">
+                  <img
+                    src={sea}
+                    className="img-fluid"
+                    alt="Vận chuyển vật liệu xây dựng"
+                    style={{ height: '500px", width: "900px' }}
+                  />
+                </div>
+                <div className="col mt-5">
+                  <div className="card-body">
+                    <h3 className="card-title">Vận chuyển đường biển</h3>
+                    <p className="card-text">
+                      Dịch vụ vận chuyển đường biển nội địa cung cấp giải pháp
+                      vận chuyển hiệu quả và đáng tin cậy trong nước, đảm bảo
+                      hàng hóa được vận chuyển đúng hẹn và an toàn.
+                    </p>
+                    <div className="custom-widget-button">
+                      <a
+                        href="/Sea"
+                        className="btn btn-primary"
+                        title="Xem thêm"
+                      >
+                        Xem thêm <FaArrowAltCircleRight />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-3">
+                <div className="col-md-5">
+                  {" "}
+                  {/* Increased the column width */}
+                  <img
+                    src={Fly2}
+                    className="img-fluid"
+                    alt="Vận chuyển vật liệu xây dựng"
+                    style={{ height: '500px", width: "500px' }}
+                  />
+                </div>
+                <div className="col mt-5">
+                  <div className="card-body">
+                    <h3 className="card-title">Vận chuyển đường hàng không</h3>
+                    <p className="card-text">
+                      Air cargo là hình thức vận chuyển hàng hóa bằng đường hàng
+                      không, sử dụng máy bay chở hàng hoặc chuyên chở trong phần
+                      bụng của máy bay hành khách.
+                    </p>
+                    <div className="custom-widget-button">
+                      <a
+                        href="/Fly"
+                        className="btn btn-primary"
+                        title="Xem thêm"
+                      >
+                        Xem thêm <FaArrowAltCircleRight />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mt-3">
+                <div className="col-md-5">
+                  {" "}
+                  {/* Increased the column width */}
+                  <img
+                    src={Rail3}
+                    className="img-fluid"
+                    alt="Vận chuyển vật liệu xây dựng"
+                    style={{ height: '500px", width: "500px' }}
+                  />
+                </div>
+                <div className="col mt-4">
+                  <div className="card-body">
+                    <h3 className="card-title">Vận chuyển đường sắt</h3>
+                    <p className="card-text">
+                      Vận chuyển đường sắt là hoạt động di chuyển hàng hóa và
+                      hành khách bằng tàu hỏa trên hệ thống đường ray.Đường sắt
+                      có thể cung cấp một giải pháp vận chuyển hiệu quả từ góc
+                      độ chi phí, đặc biệt là đối với các quãng đường dài.
+                    </p>
+                    <div className="custom-widget-button">
+                      <a
+                        href="/Rail"
+                        className="btn btn-primary"
+                        title="Xem thêm"
+                      >
+                        Xem thêm <FaArrowAltCircleRight />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
 
             <div className="col-2">
               <div className="card">
@@ -167,41 +311,6 @@ const ExampleComponent: React.FC = () => {
           </div>
         </div>
       </section>
-      <div
-        className="modal fade"
-        id="exampleModalToggle"
-        aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel"
-        tabIndex={-1}
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
-                Modal 1
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            <div className="modal-body">
-              Show a second modal and hide this one with the button below.
-            </div>
-            <div className="modal-footer">
-              <button
-                className="btn btn-primary"
-                data-bs-target="#exampleModalToggle2"
-                data-bs-toggle="modal"
-              >
-                Open second modal
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
