@@ -1,4 +1,5 @@
 const UserService = require("../services/UserService");
+const JwtService = require("../services/JwtService");
 
 const createUser = async (req, res) => {
   try {
@@ -52,7 +53,6 @@ const loginUser = async (req, res) => {
         message: "The password is equal confirmPassword",
       });
     }
-    console.log("isChekEmail", isCheckEmail);
     const respone = await UserService.loginUser(req.body);
     return res.status(200).json(respone);
   } catch (e) {
@@ -128,11 +128,30 @@ const getDetailUser = async (req, res) => {
   }
 };
 
+const refreshToken = async (req, res) => {
+  try {
+    const token = req.headers.token.split(" ")[1];
+    if (!token) {
+      return res.status(200).json({
+        status: "Err",
+        message: "The token is required!!",
+      });
+    }
+    const respone = await JwtService.refreshTokenJwtService(token);
+    return res.status(200).json(respone);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   updateUser,
   deleteUser,
   getAllUser,
-  getDetailUser
+  getDetailUser,
+  refreshToken,
 };
