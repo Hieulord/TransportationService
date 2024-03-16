@@ -57,15 +57,20 @@ const deleteProduct = async (req, res) => {
 };
 
 const getAllProduct = async (req, res) => {
-    try {
-      const respone = await ProductService.getAllProduct();
-      return res.status(200).json(respone);
-    } catch (e) {
-      return res.status(404).json({
-        message: e,
-      });
-    }
-  };
+  try {
+    const { limit, page, sort } = req.query;
+    const respone = await ProductService.getAllProduct(
+      Number(limit) || 8,
+      Number(page) || 0,
+      sort
+    );
+    return res.status(200).json(respone);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
 
 const getDetailProduct = async (req, res) => {
   try {

@@ -80,20 +80,29 @@ const deleteProduct = (id) => {
   });
 };
 
-  const getAllProduct = () => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const allProduct = await Service.find();
-        resolve({
-          staus: "OK",
-          message: "Success",
-          data: allProduct,
+const getAllProduct = (limit, page, sort) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const toatlProduct = await Service.countDocuments();
+      const allProduct = await Service.find()
+        .limit(limit)
+        .skip(page * limit)
+        .sort({
+          name: sort,
         });
-      } catch (e) {
-        reject(e);
-      }
-    });
-  };
+      resolve({
+        staus: "OK",
+        message: "Success",
+        data: allProduct,
+        total: toatlProduct,
+        pageProduct: Number(page + 1),
+        totalPage: Math.ceil(toatlProduct / limit),
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 const getDetailProduct = (id) => {
   return new Promise(async (resolve, reject) => {
