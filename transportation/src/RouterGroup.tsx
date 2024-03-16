@@ -8,6 +8,8 @@ import Footer from "./Home/Footer";
 import ServiceComponent from "./Home/ServiceComponent";
 import Logistics from "./Home/Logistics";
 import Sea from "./Home/Sea";
+import News from "./Home/News";
+import Recruitment from "./Home/Recruitment";
 import Fly from "./Home/Fly";
 import Rail from "./Home/Rail";
 import Contact from "./Home/Contact";
@@ -29,6 +31,8 @@ function RouterGroup() {
             <Route path="/Rail" element={<Rail />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Introduce" element={<Introduce />} />
+            <Route path="/Recruitment" element={<Recruitment />} />
+            <Route path="/News" element={<News />} />
             <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/SignIn" element={<SignIn />} />
             <Route path="/SignUp" element={<SignUp />} />

@@ -24,10 +24,10 @@ const Fly = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="http://localhost:3000/">Trang chủ</a>
+                    <a href="/">Trang chủ</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    <a href="http:///"> Dịch Vụ Vận Chuyển</a>
+                    <a href="/ServiceComponent"> Dịch Vụ Vận Chuyển</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Vận Chuyển Hàng Không
@@ -80,11 +80,11 @@ const Fly = () => {
                   đến lúc giao hàng.
                 </p>
                 <p className="information-1 mt-3 text-black-50">
-                  Bên cạnh vận tải đường bộ và vận tải đường Biển, còn có
-                  hình thức vận tải Hàng Không. Việc khai thác thêm hình thức
-                  vận tải này nhằm đáp ứng các nhu cầu vận tải hàng hóa giúp
-                  khách hàng có thêm nhiều lựa chọn cho việc vận chuyển của mình
-                  và đảm bảo hiệu quả giao nhận tốt nhất.
+                  Bên cạnh vận tải đường bộ và vận tải đường Biển, còn có hình
+                  thức vận tải Hàng Không. Việc khai thác thêm hình thức vận tải
+                  này nhằm đáp ứng các nhu cầu vận tải hàng hóa giúp khách hàng
+                  có thêm nhiều lựa chọn cho việc vận chuyển của mình và đảm bảo
+                  hiệu quả giao nhận tốt nhất.
                 </p>
                 {/* Nội dung vận chuyển Hàng Không */}
                 <p className="information-1 mt-3 text-black-50">
@@ -236,21 +236,21 @@ const Fly = () => {
                   <br />
                   <Link
                     className="text-black-50 text-decoration-none category"
-                    to="#"
+                    to="/Sea"
                   >
                     Vận Chuyển Đường Biển
                   </Link>
                   <br />
                   <Link
                     className="text-black-50 text-decoration-none category"
-                    to="#"
+                    to="/Fly"
                   >
                     Vận Chuyển Hàng Không
                   </Link>
                   <br />
                   <Link
                     className="text-black-50 text-decoration-none category"
-                    to="#"
+                    to="/Rail"
                   >
                     Vận Chuyển Đường Sắt
                   </Link>
