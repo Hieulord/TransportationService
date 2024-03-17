@@ -25,10 +25,10 @@ const Sea = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="http://localhost:3000/">Trang chủ</a>
+                    <a href="/">Trang chủ</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    <a href="http:///"> Dịch Vụ Vận Chuyển</a>
+                    <a href="/ServiceComponent"> Dịch Vụ Vận Chuyển</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Vận Chuyển Đường Biển
@@ -209,21 +209,21 @@ const Sea = () => {
                   <br />
                   <Link
                     className="text-black-50 text-decoration-none category"
-                    to="#"
+                    to="/Sea"
                   >
                     Vận Chuyển Đường Biển
                   </Link>
                   <br />
                   <Link
                     className="text-black-50 text-decoration-none category"
-                    to="#"
+                    to="/Fly"
                   >
                     Vận Chuyển Hàng Không
                   </Link>
                   <br />
                   <Link
                     className="text-black-50 text-decoration-none category"
-                    to="#"
+                    to="/Rail"
                   >
                     Vận Chuyển Đường Sắt
                   </Link>

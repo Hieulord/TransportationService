@@ -179,13 +179,13 @@ function Header() {
                       id="menu-item-19"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"
                     >
-                      <a href="/sample-page/">Tin Tức Mới</a>
+                      <a href="/News">Tin Tức Mới</a>
                     </li>
                     <li
                       id="menu-item-20"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"
                     >
-                      <a href="/sample-page-2/">Tuyển Dụng</a>
+                      <a href="/Recruitment">Tuyển Dụng</a>
                     </li>
                   </ul>
                 </li>
