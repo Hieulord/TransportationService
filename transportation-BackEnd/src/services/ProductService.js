@@ -80,23 +80,31 @@ const deleteProduct = (id) => {
   });
 };
 
-const getAllProduct = (limit, page, sort) => {
+const getAllProduct = (limit, page, sort, filter) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const toatlProduct = await Service.countDocuments();
-      const allProduct = await Service.find()
-        .limit(limit)
-        .skip(page * limit)
-        .sort({
-          name: sort,
-        });
+      let query = Service.find();
+
+      if (filter && filter.length === 2) {
+        const [key, value] = filter;
+        query = query.where(key, { '$regex': value });
+      }
+
+      if (sort && sort.length === 2) {
+        const [direction, field] = sort;
+        query = query.sort({ [field]: direction === 'asc' ? 1 : -1 });
+      }
+
+      const totalProduct = await Service.countDocuments();
+      const allProduct = await query.limit(limit).skip(page * limit);
+
       resolve({
-        staus: "OK",
+        status: "OK",
         message: "Success",
         data: allProduct,
-        total: toatlProduct,
+        total: totalProduct,
         pageProduct: Number(page + 1),
-        totalPage: Math.ceil(toatlProduct / limit),
+        totalPage: Math.ceil(totalProduct / limit),
       });
     } catch (e) {
       reject(e);
