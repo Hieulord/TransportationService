@@ -54,7 +54,12 @@ const loginUser = async (req, res) => {
       });
     }
     const respone = await UserService.loginUser(req.body);
-    return res.status(200).json(respone);
+    const { refresh_token, ...newRepone } = respone;
+    res.cookie("refresh_token", refresh_token, {
+      HttpOnly: true,
+      Secure: true,
+    });
+    return res.status(200).json(newRepone);
   } catch (e) {
     return res.status(404).json({
       message: e,
@@ -129,8 +134,9 @@ const getDetailUser = async (req, res) => {
 };
 
 const refreshToken = async (req, res) => {
+  console.log("req.cookies", req.cookies);
   try {
-    const token = req.headers.token.split(" ")[1];
+    const token = req.cookies.refresh_token;
     if (!token) {
       return res.status(200).json({
         status: "Err",

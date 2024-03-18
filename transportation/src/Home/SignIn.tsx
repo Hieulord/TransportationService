@@ -28,14 +28,18 @@ function SignIn() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/sign-in",
+       `${process.env.REACT_APP_API_KEY}/user/sign-in`,
         requestData
       );
 
       console.log(response.data); // handle successful response here
+      const { access_token } = response.data; // Assuming your API returns access_token upon successful login
+
+      // Save access_token to localStorage or sessionStorage
+      localStorage.setItem("access_token", access_token);
 
       // Redirect to home page
-      navigate("/"); // Replace "/" with the path to your home page
+      navigate("/");
     } catch (error) {
       console.error("Error:", error); // handle error response here
     }
