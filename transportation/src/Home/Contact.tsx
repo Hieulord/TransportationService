@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="http://localhost:3000/">Trang chủ</a>
+                    <a style={{ textDecoration: 'none'}}  href="/">Trang chủ</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Liên Hệ Chúng Tôi

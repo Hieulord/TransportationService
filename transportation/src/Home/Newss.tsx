@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import logisticsBanner from "../images/banner-1.jpg";
 import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
-import KTTT from "../News/kinhte-tang-truong.jpg";
-import CQTLAXKH from "../News/cangquoctelonganxuatkhauhang.jpg";
-import HAD from "../News/hang-an-do.jpg";
-import XG from "../News/xang-giam-29-6-2020.jpeg";
-import GTNLMB from "../News/giam-thue-nhien-lieu-may-bay.jpg";
-import Tmdt from "../News/tmdt-2.jpg";
+import KTTT from "../Home/News/kinhte-tang-truong.jpg";
+import CQTLAXKH from "../Home/News/cangquoctelonganxuatkhauhang.jpg";
+import HAD from "../Home/News/hang-an-do.jpg";
+import XG from "./News/tuyen-dung-nhan-vien.jpg";
+import GTNLMB from "../Home/News/giam-thue-nhien-lieu-may-bay.jpg";
+import Tmdt from "./News/thu-kho.jpg";
 import { FaEye } from "react-icons/fa";
 
-const News = () => {
+const Newss = () => {
   return (
     <>
       <div
@@ -27,13 +27,12 @@ const News = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a href="/">Trang chủ</a>
-                  </li>
-                  <li className="breadcrumb-item">
-                    <a href="/">Tin Tức</a>
+                    <a style={{ textDecoration: "none" }} href="/">
+                      Trang chủ
+                    </a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    <a>Tin Tức Mới</a>
+                    <a style={{ textDecoration: "none" }}>Tin Tức</a>
                   </li>
                 </ol>
               </nav>
@@ -45,7 +44,7 @@ const News = () => {
         <section style={{ maxWidth: "800px" }}>
           <section className="content">
             <div className="container mt-3 text-primary">
-              <h1>Tin Tức Mới</h1>
+              <h1>Tin Tức</h1>
             </div>
           </section>
         </section>
@@ -78,11 +77,12 @@ const News = () => {
               0,36%. Tính chung 6 tháng đầu năm, GDP tăng 1,81% so với cùng kỳ
               năm trước,
             </p>
-            <Button variant="secondary">
-              <FaEye /> View Details
+            <Button variant="secondary" href="/VietnamEconomicReport">
+              <FaEye /> Xem Thêm
             </Button>
           </div>
         </div>
+
         <div style={{ width: "calc(33% - 3px)", marginBottom: "1px" }}>
           <div style={{ backgroundColor: "#fff", padding: "1px" }}>
             <img className="shipping" src={HAD} />
@@ -95,43 +95,29 @@ const News = () => {
               những cảng lớn nhất của Ấn Độ, đã quyết định chưa thông quan cho
               các lô hàng xuất xứ từ Trung Quốc.
             </p>
-            <Button variant="secondary">
-              <FaEye /> View Details
+            <Button variant="secondary" href="/ChinaEconomicReport">
+              <FaEye /> Xem Thêm
             </Button>
           </div>
         </div>
+
         <div style={{ width: "calc(33% - 3px)", marginBottom: "1px" }}>
           <div style={{ backgroundColor: "#fff", padding: "1px" }}>
-            <img className="shipping" src={CQTLAXKH} />
-            <h3>
-              Xuất khẩu gần 50.000 tấn thép đầu tiên sau Covid-19 từ cảng Quốc
-              tế Long A
-            </h3>
-            <p>
-              (ĐTCK) Đây là số thép nằm trong tổng số lượng 50.000 tấn mà Công
-              ty TVP chọn Cảng quốc tế Long An để xuất khẩu.
+            <img className="shipping" src={XG} />
+            <h3>Tuyển nhân viên kinh doanh</h3>
+            <p className="description">
+              Cơ hội sáng tạo và phát triển bản thân cùng với chúng tôi! Chúng
+              tôi đang tìm kiếm những tài năng đam mê kinh doanh, có khả năng
+              giao tiếp tốt và sẵn lòng chinh phục thị trường. Nếu bạn muốn
+              thách thức bản thân và định hình tương lai, hãy đồng hành cùng
+              chúng tôi ngay hôm nay!
             </p>
-            <Button variant="secondary">
-              <FaEye /> View Details
+            <Button variant="secondary" href="/RecruitingSalesStaff">
+              <FaEye /> Xem Thêm
             </Button>
           </div>
         </div>
-        <div style={{ width: "calc(33% - 3px)", marginBottom: "1px" }}>
-          <div style={{ backgroundColor: "#fff", padding: "1px" }}>
-            <img className="shipping" src={Tmdt} />
-            <h3>
-              Vì sao các doanh nghiệp thi nhau 'lên sàn' thương mại điện tử?
-            </h3>
-            <p>
-              Lên sàn thương mại điện tử cũng giống như mở thêm một cửa hàng,
-              nơi doanh nghiệp có thể tiếp cận nhiều khách hàng, từ đó hứa hẹn
-              thúc đẩy doanh thu.
-            </p>
-            <Button variant="secondary">
-              <FaEye /> View Details
-            </Button>
-          </div>
-        </div>
+
         <div style={{ width: "calc(33% - 3px)", marginBottom: "1px" }}>
           <div style={{ backgroundColor: "#fff", padding: "1px" }}>
             <img className="shipping" src={GTNLMB} />
@@ -141,23 +127,39 @@ const News = () => {
               Cảng hàng không Việt Nam (ACV) đã đề xuất mục tiêu lợi nhuận trước
               thuế 2.007 tỷ đồng, giảm 80% so với năm trước.
             </p>
-            <Button variant="secondary">
-              <FaEye /> View Details
+            <Button variant="secondary" href="/Acv">
+              <FaEye /> Xem Thêm
             </Button>
           </div>
         </div>
         <div style={{ width: "calc(33% - 3px)", marginBottom: "1px" }}>
           <div style={{ backgroundColor: "#fff", padding: "1px" }}>
-            <img className="shipping" src={XG} />
-            <h3>Đề xuất giảm thuế môi trường với nhiên liệu bay</h3>
-            <p className="description">
-              Ngày 26.6, Bộ Tài chính cho biết đã gửi Chính phủ dự thảo Nghị
-              quyết mức thuế bảo vệ môi trường (BVMT) đối với nhiên liệu bay đến
-              hết ngày 31.12.2020, nhằm tháo gỡ khó khăn cho ngành hàng không
-              trước dịch Covid-19.
+            <img className="shipping" src={CQTLAXKH} />
+            <h3>
+              Xuất khẩu gần 50.000 tấn thép đầu tiên sau Covid-19 từ cảng Quốc
+              tế Long An
+            </h3>
+            <p>
+              (ĐTCK) Đây là số thép nằm trong tổng số lượng 50.000 tấn mà Công
+              ty TVP chọn Cảng quốc tế Long An để xuất khẩu.
             </p>
-            <Button variant="secondary">
-              <FaEye /> View Details
+            <Button variant="secondary" href="/LongAnexport">
+              <FaEye /> Xem Thêm
+            </Button>
+          </div>
+        </div>
+
+        <div style={{ width: "calc(33% - 3px)", marginBottom: "1px" }}>
+          <div style={{ backgroundColor: "#fff", padding: "1px" }}>
+            <img className="shipping" src={Tmdt} />
+            <h3>Tuyển thủ kho</h3>
+            <p className="description">
+              Tìm kiếm một tay thủ kho chuyên nghiệp! Hãy cùng chúng tôi xây
+              dựng hệ thống quản lý kho hàng hiệu quả và đáng tin cậy. Liên hệ
+              ngay để tham gia vào đội ngũ của chúng tôi!
+            </p>
+            <Button variant="secondary" href="/WarehousePlayer">
+              <FaEye /> Xem Thêm
             </Button>
           </div>
         </div>
@@ -166,4 +168,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default Newss;
