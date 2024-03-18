@@ -116,7 +116,9 @@ function Header() {
                   id="menu-item-75"
                   className="ms-3 menu-item menu-item-type-post_type menu-item-object-page menu-item-75 mt-2"
                 >
-                  <a href="/">Trang Chủ</a>
+                  <RouterLink to="/" className="RouterLink">
+                    Trang Chủ
+                  </RouterLink>
                 </li>
                 <li
                   id="menu-item-76"
@@ -169,17 +171,20 @@ function Header() {
                     </li>
                   </ul>
                 </li>
+
                 <li
                   id="menu-item-21"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-21 mt-2"
                 >
-                  <a href="#">Tin Tức</a>
+                  <RouterLink to="/Newss" className="RouterLink">
+                    Tin Tức
+                  </RouterLink>
                   <ul className="sub-menu">
                     <li
                       id="menu-item-19"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"
                     >
-                      <a href="/News">Tin Tức Mới</a>
+                      <a href="/News">Tin Tức</a>
                     </li>
                     <li
                       id="menu-item-20"
@@ -189,6 +194,7 @@ function Header() {
                     </li>
                   </ul>
                 </li>
+
                 <li
                   id="menu-item-77"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77 mt-2"
