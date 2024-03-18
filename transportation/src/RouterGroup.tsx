@@ -1,10 +1,11 @@
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import axios from "axios";
 import SignIn from "./Home/SignIn";
 import SignUp from "./Home/SignUp";
 import Body from "./Home/Body";
 import Header from "./Home/Header";
 import Footer from "./Home/Footer";
-
 import ServiceComponent from "./Home/ServiceComponent";
 import Logistics from "./Home/Logistics";
 import Sea from "./Home/Sea";
@@ -23,8 +24,26 @@ import Acv from "./Home/New newspaper/Acv";
 import AirplaneTaxReduction from "./Home/New newspaper/AirplaneTaxReduction";
 import WarehousePlayer from "./Home/New newspaper/WarehousePlayer";
 import RecruitingSalesStaff from "./Home/New newspaper/RecruitingSalesStaff";
+import { useQuery } from "@tanstack/react-query";
 
-function RouterGroup() {
+const RouterGroup: React.FC = () => {
+  // useEffect(() => {
+  //   fetchApi();
+  // }, []);
+  const fetchApi = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_KEY}/service/getAllProduct`
+      );
+      return res.data
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const query = useQuery({ queryKey: ['todos'], queryFn: fetchApi })
+  console.log('query', query)
+
   return (
     <>
       <Router>
@@ -68,6 +87,6 @@ function RouterGroup() {
       </Router>
     </>
   );
-}
+};
 
 export default RouterGroup;
