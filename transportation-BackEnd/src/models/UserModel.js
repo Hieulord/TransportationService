@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema(
     refresh_token: { type: String, require: true },
   },
   {
-    timestamps: true, // Thời gian tạo và usset
+    timestamps: true, 
+    versionKey: false// Thời gian tạo và usset
   }
 );
 const User = mongoose.model("User", userSchema);

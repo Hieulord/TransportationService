@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
 import SignIn from "./Home/SignIn";
@@ -25,8 +25,22 @@ import AirplaneTaxReduction from "./Home/New newspaper/AirplaneTaxReduction";
 import WarehousePlayer from "./Home/New newspaper/WarehousePlayer";
 import RecruitingSalesStaff from "./Home/New newspaper/RecruitingSalesStaff";
 import { useQuery } from "@tanstack/react-query";
+import NavAdmin from "./Admin/NavAdmin";
+import AdminService from "./Admin/AdminService";
 
 const RouterGroup: React.FC = () => {
+  const [showElement, setShowElement] = useState(true); // State để kiểm soát hiển thị của phần tử
+
+  useEffect(() => {
+    // Kiểm tra đường dẫn hiện tại
+    const currentPath = window.location.pathname;
+    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") ) {
+      setShowElement(false);
+    } else {
+      // Nếu không, hiển thị phần tử
+      setShowElement(true);
+    }
+  }, []);
   // useEffect(() => {
   //   fetchApi();
   // }, []);
@@ -35,22 +49,26 @@ const RouterGroup: React.FC = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_API_KEY}/service/getAllProduct`
       );
-      return res.data
+      return res.data;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const query = useQuery({ queryKey: ['todos'], queryFn: fetchApi })
-  console.log('query', query)
+  const query = useQuery({ queryKey: ["todos"], queryFn: fetchApi });
+  console.log("query", query);
 
   return (
     <>
       <Router>
         <div className="RouterContainer">
-          <Header />
+          {/* Hiển thị header nếu showHeader là true */}
+          {/* Phần tử cần ẩn */}
+          {showElement && <Header />}
           <Routes>
             <Route path="/" element={<Body />} />
+            <Route path="/NavAdmin" element={<NavAdmin />} />
+            <Route path="/AdminService" element={<AdminService />} />
             <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/Logistics" element={<Logistics />} />
             <Route path="/Sea" element={<Sea />} />
@@ -69,7 +87,10 @@ const RouterGroup: React.FC = () => {
               element={<AirplaneTaxReduction />}
             />
             <Route path="/WarehousePlayer" element={<WarehousePlayer />} />
-            <Route path="/RecruitingSalesStaff" element={<RecruitingSalesStaff />} />
+            <Route
+              path="/RecruitingSalesStaff"
+              element={<RecruitingSalesStaff />}
+            />
             <Route path="/Ecommerce" element={<Ecommerce />} />
             <Route path="/Fly" element={<Fly />} />
             <Route path="/Rail" element={<Rail />} />
@@ -78,7 +99,6 @@ const RouterGroup: React.FC = () => {
             <Route path="/Recruitment" element={<Recruitment />} />
             <Route path="/News" element={<News />} />
             <Route path="/Newss" element={<Newss />} />
-            <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/SignIn" element={<SignIn />} />
             <Route path="/SignUp" element={<SignUp />} />
           </Routes>

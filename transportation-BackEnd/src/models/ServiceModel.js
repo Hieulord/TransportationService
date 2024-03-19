@@ -8,10 +8,11 @@ const serviceSchema = new mongoose.Schema(
     type: { type: String, require: true },
     evaluate: { type: Number, require: true },
     price: { type: Number, require: true },
-    description: {type: String},
+    description: { type: String },
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 const Service = mongoose.model("Service", serviceSchema);

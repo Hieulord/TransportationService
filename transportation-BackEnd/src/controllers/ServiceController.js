@@ -4,8 +4,8 @@ const createProduct = async (req, res) => {
   try {
     const { serviceCode, name, image, type, evaluate, price, description } =
       req.body;
-    if (!serviceCode || !name || !image || !type || !evaluate || !price) {
-      return res.status(200).json({
+    if (!serviceCode || !name || !image || !type || !evaluate || !price || !description) {
+      return res.status(400).json({
         status: "Err",
         message: "The input is required!!",
       });
