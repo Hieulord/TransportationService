@@ -2,15 +2,15 @@ const ProductService = require("../services/ProductService");
 
 const createProduct = async (req, res) => {
   try {
-    const { serviceCode, name, image, type, evaluate, price, description } =
-      req.body;
-    if (!serviceCode || !name || !image || !type || !evaluate || !price || !description) {
-      return res.status(200).json({
-        status: "Err",
-        message: "The input is required!!",
-      });
-    }
-    const respone = await ProductService.createProduct(req.body);
+    // const { serviceCode, name, type, evaluate, price, description } =
+    //   req.body;
+    // if (!serviceCode || !name || !type || !evaluate || !price || !description) {
+    //   return res.status(200).json({
+    //     status: "Err",
+    //     message: "The input is required!!",
+    //   });
+    // }
+    const respone = await ProductService.createProduct(req);
     return res.status(200).json(respone);
   } catch (e) {
     return res.status(404).json({
@@ -18,6 +18,7 @@ const createProduct = async (req, res) => {
     });
   }
 };
+
 
 const updateProduct = async (req, res) => {
   try {

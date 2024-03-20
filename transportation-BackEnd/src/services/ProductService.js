@@ -1,13 +1,32 @@
 const Service = require("../models/ServiceModel");
 const bcrypt = require("bcrypt");
 
-const createProduct = (newProduct) => {
+// const createProduct = async (req, res) => {
+//   try {
+//     // Lưu thông tin sản phẩm vào database
+//     const product = new Service({
+//       name: req.body.name,
+//       price: req.body.price,
+//       description: req.body.description,
+//       serviceCode: req.body.serviceCode,
+//       type: req.body.type,
+//       evaluate: req.body.evaluate,
+//       imagePath: '/images/products/' + req.file.filename
+//     });
+
+//     await product.save();
+
+//     res.status(201).json({ message: 'Product created successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+const createProduct = (req) => {
   return new Promise(async (resolve, reject) => {
-    const { serviceCode, name, image, type, evaluate, price, description } =
-      newProduct;
+
     try {
       const checkProduct = await Service.findOne({
-        serviceCode: serviceCode,
+        serviceCode: req.body.serviceCode,
       });
       if (checkProduct !== null) {
         resolve({
@@ -16,14 +35,15 @@ const createProduct = (newProduct) => {
         });
       }
       const addProduct = await Service.create({
-        serviceCode,
-        name,
-        image,
-        type,
-        evaluate,
-        price,
-        description,
+        serviceCode: req.body.serviceCode,
+        name: req.body.name,
+        imagePath: '/images/products/' + req.file.filename,
+        type: req.body.type,
+        evaluate: req.body.evaluate,
+        price: req.body.price,
+        description: req.body.description,
       });
+      await Service.bulkSave(addProduct);
       if (addProduct) {
         resolve({
           staus: "OK",

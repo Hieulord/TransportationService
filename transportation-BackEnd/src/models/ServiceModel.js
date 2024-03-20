@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const serviceSchema = new mongoose.Schema(
   {
-    serviceCode: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
-    image: { type: String },
-    type: { type: String, required: true },
-    evaluate: { type: Number, required: true },
-    price: { type: Number, required: true },
+    serviceCode: { type: String, unique: true },
+    name: { type: String },
+    imagePath: { type: String },
+    type: { type: String },
+    evaluate: { type: Number },
+    price: { type: Number },
     description: { type: String },
   },
   {
