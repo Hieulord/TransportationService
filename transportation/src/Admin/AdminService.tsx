@@ -6,7 +6,7 @@ interface ServiceData {
   _id: string;
   serviceCode: string;
   name: string;
-  image: string;
+  image: File | string; // Thay đổi kiểu dữ liệu của trường image
   type: string;
   evaluate: number;
   price: number;
@@ -16,7 +16,7 @@ interface ServiceData {
 interface FormData {
   serviceCode: string;
   name: string;
-  image: string;
+  image: File | string; // Thay đổi kiểu dữ liệu của trường image
   type: string;
   evaluate: number;
   price: number;
@@ -24,10 +24,15 @@ interface FormData {
 }
 
 const AdminService: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [services, setServices] = useState<ServiceData[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const [formData, setFormData] = useState<FormData>({
     serviceCode: "",
     name: "",
-    image: "",
+    image: "", // hoặc sử dụng undefined
     type: "",
     evaluate: 5,
     price: 0,
@@ -45,25 +50,12 @@ const AdminService: React.FC = () => {
     description: "",
   });
 
-  const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [services, setServices] = useState<ServiceData[]>([]);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (isEditing) {
-      setEditFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const handleEditSubmit = async (e: FormEvent) => {
@@ -91,17 +83,17 @@ const AdminService: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      // Kiểm tra xem serviceCode đã tồn tại trong danh sách dịch vụ hay chưa
-      const existingService = services.some(
-        (service) => service.serviceCode === formData.serviceCode
-      );
-      if (existingService) {
-        alert("Mã dịch vụ đã tồn tại.");
+      // Kiểm tra xem đã chọn tệp hay chưa
+      if (!selectedFile) {
+        alert("Vui lòng chọn một tệp.");
         return;
       }
 
-      console.log(formData);
+      // Tạo FormData và thêm tệp đã chọn vào đó
+      const formData = new FormData();
+      formData.append("image", selectedFile);
 
+      // Thực hiện gửi biểu mẫu với FormData chứa tệp đã chọn
       const result = await axios.post(
         "http://localhost:4000/api/service/create",
         formData
@@ -176,7 +168,13 @@ const AdminService: React.FC = () => {
                 <tr key={service._id}>
                   <td>{service.serviceCode}</td>
                   <td>{service.name}</td>
-                  <td>{service.image}</td>
+                  <td>
+                    {typeof service.image === "string" ? (
+                      <img src={service.image} alt={service.name} />
+                    ) : (
+                      <span>Chưa có hình ảnh</span>
+                    )}
+                  </td>
                   <td>{service.type}</td>
                   <td>{service.evaluate}</td>
                   <td>{service.price}</td>
@@ -231,11 +229,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="serviceCode"
                     name="serviceCode"
-                    value={
-                      isEditing
-                        ? editFormData.serviceCode
-                        : formData.serviceCode
-                    }
+                    value={formData.serviceCode}
                     onChange={handleChange}
                   />
                 </div>
@@ -246,18 +240,17 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="name"
                     name="name"
-                    value={isEditing ? editFormData.name : formData.name}
+                    value={formData.name}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="image">Hình Ảnh:</label>
                   <input
-                    type="text"
+                    type="file"
                     className="form-control"
                     id="image"
                     name="image"
-                    value={isEditing ? editFormData.image : formData.image}
                     onChange={handleChange}
                   />
                 </div>
@@ -268,7 +261,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="type"
                     name="type"
-                    value={isEditing ? editFormData.type : formData.type}
+                    value={formData.type}
                     onChange={handleChange}
                   />
                 </div>
@@ -279,9 +272,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="evaluate"
                     name="evaluate"
-                    value={
-                      isEditing ? editFormData.evaluate : formData.evaluate
-                    }
+                    value={formData.evaluate}
                     onChange={handleChange}
                   />
                 </div>
@@ -292,7 +283,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="price"
                     name="price"
-                    value={isEditing ? editFormData.price : formData.price}
+                    value={formData.price}
                     onChange={handleChange}
                   />
                 </div>
@@ -303,11 +294,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="description"
                     name="description"
-                    value={
-                      isEditing
-                        ? editFormData.description
-                        : formData.description
-                    }
+                    value={formData.description}
                     onChange={handleChange}
                   />
                 </div>
