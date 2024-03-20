@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const serviceSchema = new mongoose.Schema(
   {
-    serviceCode: { type: String, require: true, unique: true },
-    name: { type: String, require: true },
-    image: { type: String, require: true },
-    type: { type: String, require: true },
-    evaluate: { type: Number, require: true },
-    price: { type: Number, require: true },
+    serviceCode: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    image: { type: String },
+    type: { type: String, required: true },
+    evaluate: { type: Number, required: true },
+    price: { type: Number, required: true },
     description: { type: String },
   },
   {
@@ -15,6 +15,7 @@ const serviceSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
+
 const Service = mongoose.model("Service", serviceSchema);
 
 module.exports = Service;

@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
 interface ServiceData {
@@ -34,17 +34,58 @@ const AdminService: React.FC = () => {
     description: "",
   });
 
+  const [editFormData, setEditFormData] = useState<ServiceData>({
+    _id: "",
+    serviceCode: "",
+    name: "",
+    image: "",
+    type: "",
+    evaluate: 5,
+    price: 0,
+    description: "",
+  });
+
   const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [services, setServices] = useState<ServiceData[]>([]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (isEditing) {
+      setEditFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleEditSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      const result = await axios.put(
+        `http://localhost:4000/api/service/update/${editFormData._id}`,
+        editFormData
+      );
+      console.log(result);
+      setShowModal(false);
+      setIsEditing(false);
+      fetchData(); // Cập nhật danh sách dịch vụ sau khi chỉnh sửa
+    } catch (error) {
+      console.error("Đã xảy ra lỗi:", error);
+    }
+  };
+
+  const handleEdit = (service: ServiceData) => {
+    setEditFormData(service);
+    setIsEditing(true); // Xác định modal đang ở trạng thái chỉnh sửa
+    setShowModal(true);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -59,12 +100,15 @@ const AdminService: React.FC = () => {
         return;
       }
 
+      console.log(formData);
+
       const result = await axios.post(
         "http://localhost:4000/api/service/create",
         formData
       );
       console.log(result);
       setShowModal(false);
+      fetchData();
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
     }
@@ -100,7 +144,10 @@ const AdminService: React.FC = () => {
   const openModal = () => {
     setShowModal(true);
   };
-  const closeModal = () => setShowModal(false);
+  const closeModal = () => {
+    setIsEditing(false);
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -135,14 +182,20 @@ const AdminService: React.FC = () => {
                   <td>{service.price}</td>
                   <td>{service.description}</td>
                   <td>
-                    <td>
-                      <button
-                        className="border border-0 bg-transparent"
-                        onClick={() => handleDelete(String(service._id))}
-                      >
-                        <RiDeleteBin6Line />
-                      </button>
-                    </td>
+                    <button
+                      className="border border-0 bg-transparent"
+                      onClick={() => handleEdit(service)}
+                    >
+                      <RiEditLine />
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="border border-0 bg-transparent"
+                      onClick={() => handleDelete(String(service._id))}
+                    >
+                      <RiDeleteBin6Line />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -151,6 +204,7 @@ const AdminService: React.FC = () => {
       </div>
 
       {/* Modal thêm sản phẩm */}
+      {/* Modal chỉnh sửa hoặc thêm mới */}
       <div
         className={`modal ${showModal ? "show" : ""}`}
         tabIndex={-1}
@@ -160,12 +214,15 @@ const AdminService: React.FC = () => {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Thêm sản phẩm mới</h5>
+              <h5 className="modal-title">
+                {isEditing ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"}
+              </h5>
               <button type="button" className="close" onClick={closeModal}>
                 <span>&times;</span>
               </button>
             </div>
-            <form onSubmit={handleSubmit}>
+
+            <form onSubmit={isEditing ? handleEditSubmit : handleSubmit}>
               <div className="modal-body">
                 <div className="form-group">
                   <label htmlFor="serviceCode">Mã dịch vụ:</label>
@@ -174,7 +231,11 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="serviceCode"
                     name="serviceCode"
-                    value={formData.serviceCode}
+                    value={
+                      isEditing
+                        ? editFormData.serviceCode
+                        : formData.serviceCode
+                    }
                     onChange={handleChange}
                   />
                 </div>
@@ -185,7 +246,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="name"
                     name="name"
-                    value={formData.name}
+                    value={isEditing ? editFormData.name : formData.name}
                     onChange={handleChange}
                   />
                 </div>
@@ -196,7 +257,7 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="image"
                     name="image"
-                    value={formData.image}
+                    value={isEditing ? editFormData.image : formData.image}
                     onChange={handleChange}
                   />
                 </div>
@@ -207,40 +268,46 @@ const AdminService: React.FC = () => {
                     className="form-control"
                     id="type"
                     name="type"
-                    value={formData.type}
+                    value={isEditing ? editFormData.type : formData.type}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="evaluate">Đánh Giá:</label>
+                  <label htmlFor="evaluate">Đánh giá dịch vụ:</label>
                   <input
                     type="text"
                     className="form-control"
                     id="evaluate"
                     name="evaluate"
-                    value={formData.evaluate}
+                    value={
+                      isEditing ? editFormData.evaluate : formData.evaluate
+                    }
                     onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="price">Giá Tiền:</label>
+                  <label htmlFor="price">Giá dịch vụ:</label>
                   <input
                     type="text"
                     className="form-control"
                     id="price"
                     name="price"
-                    value={formData.price}
+                    value={isEditing ? editFormData.price : formData.price}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="description">Mô tả:</label>
+                  <label htmlFor="description">Mô tả dịch vụ:</label>
                   <input
                     type="text"
                     className="form-control"
                     id="description"
                     name="description"
-                    value={formData.description}
+                    value={
+                      isEditing
+                        ? editFormData.description
+                        : formData.description
+                    }
                     onChange={handleChange}
                   />
                 </div>
@@ -254,13 +321,14 @@ const AdminService: React.FC = () => {
                   Đóng
                 </button>
                 <button type="submit" className="btn btn-primary">
-                  Thêm
+                  {isEditing ? "Lưu thay đổi" : "Thêm"}
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
+
       <div
         className={`modal-backdrop fade ${showModal ? "show" : ""}`}
         style={{ display: showModal ? "block" : "none" }}
