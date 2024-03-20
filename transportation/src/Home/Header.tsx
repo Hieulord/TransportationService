@@ -3,7 +3,6 @@ import "./header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-// import { CiSearch } from "react-icons/ci";
 import {
   FaFacebookF,
   FaTwitter,
@@ -117,71 +116,92 @@ function Header() {
                   id="menu-item-75"
                   className="ms-3 menu-item menu-item-type-post_type menu-item-object-page menu-item-75 mt-2"
                 >
-                  <a href="#">Trang Chủ</a>
+                  <RouterLink to="/" className="RouterLink">
+                    Trang Chủ
+                  </RouterLink>
                 </li>
                 <li
                   id="menu-item-76"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
-                  <a href="#">Giới thiệu</a>
+                  <RouterLink to="/Introduce" className="RouterLink">
+                    Giới Thiệu
+                  </RouterLink>
                 </li>
+
                 <li
                   id="menu-item-18"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18 mt-2"
                 >
-                  <a href="#">Dịch Vụ Vận Chuyển</a>
+                  <RouterLink to="/ServiceComponent" className="RouterLink">
+                    Dịch Vụ Vận Chuyển
+                  </RouterLink>
                   <ul className="sub-menu">
                     <li
                       id="menu-item-7"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7"
                     >
-                      <a href="/sample-page/">Vận chuyển đường bộ Logistics</a>
+                      <RouterLink to="/Logistics" className="RouterLink">
+                        Vận Chuyển Bộ Logistics
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-14"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-14"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Biển</a>
+                      <RouterLink to="/Sea" className="RouterLink">
+                        Vận Chuyển Đường Biển
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-16"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Hàng Không</a>
+                      <RouterLink to="/Fly" className="RouterLink">
+                        Vận Chuyển Đường Hàng Không
+                      </RouterLink>
                     </li>
                     <li
                       id="menu-item-17"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-17"
                     >
-                      <a href="/sample-page-2/">Vận Chuyển Đường Sắt</a>
+                      <RouterLink to="/Rail" className="RouterLink">
+                        Vận Chuyển Đường Sắt
+                      </RouterLink>
                     </li>
                   </ul>
                 </li>
+
                 <li
                   id="menu-item-21"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-21 mt-2"
                 >
-                  <a href="#">Tin Tức</a>
+                  <RouterLink to="/Newss" className="RouterLink">
+                    Tin Tức
+                  </RouterLink>
                   <ul className="sub-menu">
                     <li
                       id="menu-item-19"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"
                     >
-                      <a href="/sample-page/">Tin Tức Mới</a>
+                      <a href="/News">Tin Tức</a>
                     </li>
                     <li
                       id="menu-item-20"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"
                     >
-                      <a href="/sample-page-2/">Tuyển Dụng</a>
+                      <a href="/Recruitment">Tuyển Dụng</a>
                     </li>
                   </ul>
                 </li>
+
                 <li
                   id="menu-item-77"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77 mt-2"
                 >
-                  <a href="#">Liên Hệ Chúng Tôi</a>
+                  <RouterLink to="/Contact" className="RouterLink">
+                    Liên hệ chúng tôi
+                  </RouterLink>
                 </li>
                 <li className="mt-3 ms-5">
                   <Breadcrumbs aria-label="breadcrumb" className="mt-1">

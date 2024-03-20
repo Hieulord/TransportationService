@@ -4,7 +4,7 @@ import {
   AiOutlinePhone,
   AiOutlineMail,
 } from "react-icons/ai";
-// import "Footer.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
   FaMapMarkerAlt,
   FaPhoneAlt,
@@ -18,19 +18,19 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <section id="footer ">
+    <section id="footer" style={{ backgroundColor: "#0b3d66" }}>
       <div className="container footer-container mt-5 pt-3">
         <footer className="row row-cols-1 row-cols-sm-2 row-cols-md-5 my-5 py-5">
           <div className="col-md-4 mt-5 mt-md-0">
             <img
-              src="https://demo031153.web30s.vn/datafiles/36872/upload/files/logo%20%282%29.png"
+              src="https://demo031153.web30s.vn/image-process/get-image-v3?path=/datafiles/web30s/upload/images/3101-3200/30S-03-1153/footer-logo.png&width=0"
               alt="Transland"
             />
-            <p>
-              🌐 Easy, convenient, and secure transportation - Connecting every
-              place to every destination because we understand the value of each
-              journey of yours! 🚚✨ Fast, reliable, and always on the move!
-              🕒🌍.
+            <p className="text-white-50 mt-3">
+              🌐 Giao thông dễ dàng, thuận tiện, an toàn - Kết nối mọi khu vực
+              đến mọi điểm đến vì chúng tôi hiểu giá trị của mỗi điểm đến cuộc
+              hành trình của bạn! 🚚✨ Nhanh chóng, đáng tin cậy và luôn luôn di
+              chuyển! 🕒🌍.
             </p>
             <div className="d-flex align-items-center">
               <a href="https://www.facebook.com" target="_blank">
@@ -55,80 +55,82 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="col-md-2 offset-md-1">
-            <h5 className="py-3">Our services</h5>
+            <h5 className="py-3 text-uppercase text-white">
+              Dịch vụ của chúng tôi
+            </h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Logistic road transport
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Vận tải đường bộ logistic
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Sea shipping
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Vận chuyển đường biển
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Air transportation
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Giao thông đường hàng không
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Rail transport
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Vận tải đường sắt
                 </a>
               </li>
             </ul>
           </div>
 
           <div className="col-md-2">
-            <h5 className="py-3">Quick links</h5>
+            <h5 className="py-3 text-uppercase text-white">Đường dẫn nhanh</h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Our locations
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Địa điểm của chúng tôi
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  About us
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Về chúng tôi
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Our gallery
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Phòng trưng bày của chúng tôi
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Privacy Policy
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Chính sách bảo mật
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0">
-                  Contact us
+                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                  Liên hệ chúng tôi
                 </a>
               </li>
             </ul>
           </div>
 
           <div className="col-md-3">
-            <h5 className="py-3">Contact Info</h5>
+            <h5 className="py-3 text-white">Thông tin liên lạc</h5>
             <ul className="nav flex-column">
               <li className="nav-item d-flex mb-4">
-                <FaMapMarkerAlt className="me-2" />{" "}
-                <a href="#" className="nav-link p-0">
-                  163 Elm Drive, NYC, USA
+                <FaMapMarkerAlt className="me-2 text-white-50 mt-1" />{" "}
+                <a href="#" className="nav-link p-0 text-white-50">
+                  163 Elm Drive, New York, Mỹ
                 </a>
               </li>
               <li className="nav-item d-flex mb-4">
-                <FaPhoneAlt className="me-2" />{" "}
-                <a href="#" className="nav-link p-0">
+                <FaPhoneAlt className="me-2 text-white-50 mt-1" />{" "}
+                <a href="#" className="nav-link p-0 text-white-50">
                   (+089) 234-516-6123
                 </a>
               </li>
               <li className="nav-item d-flex mb-4">
-                <FaEnvelope className="me-2" />{" "}
-                <a href="#" className="nav-link p-0">
+                <FaEnvelope className="me-2 text-white-50 mt-1" />{" "}
+                <a href="#" className="nav-link p-0 text-white-50">
                   info@yourdomain.com
                 </a>
               </li>
@@ -142,14 +144,14 @@ const Footer: React.FC = () => {
       <div className="container">
         <footer className="d-flex flex-wrap justify-content-between align-items-center py-2 pt-4">
           <div className="col-md-6 d-flex align-items-center">
-            <p>© 2023 Roofers - All rights reserved</p>
+            <p className="text-white">© 2023 Roofers - All rights reserved</p>
           </div>
           <div className="col-md-6 d-flex align-items-center justify-content-end">
-            <p className="">
+            <p className="text-white">
               © 2023 Website By:{" "}
               <a
                 href="https://templatesjungle.com/"
-                className="website-link"
+                className="website-link text-decoration-none text-white-50"
                 target="_blank"
               >
                 <b>
