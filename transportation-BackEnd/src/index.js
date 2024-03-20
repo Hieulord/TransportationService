@@ -5,6 +5,7 @@ const routes = require("./routes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const path = require('path');
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
+const imagesDirectoryPath = path.join(__dirname, './images');
+
+// Sử dụng middleware express.static để phục vụ các tệp tin tĩnh từ thư mục images
+app.use('/images', express.static(imagesDirectoryPath));
 
 routes(app);
 

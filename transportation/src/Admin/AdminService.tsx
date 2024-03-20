@@ -2,11 +2,13 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
+// import { Image } from "react-bootstrap";
 interface ServiceData {
   _id: string;
   serviceCode: string;
   name: string;
   image: File | string; // Thay đổi kiểu dữ liệu của trường image
+  imagePath: string;
   type: string;
   evaluate: number;
   price: number;
@@ -27,7 +29,20 @@ const AdminService: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [services, setServices] = useState<ServiceData[]>([]);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [name, setName] = useState("");
+  const [evaluate, setEvaluate] = useState("");
+  const [serviceCode, setServiceCode] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setImage(selectedFile);
+    }
+  };
 
   const [formData, setFormData] = useState<FormData>({
     serviceCode: "",
@@ -44,6 +59,7 @@ const AdminService: React.FC = () => {
     serviceCode: "",
     name: "",
     image: "",
+    imagePath: "",
     type: "",
     evaluate: 5,
     price: 0,
@@ -84,21 +100,41 @@ const AdminService: React.FC = () => {
     e.preventDefault();
     try {
       // Kiểm tra xem đã chọn tệp hay chưa
-      if (!selectedFile) {
-        alert("Vui lòng chọn một tệp.");
-        return;
+      if (!image) {
+        throw new Error("Vui lòng chọn một tệp");
       }
 
       // Tạo FormData và thêm tệp đã chọn vào đó
-      const formData = new FormData();
-      formData.append("image", selectedFile);
+      const form = new FormData();
+      form.append("name", name);
+      form.append("image", image);
+      form.append("serviceCode", serviceCode);
+      form.append("type", type);
+      form.append("description", description);
+      form.append("price", price.toString());
+      form.append("evaluate", evaluate.toString());
 
       // Thực hiện gửi biểu mẫu với FormData chứa tệp đã chọn
-      const result = await axios.post(
-        "http://localhost:4000/api/service/create",
-        formData
-      );
-      console.log(result);
+      const response = await fetch("http://localhost:4000/api/service/create", {
+        method: "POST",
+        body: form,
+      });
+
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi gửi biểu mẫu");
+      }
+
+      alert("Dữ liệu đã được lưu");      
+      console.log(response);
+      // Xóa các trường sau khi gửi thành công
+      setName("");
+      setImage(null);
+      setServiceCode("");
+      setType("");
+      setDescription("");
+      setPrice("");
+      setEvaluate("");
+      console.log(response);
       setShowModal(false);
       fetchData();
     } catch (error) {
@@ -169,11 +205,16 @@ const AdminService: React.FC = () => {
                   <td>{service.serviceCode}</td>
                   <td>{service.name}</td>
                   <td>
-                    {typeof service.image === "string" ? (
-                      <img src={service.image} alt={service.name} />
+                    {/* {typeof service.image === "string" ? (
+                      <img src={"http://localhost:4000/"+service.image} alt={service.name} />
                     ) : (
                       <span>Chưa có hình ảnh</span>
-                    )}
+                    )} */}
+                    <img
+                      style={{ width: 100, height: 100 }}
+                      src={"http://localhost:4000" + service.imagePath}
+                      alt={service.name}
+                    />
                   </td>
                   <td>{service.type}</td>
                   <td>{service.evaluate}</td>
@@ -213,14 +254,15 @@ const AdminService: React.FC = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">
-                {isEditing ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"}
+                {/* {isEditing ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"} */}
+                Thêm mới sản phẩm
               </h5>
               <button type="button" className="close" onClick={closeModal}>
                 <span>&times;</span>
               </button>
             </div>
 
-            <form onSubmit={isEditing ? handleEditSubmit : handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="modal-body">
                 <div className="form-group">
                   <label htmlFor="serviceCode">Mã dịch vụ:</label>
@@ -228,9 +270,8 @@ const AdminService: React.FC = () => {
                     type="text"
                     className="form-control"
                     id="serviceCode"
-                    name="serviceCode"
-                    value={formData.serviceCode}
-                    onChange={handleChange}
+                    value={serviceCode}
+                    onChange={(e) => setServiceCode(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
@@ -239,9 +280,8 @@ const AdminService: React.FC = () => {
                     type="text"
                     className="form-control"
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
@@ -250,8 +290,7 @@ const AdminService: React.FC = () => {
                     type="file"
                     className="form-control"
                     id="image"
-                    name="image"
-                    onChange={handleChange}
+                    onChange={handleFileChange}
                   />
                 </div>
                 <div className="form-group">
@@ -260,31 +299,28 @@ const AdminService: React.FC = () => {
                     type="text"
                     className="form-control"
                     id="type"
-                    name="type"
-                    value={formData.type}
-                    onChange={handleChange}
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="evaluate">Đánh giá dịch vụ:</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="evaluate"
-                    name="evaluate"
-                    value={formData.evaluate}
-                    onChange={handleChange}
+                    value={evaluate}
+                    onChange={(e) => setEvaluate(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
                   <label htmlFor="price">Giá dịch vụ:</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="price"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleChange}
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
                 <div className="form-group">
@@ -293,9 +329,8 @@ const AdminService: React.FC = () => {
                     type="text"
                     className="form-control"
                     id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
               </div>
@@ -308,10 +343,72 @@ const AdminService: React.FC = () => {
                   Đóng
                 </button>
                 <button type="submit" className="btn btn-primary">
-                  {isEditing ? "Lưu thay đổi" : "Thêm"}
+                  Thêm
                 </button>
               </div>
             </form>
+            {/* <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="name">Tên:</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="image">Hình ảnh:</label>
+                <input type="file" id="image" onChange={handleFileChange} />
+              </div>
+              <div>
+                <label htmlFor="serviceCode">Mã dịch vụ:</label>
+                <input
+                  type="text"
+                  id="serviceCode"
+                  value={serviceCode}
+                  onChange={(e) => setServiceCode(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="type">Loại:</label>
+                <input
+                  type="text"
+                  id="type"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="description">Mô tả:</label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+              <div>
+                <label htmlFor="price">Giá:</label>
+                <input
+                  type="number"
+                  id="price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="evaluate">Đánh giá:</label>
+                <input
+                  type="number"
+                  id="evaluate"
+                  value={evaluate}
+                  onChange={(e) => setEvaluate(e.target.value)}
+                />
+              </div>
+              <div>
+                <button type="submit">Gửi</button>
+              </div>
+            </form> */}
           </div>
         </div>
       </div>

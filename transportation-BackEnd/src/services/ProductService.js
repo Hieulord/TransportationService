@@ -23,7 +23,6 @@ const bcrypt = require("bcrypt");
 // };
 const createProduct = (req) => {
   return new Promise(async (resolve, reject) => {
-
     try {
       const checkProduct = await Service.findOne({
         serviceCode: req.body.serviceCode,
@@ -31,28 +30,35 @@ const createProduct = (req) => {
       if (checkProduct !== null) {
         resolve({
           status: "OK",
-          message: "The service code of product is already",
+          message: "The service code of product already exists.",
         });
-      }
-      const addProduct = await Service.create({
-        serviceCode: req.body.serviceCode,
-        name: req.body.name,
-        imagePath: '/images/products/' + req.file.filename,
-        type: req.body.type,
-        evaluate: req.body.evaluate,
-        price: req.body.price,
-        description: req.body.description,
-      });
-      await Service.bulkSave(addProduct);
-      if (addProduct) {
-        resolve({
-          staus: "OK",
-          message: "SUCCESS",
-          data: addProduct,
+      } else {
+        const addProduct = await Service.create({
+          serviceCode: req.body.serviceCode,
+          name: req.body.name,
+          imagePath: '/images/products/' + req.file.filename,
+          type: req.body.type,
+          evaluate: req.body.evaluate,
+          price: req.body.price,
+          description: req.body.description,
         });
+        console.log("tao san pham ");
+        console.log("luu san pham");
+        if (addProduct) {
+          resolve({
+            status: "OK",
+            message: "SUCCESS",
+            data: addProduct,
+          });
+          console.log("ok con de");
+        } else {
+          console.log("bug");
+          reject("Failed to create product.");
+        }
       }
-    } catch (e) {
-      reject(e);
+    } catch (error) {
+      console.log("loi to dung");
+      reject(error);
     }
   });
 };
