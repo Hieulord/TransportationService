@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
-// import { Image } from "react-bootstrap";
 interface ServiceData {
   _id: string;
   serviceCode: string;
@@ -36,6 +35,31 @@ const AdminService: React.FC = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  // State để lưu trữ dạng sắp xếp hiện tại
+  const [sortType, setSortType] = useState<"asc" | "desc">("asc");
+
+  const handleSort = (sortBy: keyof ServiceData) => {
+    const sortedServices = [...services]; // Tạo một bản sao của danh sách dịch vụ
+    sortedServices.sort((a, b) => {
+      if (sortType === "asc") {
+        return a[sortBy] > b[sortBy] ? 1 : -1;
+      } else {
+        return a[sortBy] < b[sortBy] ? 1 : -1;
+      }
+    });
+    setServices(sortedServices); // Cập nhật danh sách dịch vụ với thứ tự đã sắp xếp
+    setSortType(sortType === "asc" ? "desc" : "asc"); // Đảo ngược loại sắp xếp
+  };
+  // Filter
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
+
+  const filteredServices = services.filter((service) =>
+    service.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  );
+
+  function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearchKeyword(e.target.value);
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -43,16 +67,6 @@ const AdminService: React.FC = () => {
       setImage(selectedFile);
     }
   };
-
-  const [formData, setFormData] = useState<FormData>({
-    serviceCode: "",
-    name: "",
-    image: "", // hoặc sử dụng undefined
-    type: "",
-    evaluate: 5,
-    price: 0,
-    description: "",
-  });
 
   const [editFormData, setEditFormData] = useState<ServiceData>({
     _id: "",
@@ -66,14 +80,6 @@ const AdminService: React.FC = () => {
     description: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleEditSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -82,18 +88,16 @@ const AdminService: React.FC = () => {
         editFormData
       );
       console.log(result);
-      setShowModal(false);
-      setIsEditing(false);
-      fetchData(); // Cập nhật danh sách dịch vụ sau khi chỉnh sửa
+      setShowModal(false); // Ẩn modal sau khi chỉnh sửa thành công
+      fetchData(); // Lấy lại dữ liệu từ API để cập nhật danh sách
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
     }
   };
 
   const handleEdit = (service: ServiceData) => {
-    setEditFormData(service);
-    setIsEditing(true); // Xác định modal đang ở trạng thái chỉnh sửa
-    setShowModal(true);
+    setEditFormData(service); // Cập nhật dữ liệu của editFormData
+    setShowModal(true); // Hiển thị modal chỉnh sửa
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -124,7 +128,7 @@ const AdminService: React.FC = () => {
         throw new Error("Có lỗi xảy ra khi gửi biểu mẫu");
       }
 
-      alert("Dữ liệu đã được lưu");      
+      alert("Dữ liệu đã được lưu");
       console.log(response);
       // Xóa các trường sau khi gửi thành công
       setName("");
@@ -172,6 +176,7 @@ const AdminService: React.FC = () => {
   const openModal = () => {
     setShowModal(true);
   };
+
   const closeModal = () => {
     setIsEditing(false);
     setShowModal(false);
@@ -182,233 +187,328 @@ const AdminService: React.FC = () => {
       <NavAdmin />
       <div className="container">
         <h2>Danh sách dịch vụ</h2>
-        <button className="btn btn-primary mb-3" onClick={openModal}>
-          Thêm sản phẩm
-        </button>
+        <div className="d-inline-flex">
+          <div>
+            <button
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Thêm sản phẩm
+            </button>
+          </div>
+          <div className="ms-3 mt-1">
+            <input
+              type="text"
+              style={{ width: "300px" }}
+              placeholder="Tìm kiếm..."
+              value={searchKeyword}
+              onChange={handleSearchInputChange}
+            />
+          </div>
+        </div>
         <table className="table">
           <thead>
             <tr>
-              <th>Mã dịch vụ</th>
-              <th>Tên dịch vụ</th>
+              <th onClick={() => handleSort("serviceCode")}>Mã dịch vụ</th>
+              <th onClick={() => handleSort("serviceCode")}>Tên dịch vụ</th>
               <th>Hình ảnh</th>
-              <th>Loại dịch vụ</th>
-              <th>Đánh giá</th>
-              <th>Giá tiền</th>
+              <th onClick={() => handleSort("serviceCode")}>Loại dịch vụ</th>
+              <th onClick={() => handleSort("serviceCode")}>Đánh giá</th>
+              <th onClick={() => handleSort("serviceCode")}>Giá tiền</th>
               <th>Mô tả</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {services &&
-              services.map((service) => (
-                <tr key={service._id}>
-                  <td>{service.serviceCode}</td>
-                  <td>{service.name}</td>
-                  <td>
-                    {/* {typeof service.image === "string" ? (
-                      <img src={"http://localhost:4000/"+service.image} alt={service.name} />
-                    ) : (
-                      <span>Chưa có hình ảnh</span>
-                    )} */}
-                    <img
-                      style={{ width: 100, height: 100 }}
-                      src={"http://localhost:4000" + service.imagePath}
-                      alt={service.name}
-                    />
-                  </td>
-                  <td>{service.type}</td>
-                  <td>{service.evaluate}</td>
-                  <td>{service.price}</td>
-                  <td>{service.description}</td>
-                  <td>
-                    <button
-                      className="border border-0 bg-transparent"
-                      onClick={() => handleEdit(service)}
-                    >
-                      <RiEditLine />
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="border border-0 bg-transparent"
-                      onClick={() => handleDelete(String(service._id))}
-                    >
-                      <RiDeleteBin6Line />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {filteredServices.map((service) => (
+              <tr key={service._id}>
+                <td>{service.serviceCode}</td>
+                <td>{service.name}</td>
+                <td>
+                  <img
+                    style={{ width: 100, height: 100 }}
+                    src={"http://localhost:4000" + service.imagePath}
+                    alt={service.name}
+                  />
+                </td>
+                <td>{service.type}</td>
+                <td>{service.evaluate}</td>
+                <td>{service.price}</td>
+                <td>{service.description}</td>
+                <td>
+                  <button
+                    className="border border-0 bg-transparent"
+                    onClick={() => handleEdit(service)}
+                  >
+                    <RiEditLine />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="border border-0 bg-transparent"
+                    onClick={() => handleDelete(String(service._id))}
+                  >
+                    <RiDeleteBin6Line />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      {/* Modal thêm sản phẩm */}
       {/* Modal chỉnh sửa hoặc thêm mới */}
       <div
-        className={`modal ${showModal ? "show" : ""}`}
+        className="modal fade"
+        id="exampleModal"
         tabIndex={-1}
-        role="dialog"
-        style={{ display: showModal ? "block" : "none" }}
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
       >
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">
-                {/* {isEditing ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"} */}
-                Thêm mới sản phẩm
-              </h5>
-              <button type="button" className="close" onClick={closeModal}>
-                <span>&times;</span>
-              </button>
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Thêm sản phẩm
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
             </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmit}>
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label htmlFor="serviceCode">Mã dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="serviceCode"
+                      value={serviceCode}
+                      onChange={(e) => setServiceCode(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="name">Tên dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="image">Hình Ảnh:</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="type">Loại dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="type"
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="evaluate">Đánh giá dịch vụ:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="evaluate"
+                      value={evaluate}
+                      onChange={(e) => setEvaluate(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="price">Giá dịch vụ:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="price"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="description">Mô tả dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeModal}
+                  >
+                    Đóng
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Thêm
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <form onSubmit={handleSubmit}>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="serviceCode">Mã dịch vụ:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="serviceCode"
-                    value={serviceCode}
-                    onChange={(e) => setServiceCode(e.target.value)}
-                  />
+      <div
+        className={`modal fade ${showModal ? "show" : ""}`}
+        id="editModal"
+        tabIndex={-1}
+        aria-labelledby="editModalLabel"
+        aria-hidden="true"
+        style={{ display: showModal ? "block" : "none" }}
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="editModalLabel">
+                Sửa sản phẩm
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={closeModal}
+              />
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleEditSubmit}>
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label htmlFor="serviceCode">Mã dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="serviceCode"
+                      value={editFormData.serviceCode}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          serviceCode: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="name">Tên dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      value={editFormData.name}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="image">Hình Ảnh:</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="type">Loại dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="type"
+                      value={editFormData.type}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          type: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="evaluate">Đánh giá dịch vụ:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="evaluate"
+                      value={editFormData.evaluate}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          evaluate: Number(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="price">Giá dịch vụ:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="price"
+                      value={editFormData.price}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          price: Number(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="description">Mô tả dịch vụ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="description"
+                      value={editFormData.description}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          description: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="name">Tên dịch vụ:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeModal}
+                  >
+                    Đóng
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Sửa
+                  </button>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="image">Hình Ảnh:</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="image"
-                    onChange={handleFileChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="type">Loại dịch vụ:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="type"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="evaluate">Đánh giá dịch vụ:</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="evaluate"
-                    value={evaluate}
-                    onChange={(e) => setEvaluate(e.target.value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="price">Giá dịch vụ:</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="description">Mô tả dịch vụ:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={closeModal}
-                >
-                  Đóng
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  Thêm
-                </button>
-              </div>
-            </form>
-            {/* <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="name">Tên:</label>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="image">Hình ảnh:</label>
-                <input type="file" id="image" onChange={handleFileChange} />
-              </div>
-              <div>
-                <label htmlFor="serviceCode">Mã dịch vụ:</label>
-                <input
-                  type="text"
-                  id="serviceCode"
-                  value={serviceCode}
-                  onChange={(e) => setServiceCode(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="type">Loại:</label>
-                <input
-                  type="text"
-                  id="type"
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="description">Mô tả:</label>
-                <textarea
-                  id="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-              </div>
-              <div>
-                <label htmlFor="price">Giá:</label>
-                <input
-                  type="number"
-                  id="price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="evaluate">Đánh giá:</label>
-                <input
-                  type="number"
-                  id="evaluate"
-                  value={evaluate}
-                  onChange={(e) => setEvaluate(e.target.value)}
-                />
-              </div>
-              <div>
-                <button type="submit">Gửi</button>
-              </div>
-            </form> */}
+              </form>
+            </div>
           </div>
         </div>
       </div>

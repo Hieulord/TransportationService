@@ -1,26 +1,6 @@
 const Service = require("../models/ServiceModel");
 const bcrypt = require("bcrypt");
 
-// const createProduct = async (req, res) => {
-//   try {
-//     // Lưu thông tin sản phẩm vào database
-//     const product = new Service({
-//       name: req.body.name,
-//       price: req.body.price,
-//       description: req.body.description,
-//       serviceCode: req.body.serviceCode,
-//       type: req.body.type,
-//       evaluate: req.body.evaluate,
-//       imagePath: '/images/products/' + req.file.filename
-//     });
-
-//     await product.save();
-
-//     res.status(201).json({ message: 'Product created successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 const createProduct = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -42,22 +22,22 @@ const createProduct = (req) => {
           price: req.body.price,
           description: req.body.description,
         });
-        console.log("tao san pham ");
-        console.log("luu san pham");
+        console.log("Tạo sản phẩm ");
+        console.log("Lưu sản phẩm");
         if (addProduct) {
           resolve({
             status: "OK",
             message: "SUCCESS",
             data: addProduct,
           });
-          console.log("ok con de");
+          console.log("Ok con dê");
         } else {
           console.log("bug");
           reject("Failed to create product.");
         }
       }
     } catch (error) {
-      console.log("loi to dung");
+      console.log("Lỗi to đùng");
       reject(error);
     }
   });
