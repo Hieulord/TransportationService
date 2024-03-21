@@ -100,6 +100,11 @@ const AdminService: React.FC = () => {
     setShowModal(true); // Hiển thị modal chỉnh sửa
   };
 
+  const checkDuplicateServiceCode = (code: string): boolean => {
+    // Kiểm tra xem serviceCode có tồn tại trong danh sách dịch vụ hay không
+    return services.some(service => service.serviceCode === code);
+  };
+  
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -107,7 +112,12 @@ const AdminService: React.FC = () => {
       if (!image) {
         throw new Error("Vui lòng chọn một tệp");
       }
-
+  
+      // Kiểm tra serviceCode có trùng không
+      if (checkDuplicateServiceCode(serviceCode)) {
+        alert("Mã dịch vụ đã tồn tại");
+      }
+  
       // Tạo FormData và thêm tệp đã chọn vào đó
       const form = new FormData();
       form.append("name", name);
@@ -117,17 +127,17 @@ const AdminService: React.FC = () => {
       form.append("description", description);
       form.append("price", price.toString());
       form.append("evaluate", evaluate.toString());
-
+  
       // Thực hiện gửi biểu mẫu với FormData chứa tệp đã chọn
       const response = await fetch("http://localhost:4000/api/service/create", {
         method: "POST",
         body: form,
       });
-
+  
       if (!response.ok) {
         throw new Error("Có lỗi xảy ra khi gửi biểu mẫu");
       }
-
+  
       alert("Dữ liệu đã được lưu");
       console.log(response);
       // Xóa các trường sau khi gửi thành công
@@ -138,13 +148,13 @@ const AdminService: React.FC = () => {
       setDescription("");
       setPrice("");
       setEvaluate("");
-      console.log(response);
       setShowModal(false);
       fetchData();
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
     }
   };
+  
 
   const fetchData = async () => {
     try {
