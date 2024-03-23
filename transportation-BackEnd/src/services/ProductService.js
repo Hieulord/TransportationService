@@ -72,13 +72,13 @@ const deleteProduct = (id) => {
       if (!checkProduct) {
         resolve({
           status: "OK",
-          message: "The user is not defined!!",
+          message: "The product is not defined!!",
         });
       }
       await Service.findByIdAndDelete(id);
       resolve({
         staus: "OK",
-        message: "Delete user success",
+        message: "Delete product success",
       });
     } catch (e) {
       reject(e);

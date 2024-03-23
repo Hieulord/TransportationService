@@ -13,8 +13,8 @@ router.put(
   ServiceTypeController.updateServiceType
 );
 
-// router.get("/getDetail/:id", ServiceTypeController.getDetailProduct);
-// router.delete("/delete/:id", ServiceTypeController.deleteProduct);
-// router.get("/getAllProduct", ServiceTypeController.getAllProduct);
+router.delete("/delete/:id", ServiceTypeController.delteServiceType);
+router.get("/getAllServiceType", ServiceTypeController.getAllServiceType);
+router.get("/getDetailServiceType/:id", ServiceTypeController.getDetailServiceType);
 
 module.exports = router;
