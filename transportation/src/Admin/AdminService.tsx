@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { TbArrowsSort } from "react-icons/tb";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
 interface ServiceData {
@@ -27,6 +28,22 @@ const AdminService: React.FC = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | null>(null);
+
+  // State cho phân trang
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  // Hàm lấy dữ liệu cho trang hiện tại
+  const getCurrentItems = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filterServices.slice(startIndex, endIndex); //Phương thức slice dùng để cắt mảng
+  };
+
+  // Hàm xử lý khi chuyển trang
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   // Sort để lưu trữ dạng sắp xếp hiện tại
   const [sortType, setSortType] = useState<"asc" | "desc">("asc");
@@ -315,7 +332,7 @@ const AdminService: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filterServices.map((service) => (
+            {getCurrentItems().map((service) => (
               <tr key={service._id}>
                 <td>{service.serviceCode}</td>
                 <td>{service.name}</td>
@@ -350,6 +367,32 @@ const AdminService: React.FC = () => {
             ))}
           </tbody>
         </table>
+
+        <div className="pagination mt-3 d-flex justify-content-center">
+          <button
+            className="btn btn-light me-2 border border-1"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <BiLeftArrow />
+          </button>
+          <button
+            className="btn btn-light me-2 border border-1"
+            onClick={() => handlePageChange(currentPage)}
+            disabled
+          >
+            {currentPage}
+          </button>
+          <button
+            className="btn btn-light border border-1"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(filterServices.length / itemsPerPage)
+            }
+          >
+            <BiRightArrow />
+          </button>
+        </div>
       </div>
 
       {/* Modal chỉnh sửa hoặc thêm mới */}
@@ -464,6 +507,7 @@ const AdminService: React.FC = () => {
         </div>
       </div>
 
+      {/* Form edit sản phẩm */}
       <div
         className={`modal fade ${showModal ? "show" : ""}`}
         id="editModal"
@@ -607,6 +651,7 @@ const AdminService: React.FC = () => {
         </div>
       </div>
 
+      {/* Hàm kiểm tra ẩn hiện modal */}
       <div
         className={`modal-backdrop fade ${showModal ? "show" : ""}`}
         style={{ display: showModal ? "block" : "none" }}
