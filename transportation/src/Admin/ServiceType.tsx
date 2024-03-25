@@ -12,19 +12,27 @@ interface ServiceTypeData {
 }
 
 const ServiceType: React.FC = () => {
-  const [services, setServices] = useState<ServiceTypeData[]>([]);
+  const [searchLetter, setSearchLetter] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceTypeData[]>([]);
   const [serviceTypeCode, setServiceTypeCode] = useState("");
   const [nameType, setNameType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
 
   //Phân Trang
   const getCurrentItems = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return serviceTypes.slice(startIndex, endIndex);
+    let filteredServiceTypes = serviceTypes;
+
+    // Lọc theo chữ cái đầu tiên của serviceTypeCode nếu có giá trị được nhập vào trường input
+    if (searchLetter.trim() !== "") {
+      filteredServiceTypes = filterByFirstLetter(searchLetter);
+    }
+
+    return filteredServiceTypes.slice(startIndex, endIndex);
   };
 
   const handlePageChange = (page: number) => {
@@ -45,6 +53,18 @@ const ServiceType: React.FC = () => {
     });
     setServiceTypes(sortedServiceTypes); // Update serviceTypes array with the sorted order
     setSortType((prevSortType) => (prevSortType === "asc" ? "desc" : "asc")); // Reverse the sort type
+  };
+
+  // Hàm lọc theo serviceTypeCode
+  const filterByFirstLetter = (letter: string) => {
+    const filteredServiceTypes = serviceTypes.filter((serviceType) =>
+      serviceType.serviceTypeCode.toLowerCase().startsWith(letter.toLowerCase())
+    );
+    return filteredServiceTypes;
+  };
+
+  const handleSearchLetterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchLetter(e.target.value);
   };
 
   //Edit
@@ -119,18 +139,25 @@ const ServiceType: React.FC = () => {
     }
   };
 
-  //Hàm xóa
+  // Hàm xóa
   const handleDelete = async (id: string) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:4000/api/serviceType/delete/${id}`
-      );
-      console.log(res);
-      fetchData();
+      if (confirmDelete()) {
+        const res = await axios.delete(
+          `http://localhost:4000/api/serviceType/delete/${id}`
+        );
+        console.log(res);
+        fetchData();
+      }
     } catch (e) {
       console.error(e);
     }
   };
+
+  // Hàm xác nhận xóa
+  function confirmDelete() {
+    return window.confirm("Bạn có muốn xóa không??");
+  }
 
   //Kiểm tra mã trùng
   const checkDuplicateServiceTypeCode = (code: string): boolean => {
@@ -157,6 +184,25 @@ const ServiceType: React.FC = () => {
             >
               Thêm loại dịch vụ
             </button>
+          </div>
+          <div className="ms-3">
+            <input
+              type="text"
+              className="mt-1 border border-2 rounded-2 h-75"
+              placeholder="Tìm kiếm..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="ms-3">
+            <label htmlFor="serviceTypeCode">Lọc: </label>
+            <input
+              type="text"
+              className="mt-1 ms-2 border border-2 rounded-2 h-75"
+              placeholder="Nhập mã loại dịch vụ..."
+              value={searchLetter}
+              onChange={handleSearchLetterChange}
+            />
           </div>
         </div>
         <table className="table mt-3">
