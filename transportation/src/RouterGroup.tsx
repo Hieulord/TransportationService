@@ -27,6 +27,7 @@ import RecruitingSalesStaff from "./Home/New newspaper/RecruitingSalesStaff";
 import { useQuery } from "@tanstack/react-query";
 import NavAdmin from "./Admin/NavAdmin";
 import AdminService from "./Admin/AdminService";
+import ServiceType from "./Admin/ServiceType";
 
 const RouterGroup: React.FC = () => {
   const [showElement, setShowElement] = useState(true); // State để kiểm soát hiển thị của phần tử
@@ -34,7 +35,7 @@ const RouterGroup: React.FC = () => {
   useEffect(() => {
     // Kiểm tra đường dẫn hiện tại
     const currentPath = window.location.pathname;
-    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") ) {
+    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/ServiceType") ) {
       setShowElement(false);
     } else {
       // Nếu không, hiển thị phần tử
@@ -69,6 +70,7 @@ const RouterGroup: React.FC = () => {
             <Route path="/" element={<Body />} />
             <Route path="/NavAdmin" element={<NavAdmin />} />
             <Route path="/AdminService" element={<AdminService />} />
+            <Route path="/ServiceType" element={<ServiceType />} />
             <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/Logistics" element={<Logistics />} />
             <Route path="/Sea" element={<Sea />} />

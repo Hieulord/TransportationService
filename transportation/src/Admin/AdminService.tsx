@@ -304,26 +304,26 @@ const AdminService: React.FC = () => {
               </th>
               <th
                 style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceCode")}
+                onClick={() => handleSort("name")}
               >
                 Tên dịch vụ <TbArrowsSort />
               </th>
               <th>Hình ảnh</th>
               <th
                 style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceCode")}
+                onClick={() => handleSort("type")}
               >
                 Loại dịch vụ <TbArrowsSort />
               </th>
               <th
                 style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceCode")}
+                onClick={() => handleSort("evaluate")}
               >
                 Đánh giá <TbArrowsSort />
               </th>
               <th
                 style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceCode")}
+                onClick={() => handleSort("price")}
               >
                 Giá tiền <TbArrowsSort />
               </th>
