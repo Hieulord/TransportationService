@@ -145,88 +145,106 @@ const ServiceType: React.FC = () => {
 
   return (
     <>
-      <NavAdmin />
-      <div className="container">
-        <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
-        <div className="d-inline-flex">
-          <div>
-            <button
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Thêm loại dịch vụ
-            </button>
-          </div>
-        </div>
-        <table className="table mt-3">
-          <thead>
-            <tr className="dataFields">
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceTypeCode")}
-              >
-                Mã loại dịch vụ <TbArrowsSort />
-              </th>
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("nameType")}
-              >
-                Tên loại dịch vụ <TbArrowsSort />
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {getCurrentItems().map((serviceType) => (
-              <tr key={serviceType._id}>
-                <td>{serviceType.serviceTypeCode}</td>
-                <td>{serviceType.nameType}</td>
-                <td>
-                  <button
-                    className="border border-0 bg-transparent"
-                    onClick={() => handleEdit(serviceType)}
-                  >
-                    <RiEditLine />
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="border border-0 bg-transparent"
-                    onClick={() => handleDelete(String(serviceType._id))}
-                  >
-                    <RiDeleteBin6Line />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <header
+        className="d-flex justify-content-center align-items-center"
+        style={{ backgroundColor: "#0b3d66", height: "90px" }}
+      >
+        <h1>𝕎𝕖𝕝𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝔸𝕕𝕞𝕚𝕟 𝕂𝕒𝕚𝕥𝕚𝕠𝕟.𝕁𝕜𝕖𝕪𝕒𝕟-𝕌ℕ𝕚𝕧𝕖𝕣 </h1>
+      </header>
 
-        <div className="pagination mt-3 d-flex justify-content-center">
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+      <div className="container-fluid">
+        <div className="row">
+          <div
+            className="col-2 d-flex justify-content align-items-start mt-2"
+            // style={{ backgroundColor: "#0b3d66" }}
           >
-            <BiLeftArrow />
-          </button>
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage)}
-            disabled
-          >
-            {currentPage}
-          </button>
-          <button
-            className="btn btn-light border border-1"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={
-              currentPage === Math.ceil(serviceTypes.length / itemsPerPage)
-            }
-          >
-            <BiRightArrow />
-          </button>
+            <NavAdmin />
+          </div>
+          <div className="col-10">
+          <div className="container">
+            <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
+            <div className="d-inline-flex">
+              <div>
+                <button
+                  className="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Thêm loại dịch vụ
+                </button>
+              </div>
+            </div>
+            <table className="table mt-3">
+              <thead>
+                <tr className="dataFields">
+                  <th
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSort("serviceTypeCode")}
+                  >
+                    Mã loại dịch vụ <TbArrowsSort />
+                  </th>
+                  <th
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSort("nameType")}
+                  >
+                    Tên loại dịch vụ <TbArrowsSort />
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {getCurrentItems().map((serviceType) => (
+                  <tr key={serviceType._id}>
+                    <td>{serviceType.serviceTypeCode}</td>
+                    <td>{serviceType.nameType}</td>
+                    <td>
+                      <button
+                        className="border border-0 bg-transparent"
+                        onClick={() => handleEdit(serviceType)}
+                      >
+                        <RiEditLine />
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="border border-0 bg-transparent"
+                        onClick={() => handleDelete(String(serviceType._id))}
+                      >
+                        <RiDeleteBin6Line />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="pagination mt-3 d-flex justify-content-center">
+              <button
+                className="btn btn-light me-2 border border-1"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <BiLeftArrow />
+              </button>
+              <button
+                className="btn btn-light me-2 border border-1"
+                onClick={() => handlePageChange(currentPage)}
+                disabled
+              >
+                {currentPage}
+              </button>
+              <button
+                className="btn btn-light border border-1"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={
+                  currentPage === Math.ceil(serviceTypes.length / itemsPerPage)
+                }
+              >
+                <BiRightArrow />
+              </button>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
 

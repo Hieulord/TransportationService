@@ -4,6 +4,16 @@ import { TbArrowsSort } from "react-icons/tb";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
+import AVT from "../Avatar/avatar-19.jpg";
+import {
+  Navbar,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+  Dropdown,
+} from "react-bootstrap";
+import { FiSearch, FiBell, FiUser } from "react-icons/fi";
 interface ServiceData {
   _id: string;
   serviceCode: string;
@@ -243,155 +253,174 @@ const AdminService: React.FC = () => {
 
   return (
     <>
-      <NavAdmin />
-      <div className="container">
-        <h2 className="mt-3 mb-3">Danh sách dịch vụ</h2>
-        <div className="d-inline-flex">
-          <div>
-            <button
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Thêm sản phẩm
-            </button>
-          </div>
-          <div className="ms-3 mt-1">
-            <input
-              className="border border-2 rounded-2"
-              type="text"
-              style={{ width: "300px" }}
-              placeholder="Tìm kiếm..."
-              value={searchKeyword}
-              onChange={handleSearchInputChange}
-            />
-          </div>
-          <div className="ms-3 mt-2">
-            <label htmlFor="typeFilter">Lọc theo loại dịch vụ:</label>
-            <select
-              className="ms-3 border border-2 rounded-2"
-              style={{ width: "130px" }}
-              id="typeFilter"
-              value={filterType}
-              onChange={handleTypeFilterChange}
-            >
-              <option value="">Tất cả</option>
-              <option value="Logistics">Logistics</option>
-              <option value="Sea">Sea</option>
-              <option value="Rail">Rail</option>
-              <option value="Airlife">Airlife</option>
-            </select>
-          </div>
-          <div className="ms-5 mt-1">
-            <label htmlFor="priceFilter">Lọc theo giá tiền:</label>
-            <input
-              type="number"
-              className="ms-3 border border-2 rounded-2"
-              id="priceFilter"
-              value={filterPrice || ""}
-              onChange={handlePriceFilterChange}
-            />
-          </div>
-        </div>
-        <table className="table mt-3">
-          <thead>
-            <tr className="dataFields">
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceCode")}
-              >
-                Mã dịch vụ <TbArrowsSort />
-              </th>
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("name")}
-              >
-                Tên dịch vụ <TbArrowsSort />
-              </th>
-              <th>Hình ảnh</th>
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("type")}
-              >
-                Loại dịch vụ <TbArrowsSort />
-              </th>
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("evaluate")}
-              >
-                Đánh giá <TbArrowsSort />
-              </th>
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("price")}
-              >
-                Giá tiền <TbArrowsSort />
-              </th>
-              <th>Mô tả</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {getCurrentItems().map((service) => (
-              <tr key={service._id}>
-                <td>{service.serviceCode}</td>
-                <td>{service.name}</td>
-                <td>
-                  <img
-                    style={{ width: 100, height: 100 }}
-                    src={"http://localhost:4000" + service.imagePath}
-                    alt={service.name}
-                  />
-                </td>
-                <td>{service.type}</td>
-                <td>{service.evaluate}</td>
-                <td>{service.price}</td>
-                <td>{service.description}</td>
-                <td>
-                  <button
-                    className="border border-0 bg-transparent"
-                    onClick={() => handleEdit(service)}
-                  >
-                    <RiEditLine />
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="border border-0 bg-transparent"
-                    onClick={() => handleDelete(String(service._id))}
-                  >
-                    <RiDeleteBin6Line />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <header
+        className="d-flex justify-content-center align-items-center"
+        style={{ backgroundColor: "#0b3d66", height: "90px" }}
+      >
+        <h1>𝕎𝕖𝕝𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝔸𝕕𝕞𝕚𝕟 𝕂𝕒𝕚𝕥𝕚𝕠𝕟.𝕁𝕜𝕖𝕪𝕒𝕟-𝕌ℕ𝕚𝕧𝕖𝕣 </h1>
+      </header>
 
-        <div className="pagination mt-3 d-flex justify-content-center">
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+      <div className="container-fluid">
+        <div className="row">
+          <div
+            className="col-2 d-flex justify-content align-items-start mt-2"
+            // style={{ backgroundColor: "#0b3d66" }}
           >
-            <BiLeftArrow />
-          </button>
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage)}
-            disabled
-          >
-            {currentPage}
-          </button>
-          <button
-            className="btn btn-light border border-1"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={
-              currentPage === Math.ceil(filterServices.length / itemsPerPage)
-            }
-          >
-            <BiRightArrow />
-          </button>
+            <NavAdmin />
+          </div>
+          <div className="col-10">
+            <div className="container">
+              <h2 className="mt-3 mb-3">Danh sách dịch vụ</h2>
+              <div className="d-inline-flex">
+                <div>
+                  <button
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    Thêm sản phẩm
+                  </button>
+                </div>
+                <div className="ms-3 mt-1">
+                  <input
+                    className="border border-2 rounded-2"
+                    type="text"
+                    style={{ width: "300px" }}
+                    placeholder="Tìm kiếm..."
+                    value={searchKeyword}
+                    onChange={handleSearchInputChange}
+                  />
+                </div>
+                <div className="ms-3 mt-2">
+                  <label htmlFor="typeFilter">Lọc theo loại dịch vụ:</label>
+                  <select
+                    className="ms-3 border border-2 rounded-2"
+                    style={{ width: "130px" }}
+                    id="typeFilter"
+                    value={filterType}
+                    onChange={handleTypeFilterChange}
+                  >
+                    <option value="">Tất cả</option>
+                    <option value="Logistics">Logistics</option>
+                    <option value="Sea">Sea</option>
+                    <option value="Rail">Rail</option>
+                    <option value="Airlife">Airlife</option>
+                  </select>
+                </div>
+                <div className="ms-5 mt-1">
+                  <label htmlFor="priceFilter">Lọc theo giá tiền:</label>
+                  <input
+                    type="number"
+                    className="ms-3 border border-2 rounded-2"
+                    id="priceFilter"
+                    value={filterPrice || ""}
+                    onChange={handlePriceFilterChange}
+                  />
+                </div>
+              </div>
+              <table className="table mt-3">
+                <thead>
+                  <tr className="dataFields">
+                    <th
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSort("serviceCode")}
+                    >
+                      Mã dịch vụ <TbArrowsSort />
+                    </th>
+                    <th
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSort("name")}
+                    >
+                      Tên dịch vụ <TbArrowsSort />
+                    </th>
+                    <th>Hình ảnh</th>
+                    <th
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSort("type")}
+                    >
+                      Loại dịch vụ <TbArrowsSort />
+                    </th>
+                    <th
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSort("evaluate")}
+                    >
+                      Đánh giá <TbArrowsSort />
+                    </th>
+                    <th
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSort("price")}
+                    >
+                      Giá tiền <TbArrowsSort />
+                    </th>
+                    <th>Mô tả</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getCurrentItems().map((service) => (
+                    <tr key={service._id}>
+                      <td>{service.serviceCode}</td>
+                      <td>{service.name}</td>
+                      <td>
+                        <img
+                          style={{ width: 100, height: 100 }}
+                          src={"http://localhost:4000" + service.imagePath}
+                          alt={service.name}
+                        />
+                      </td>
+                      <td>{service.type}</td>
+                      <td>{service.evaluate}</td>
+                      <td>{service.price}</td>
+                      <td>{service.description}</td>
+                      <td>
+                        <button
+                          className="border border-0 bg-transparent"
+                          onClick={() => handleEdit(service)}
+                        >
+                          <RiEditLine />
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="border border-0 bg-transparent"
+                          onClick={() => handleDelete(String(service._id))}
+                        >
+                          <RiDeleteBin6Line />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="pagination mt-3 d-flex justify-content-center">
+                <button
+                  className="btn btn-light me-2 border border-1"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  <BiLeftArrow />
+                </button>
+                <button
+                  className="btn btn-light me-2 border border-1"
+                  onClick={() => handlePageChange(currentPage)}
+                  disabled
+                >
+                  {currentPage}
+                </button>
+                <button
+                  className="btn btn-light border border-1"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={
+                    currentPage ===
+                    Math.ceil(filterServices.length / itemsPerPage)
+                  }
+                >
+                  <BiRightArrow />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
