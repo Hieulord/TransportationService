@@ -43,7 +43,7 @@ const RouterGroup: React.FC = () => {
       // Nếu không, hiển thị phần tử
       setShowElement(true);
     }
-  }, []);
+  });
   // useEffect(() => {
   //   fetchApi();
   // }, []);

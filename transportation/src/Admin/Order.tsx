@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import NavAdmin from "./NavAdmin";
 import axios from "axios";
 
 interface OrderData {
@@ -145,104 +146,128 @@ const Order: React.FC = () => {
 
   return (
     <>
-      <div className="container">
-        <h2 className="mt-3 mb-3">Danh sách đơn hàng</h2>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          Thêm đơn hàng
-        </button>
-        <div className="mb-3">
-          <input
-            type="text"
-            className=""
-            placeholder="Tìm kiếm..."
-            value={searchKeyword}
-            onChange={handleSearchInputChange}
-          />
-          <select
-            className=""
-            value={filterArea}
-            onChange={handleFilterAreaChange}
+      <header
+        className="d-flex justify-content-center align-items-center"
+        style={{ backgroundColor: "#0b3d66", height: "90px" }}
+      >
+        <h1>𝕎𝕖𝕝𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝔸𝕕𝕞𝕚𝕟 𝕂𝕒𝕚𝕥𝕚𝕠𝕟.𝕁𝕜𝕖𝕪𝕒𝕟-𝕌ℕ𝕚𝕧𝕖𝕣 </h1>
+      </header>
+      <div className="container-fluid">
+        <div className="row">
+          <div
+            className="col-2 d-flex justify-content align-items-start mt-2"
+            // style={{ backgroundColor: "#0b3d66" }}
           >
-            <option value="">Tất cả</option>
-            <option value="Area1">Khu vực 1</option>
-            <option value="Area2">Khu vực 2</option>
-            <option value="Area3">Khu vực 3</option>
-          </select>
-        </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("orderCode")}>Order Code</th>
-              <th onClick={() => handleSort("wayCode")}>Way Code</th>
-              <th onClick={() => handleSort("receivingParty")}>
-                Receiving Party
-              </th>
-              <th onClick={() => handleSort("sendingParty")}>Sending Party</th>
-              <th onClick={() => handleSort("deliveryAddress")}>
-                Delivery Address
-              </th>
-              <th onClick={() => handleSort("price")}>Price</th>
-              <th onClick={() => handleSort("moneyCollected")}>
-                Money Collected
-              </th>
-              <th onClick={() => handleSort("area")}>Area</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getCurrentItems().map((order) => (
-              <tr key={order._id}>
-                <td>{order.orderCode}</td>
-                <td>{order.wayCode}</td>
-                <td>{order.receivingParty}</td>
-                <td>{order.sendingParty}</td>
-                <td>{order.deliveryAddress}</td>
-                <td>{order.price}</td>
-                <td>{order.moneyCollected}</td>
-                <td>{order.area}</td>
-                <td>
-                  <button
-                    className="btn btn-primary btn-sm me-2"
-                    onClick={() => handleEdit(order)}
-                  >
-                    Sửa
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(order._id)}
-                  >
-                    Xóa
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="pagination mt-3 d-flex justify-content-center">
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <BiLeftArrow />
-          </button>
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage)}
-            disabled
-          >
-            {currentPage}
-          </button>
-          <button
-            className="btn btn-light border border-1"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === Math.ceil(orders.length / itemsPerPage)}
-          >
-            <BiRightArrow />
-          </button>
+            <NavAdmin />
+          </div>
+          <div className="col-10">
+            <div className="container">
+              <h2 className="mt-3 mb-3">Danh sách đơn hàng</h2>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowModal(true)}
+              >
+                Thêm đơn hàng
+              </button>
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className=""
+                  placeholder="Tìm kiếm..."
+                  value={searchKeyword}
+                  onChange={handleSearchInputChange}
+                />
+                <select
+                  className=""
+                  value={filterArea}
+                  onChange={handleFilterAreaChange}
+                >
+                  <option value="">Tất cả</option>
+                  <option value="Area1">Khu vực 1</option>
+                  <option value="Area2">Khu vực 2</option>
+                  <option value="Area3">Khu vực 3</option>
+                </select>
+              </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th onClick={() => handleSort("orderCode")}>Order Code</th>
+                    <th onClick={() => handleSort("wayCode")}>Way Code</th>
+                    <th onClick={() => handleSort("receivingParty")}>
+                      Receiving Party
+                    </th>
+                    <th onClick={() => handleSort("sendingParty")}>
+                      Sending Party
+                    </th>
+                    <th onClick={() => handleSort("deliveryAddress")}>
+                      Delivery Address
+                    </th>
+                    <th onClick={() => handleSort("price")}>Price</th>
+                    <th onClick={() => handleSort("moneyCollected")}>
+                      Money Collected
+                    </th>
+                    <th onClick={() => handleSort("area")}>Area</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getCurrentItems().map((order) => (
+                    <tr key={order._id}>
+                      <td>{order.orderCode}</td>
+                      <td>{order.wayCode}</td>
+                      <td>{order.receivingParty}</td>
+                      <td>{order.sendingParty}</td>
+                      <td>{order.deliveryAddress}</td>
+                      <td>{order.price}</td>
+                      <td>{order.moneyCollected}</td>
+                      <td>{order.area}</td>
+                      <td>
+                        <button
+                          className="btn btn-primary btn-sm me-2"
+                          onClick={() => handleEdit(order)}
+                        >
+                          Sửa
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDelete(order._id)}
+                        >
+                          Xóa
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="pagination mt-3 d-flex justify-content-center">
+                <button
+                  className="btn btn-light me-2 border border-1"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  <BiLeftArrow />
+                </button>
+                <button
+                  className="btn btn-light me-2 border border-1"
+                  onClick={() => handlePageChange(currentPage)}
+                  disabled
+                >
+                  {currentPage}
+                </button>
+                <button
+                  className="btn btn-light border border-1"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={
+                    currentPage === Math.ceil(orders.length / itemsPerPage)
+                  }
+                >
+                  <BiRightArrow />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
       {/* Modal Form Sửa đơn hàng */}
       <div
         className={`modal fade ${showModal ? "show" : ""}`}

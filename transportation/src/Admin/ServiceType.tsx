@@ -172,249 +172,98 @@ const ServiceType: React.FC = () => {
 
   return (
     <>
-      <NavAdmin />
-      <div className="container">
-        <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
-        <div className="d-inline-flex">
-          <div>
-            <button
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Thêm loại dịch vụ
-            </button>
-          </div>
-          <div className="ms-3">
-            <input
-              type="text"
-              className="mt-1 border border-2 rounded-2 h-75"
-              placeholder="Tìm kiếm..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="ms-3">
-            <label htmlFor="serviceTypeCode">Lọc: </label>
-            <input
-              type="text"
-              className="mt-1 ms-2 border border-2 rounded-2 h-75"
-              placeholder="Nhập mã loại dịch vụ..."
-              value={searchLetter}
-              onChange={handleSearchLetterChange}
-            />
-          </div>
-        </div>
-        <table className="table mt-3">
-          <thead>
-            <tr className="dataFields">
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("serviceTypeCode")}
-              >
-                Mã loại dịch vụ <TbArrowsSort />
-              </th>
-              <th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSort("nameType")}
-              >
-                Tên loại dịch vụ <TbArrowsSort />
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {getCurrentItems().map((serviceType) => (
-              <tr key={serviceType._id}>
-                <td>{serviceType.serviceTypeCode}</td>
-                <td>{serviceType.nameType}</td>
-                <td>
-                  <button
-                    className="border border-0 bg-transparent"
-                    onClick={() => handleEdit(serviceType)}
-                  >
-                    <RiEditLine />
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="border border-0 bg-transparent"
-                    onClick={() => handleDelete(String(serviceType._id))}
-                  >
-                    <RiDeleteBin6Line />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <div className="pagination mt-3 d-flex justify-content-center">
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <BiLeftArrow />
-          </button>
-          <button
-            className="btn btn-light me-2 border border-1"
-            onClick={() => handlePageChange(currentPage)}
-            disabled
-          >
-            {currentPage}
-          </button>
-          <button
-            className="btn btn-light border border-1"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={
-              currentPage === Math.ceil(serviceTypes.length / itemsPerPage)
-            }
-          >
-            <BiRightArrow />
-          </button>
-        </div>
-      </div>
-
-      {/* Modal thêm loại dịch vụ */}
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex={-1}
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
+      <header
+        className="d-flex justify-content-center align-items-center"
+        style={{ backgroundColor: "#0b3d66", height: "90px" }}
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Thêm loại dịch vụ
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={closeModal}
-              />
+        <h1>𝕎𝕖𝕝𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝔸𝕕𝕞𝕚𝕟 𝕂𝕒𝕚𝕥𝕚𝕠𝕟.𝕁𝕜𝕖𝕪𝕒𝕟-𝕌ℕ𝕚𝕧𝕖𝕣 </h1>
+      </header>
+      <div className="container-fluid">
+        <div className="row">
+          <div
+            className="col-2 d-flex justify-content align-items-start mt-2"
+            // style={{ backgroundColor: "#0b3d66" }}
+          >
+            <NavAdmin />
+          </div>
+          <div className="col-10">
+            <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
+            <div className="d-inline-flex">
+              <div>
+                <button
+                  className="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Thêm loại dịch vụ
+                </button>
+              </div>
+              <div className="ms-3">
+                <input
+                  type="text"
+                  className="mt-1 border border-2 rounded-2 h-75"
+                  placeholder="Tìm kiếm..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <div className="ms-3">
+                <label htmlFor="serviceTypeCode">Lọc: </label>
+                <input
+                  type="text"
+                  className="mt-1 ms-2 border border-2 rounded-2 h-75"
+                  placeholder="Nhập mã loại dịch vụ..."
+                  value={searchLetter}
+                  onChange={handleSearchLetterChange}
+                />
+              </div>
             </div>
-            <div className="modal-body">
-              <form onSubmit={handleSubmit}>
-                <div className="modal-body">
-                  <div className="form-group">
-                    <label htmlFor="serviceTypeCode">Mã loại dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="serviceTypeCode"
-                      value={serviceTypeCode}
-                      onChange={(e) => setServiceTypeCode(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="nameType">Tên loại dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nameType"
-                      value={nameType}
-                      onChange={(e) => setNameType(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={closeModal}
+            <table className="table mt-3">
+              <thead>
+                <tr className="dataFields">
+                  <th
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSort("serviceTypeCode")}
                   >
-                    Đóng
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Thêm
-                  </button>
-                </div>
-              </form>
-            </div>
+                    Mã loại dịch vụ <TbArrowsSort />
+                  </th>
+                  <th
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSort("nameType")}
+                  >
+                    Tên loại dịch vụ <TbArrowsSort />
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {getCurrentItems().map((serviceType) => (
+                  <tr key={serviceType._id}>
+                    <td>{serviceType.serviceTypeCode}</td>
+                    <td>{serviceType.nameType}</td>
+                    <td>
+                      <button
+                        className="border border-0 bg-transparent"
+                        onClick={() => handleEdit(serviceType)}
+                      >
+                        <RiEditLine />
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="border border-0 bg-transparent"
+                        onClick={() => handleDelete(String(serviceType._id))}
+                      >
+                        <RiDeleteBin6Line />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
-      {/* Form edit sản phẩm */}
-      <div
-        className={`modal fade ${showModal ? "show" : ""}`}
-        id="editModal"
-        tabIndex={-1}
-        aria-labelledby="editModalLabel"
-        aria-hidden="true"
-        style={{ display: showModal ? "block" : "none" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="editModalLabel">
-                Sửa sản phẩm
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={closeModal}
-              />
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleEditSubmit}>
-                <div className="modal-body">
-                  <div className="form-group">
-                    <label htmlFor="serviceTypeCode">Mã dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="serviceTypeCode"
-                      value={editFormData.serviceTypeCode}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          serviceTypeCode: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="name">Tên dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="nameType"
-                      value={editFormData.nameType}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          nameType: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={closeModal}
-                  >
-                    Đóng
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Sửa
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Hàm kiểm tra ẩn hiện modal */}
       <div
         className={`modal-backdrop fade ${showModal ? "show" : ""}`}
