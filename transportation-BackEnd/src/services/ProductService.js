@@ -32,12 +32,12 @@ const createProduct = (req) => {
           });
           console.log("Ok con dê");
         } else {
-          console.log("bug");
+          console.log("bug kìa");
           reject("Failed to create product.");
         }
       }
     } catch (error) {
-      console.log("Lỗi to đùng");
+      console.log("Lỗi Kìa Thằng Lỏ");
       reject(error);
     }
   });
