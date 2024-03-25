@@ -29,6 +29,7 @@ import NavAdmin from "./Admin/NavAdmin";
 import AdminService from "./Admin/AdminService";
 import Home from "./Admin/Home";
 import ServiceType from "./Admin/ServiceType";
+import Order from "./Admin/Order";
 
 const RouterGroup: React.FC = () => {
   const [showElement, setShowElement] = useState(true); // State để kiểm soát hiển thị của phần tử
@@ -36,7 +37,7 @@ const RouterGroup: React.FC = () => {
   useEffect(() => {
     // Kiểm tra đường dẫn hiện tại
     const currentPath = window.location.pathname;
-    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/Home")) {
+    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/ServiceType") || currentPath.startsWith("/Home") || currentPath.startsWith("/Order")) {
       setShowElement(false);
     } else {
       // Nếu không, hiển thị phần tử
@@ -71,6 +72,7 @@ const RouterGroup: React.FC = () => {
             <Route path="/" element={<Body />} />
             <Route path="/NavAdmin" element={<NavAdmin />} />
             <Route path="/AdminService" element={<AdminService />} />
+            <Route path="/Order" element={<Order />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/ServiceType" element={<ServiceType />} />
             <Route path="/ServiceComponent" element={<ServiceComponent />} />
