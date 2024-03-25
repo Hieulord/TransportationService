@@ -18,7 +18,6 @@ const ServiceType: React.FC = () => {
   const [serviceTypeCode, setServiceTypeCode] = useState("");
   const [nameType, setNameType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
 
   //Phân Trang
@@ -199,6 +198,15 @@ const ServiceType: React.FC = () => {
                     Thêm loại dịch vụ
                   </button>
                 </div>
+                <div className="ms-3">
+                  <input
+                    type="text"
+                    className="mt-1 border border-2 rounded-2 h-75"
+                    placeholder="Tìm kiếm..."
+                    value={searchLetter}
+                    onChange={handleSearchLetterChange}
+                  />
+                </div>
               </div>
               <table className="table mt-3">
                 <thead>
@@ -274,7 +282,6 @@ const ServiceType: React.FC = () => {
           </div>
         </div>
       </div>
-      
 
       {/* Modal thêm loại dịch vụ */}
       <div
