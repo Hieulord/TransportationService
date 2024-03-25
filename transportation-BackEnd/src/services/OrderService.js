@@ -1,20 +1,64 @@
 const Order = require("../models/OrderModel");
 const bcrypt = require("bcrypt");
 
+// const createOrder = async (req) => {
+//   try {
+//     const checkOrder = await Order.findOne({
+//       orderCode: req.body.orderCode,
+//       wayCode: req.body.wayCode,
+//     });
+
+//     if (checkOrder !== null) {
+//       return {
+//         status: "FAIL",
+//         message: "The service type code already exists.",
+//       };
+//     }
+
+//     const newOrder = new Order({
+//       orderCode: req.body.orderCode,
+//       wayCode: req.body.wayCode,
+//       receivingParty: req.body.receivingParty,
+//       sendingParty: req.body.sendingParty,
+//       deliveryAddress: req.body.deliveryAddress,
+//       price: req.body.price,
+//       moneyCollected: req.body.moneyCollected,
+//       area: req.body.area,
+//     });
+
+//     const savedOrder = await newOrder.save();
+
+//     if (savedOrder) {
+//       console.log("Tạo đơn hàng mới thành công");
+//       return {
+//         status: "SUCCESS",
+//         message: "The service type has been successfully saved.",
+//         data: savedOrder,
+//       };
+//     } else {
+//       console.log("Lỗi khi lưu đơn hàng mới");
+//       throw new Error("Failed to save service type.");
+//     }
+//   } catch (error) {
+//     console.log("Lỗi khi tạo đơn hàng mới:", error);
+//     throw error;
+//   }
+// };
+
 const createOrder = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const checkOrder = await Order.findOne({
+      const checkProduct = await Order.findOne({
         orderCode: req.body.orderCode,
         wayCode: req.body.wayCode,
       });
-      if (checkOrder !== null) {
+      if (checkProduct !== null) {
         resolve({
           status: "OK",
-          message: "The service type code already exists.",
+          message: "The service code of product already exists.",
         });
       } else {
-        const newOrder = new Order({
+        const addProduct = await Order.create({
           orderCode: req.body.orderCode,
           wayCode: req.body.wayCode,
           receivingParty: req.body.receivingParty,
@@ -24,23 +68,22 @@ const createOrder = (req) => {
           moneyCollected: req.body.moneyCollected,
           area: req.body.area,
         });
-        const saveOder = await newOrder.save();
-        console.log("Tạo đơn hàng mới ");
-        console.log("Lưu đơn hàng mới");
-        if (saveOder) {
+        console.log("Tạo sản phẩm ");
+        console.log("Lưu sản phẩm");
+        if (addProduct) {
           resolve({
             status: "OK",
             message: "SUCCESS",
-            data: saveOder,
+            data: addProduct,
           });
-          console.log("Thành công");
+          console.log("Ok con dê");
         } else {
-          console.log("Lỗi khi lưu đơn hàng mới");
-          reject("Failed to save service type.");
+          console.log("bug kìa");
+          reject("Failed to create product.");
         }
       }
     } catch (error) {
-      console.log("Lỗi khi tạo đơn hàng mới:", error);
+      console.log("Lỗi Kìa Thằng Lỏ");
       reject(error);
     }
   });
