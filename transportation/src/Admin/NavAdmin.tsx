@@ -28,6 +28,11 @@ const NavAdmin = () => {
                   Dịch Vụ
                 </a>
               </li>
+              <li style={{ marginTop: "3px", fontWeight: "600" }}>
+                <a href="/ServiceType" className="text-decoration-none text-white fs-4">
+                  Loại Dịch Vụ
+                </a>
+              </li>
             </ul>
           </nav>
         </div>

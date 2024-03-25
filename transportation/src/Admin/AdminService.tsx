@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
+import { TbArrowsSort } from "react-icons/tb";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
 interface ServiceData {
@@ -14,20 +16,11 @@ interface ServiceData {
   description: string;
 }
 
-interface FormData {
-  serviceCode: string;
-  name: string;
-  image: File | string; // Thay đổi kiểu dữ liệu của trường image
-  type: string;
-  evaluate: number;
-  price: number;
-  description: string;
-}
-
 const AdminService: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [services, setServices] = useState<ServiceData[]>([]);
+
   const [name, setName] = useState("");
   const [evaluate, setEvaluate] = useState("");
   const [serviceCode, setServiceCode] = useState("");
@@ -35,32 +28,81 @@ const AdminService: React.FC = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | null>(null);
-  // State để lưu trữ dạng sắp xếp hiện tại
+
+  // State cho phân trang
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  // Hàm lấy dữ liệu cho trang hiện tại
+  const getCurrentItems = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filterServices.slice(startIndex, endIndex); //Phương thức slice dùng để cắt mảng
+  };
+
+  // Hàm xử lý khi chuyển trang
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Sort để lưu trữ dạng sắp xếp hiện tại
   const [sortType, setSortType] = useState<"asc" | "desc">("asc");
 
   const handleSort = (sortBy: keyof ServiceData) => {
     const sortedServices = [...services]; // Tạo một bản sao của danh sách dịch vụ
     sortedServices.sort((a, b) => {
       if (sortType === "asc") {
-        return a[sortBy] > b[sortBy] ? 1 : -1;
+        return a[sortBy] > b[sortBy] ? 1 : -1; // Sắp xếp theo asc
       } else {
-        return a[sortBy] < b[sortBy] ? 1 : -1;
+        return a[sortBy] < b[sortBy] ? 1 : -1; // Sắp xếp theo desc
       }
     });
     setServices(sortedServices); // Cập nhật danh sách dịch vụ với thứ tự đã sắp xếp
     setSortType(sortType === "asc" ? "desc" : "asc"); // Đảo ngược loại sắp xếp
   };
-  // Filter
+
+  // Search Service
   const [searchKeyword, setSearchKeyword] = useState<string>("");
 
-  const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  const searchServices = services.filter(
+    (service) =>
+      service.name.toLowerCase().includes(searchKeyword.toLowerCase()) //includes là kiểm tra xem 1 chuỗi có chứa 1 chuỗi con khác không
   );
 
   function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
     setSearchKeyword(e.target.value);
   }
 
+  //Filter
+  const [filterType, setFilterType] = useState<string>("");
+  const [filterPrice, setFilterPrice] = useState<number | null>(null);
+
+  //Hàm kiểm tra bộ lọc
+  const filterServices = searchServices.filter((service) => {
+    // Kiểm tra nếu không có bộ lọc hoặc dịch vụ không phù hợp với bộ lọc
+    if (
+      (filterType === "" ||
+        service.type.toLowerCase() === filterType.toLowerCase()) && //toLowerCase là chuyển đổi chuỗi thành chữ thường
+      (filterPrice === null || service.price === filterPrice)
+    ) {
+      return true;
+    }
+    return false;
+  });
+
+  //Lọc theo loại dịch vụ
+  const handleTypeFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedType = e.target.value;
+    setFilterType(selectedType);
+  };
+
+  //Lọc theo giá tiền
+  const handlePriceFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const price = e.target.value === "" ? null : parseInt(e.target.value);
+    setFilterPrice(price);
+  };
+
+  //Thêm ảnh
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
@@ -68,6 +110,7 @@ const AdminService: React.FC = () => {
     }
   };
 
+  //Edit
   const [editFormData, setEditFormData] = useState<ServiceData>({
     _id: "",
     serviceCode: "",
@@ -80,9 +123,13 @@ const AdminService: React.FC = () => {
     description: "",
   });
 
+  //Hàm lấy api edit
   const handleEditSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      if (checkDuplicateServiceCode(editFormData.serviceCode)) {
+        alert("Mã dịch vụ đã tồn tại");
+      }
       const result = await axios.put(
         `http://localhost:4000/api/service/update/${editFormData._id}`,
         editFormData
@@ -92,6 +139,9 @@ const AdminService: React.FC = () => {
       fetchData(); // Lấy lại dữ liệu từ API để cập nhật danh sách
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
+      if (error === "Mã dịch vụ đã tồn tại") {
+        alert(error);
+      }
     }
   };
 
@@ -100,11 +150,13 @@ const AdminService: React.FC = () => {
     setShowModal(true); // Hiển thị modal chỉnh sửa
   };
 
+  //Kiểm tra mã trùng
   const checkDuplicateServiceCode = (code: string): boolean => {
     // Kiểm tra xem serviceCode có tồn tại trong danh sách dịch vụ hay không
-    return services.some(service => service.serviceCode === code);
+    return services.some((service) => service.serviceCode === code);
   };
-  
+
+  //Form nhập
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -112,12 +164,14 @@ const AdminService: React.FC = () => {
       if (!image) {
         throw new Error("Vui lòng chọn một tệp");
       }
-  
+
       // Kiểm tra serviceCode có trùng không
       if (checkDuplicateServiceCode(serviceCode)) {
         alert("Mã dịch vụ đã tồn tại");
+      } else {
+        alert("Dữ liệu đã được lưu");
       }
-  
+
       // Tạo FormData và thêm tệp đã chọn vào đó
       const form = new FormData();
       form.append("name", name);
@@ -127,18 +181,16 @@ const AdminService: React.FC = () => {
       form.append("description", description);
       form.append("price", price.toString());
       form.append("evaluate", evaluate.toString());
-  
+
       // Thực hiện gửi biểu mẫu với FormData chứa tệp đã chọn
       const response = await fetch("http://localhost:4000/api/service/create", {
         method: "POST",
         body: form,
       });
-  
+
       if (!response.ok) {
         throw new Error("Có lỗi xảy ra khi gửi biểu mẫu");
       }
-  
-      alert("Dữ liệu đã được lưu");
       console.log(response);
       // Xóa các trường sau khi gửi thành công
       setName("");
@@ -154,8 +206,8 @@ const AdminService: React.FC = () => {
       console.error("Đã xảy ra lỗi:", error);
     }
   };
-  
 
+  //In dữ liệu ra bảng
   const fetchData = async () => {
     try {
       const res = await axios.get(
@@ -167,6 +219,7 @@ const AdminService: React.FC = () => {
     }
   };
 
+  //Hàm xóa
   const handleDelete = async (id: string) => {
     try {
       const res = await axios.delete(
@@ -183,10 +236,6 @@ const AdminService: React.FC = () => {
     fetchData();
   }, []);
 
-  const openModal = () => {
-    setShowModal(true);
-  };
-
   const closeModal = () => {
     setIsEditing(false);
     setShowModal(false);
@@ -196,7 +245,7 @@ const AdminService: React.FC = () => {
     <>
       <NavAdmin />
       <div className="container">
-        <h2>Danh sách dịch vụ</h2>
+        <h2 className="mt-3 mb-3">Danh sách dịch vụ</h2>
         <div className="d-inline-flex">
           <div>
             <button
@@ -209,6 +258,7 @@ const AdminService: React.FC = () => {
           </div>
           <div className="ms-3 mt-1">
             <input
+              className="border border-2 rounded-2"
               type="text"
               style={{ width: "300px" }}
               placeholder="Tìm kiếm..."
@@ -216,22 +266,73 @@ const AdminService: React.FC = () => {
               onChange={handleSearchInputChange}
             />
           </div>
+          <div className="ms-3 mt-2">
+            <label htmlFor="typeFilter">Lọc theo loại dịch vụ:</label>
+            <select
+              className="ms-3 border border-2 rounded-2"
+              style={{ width: "130px" }}
+              id="typeFilter"
+              value={filterType}
+              onChange={handleTypeFilterChange}
+            >
+              <option value="">Tất cả</option>
+              <option value="Logistics">Logistics</option>
+              <option value="Sea">Sea</option>
+              <option value="Rail">Rail</option>
+              <option value="Airlife">Airlife</option>
+            </select>
+          </div>
+          <div className="ms-5 mt-1">
+            <label htmlFor="priceFilter">Lọc theo giá tiền:</label>
+            <input
+              type="number"
+              className="ms-3 border border-2 rounded-2"
+              id="priceFilter"
+              value={filterPrice || ""}
+              onChange={handlePriceFilterChange}
+            />
+          </div>
         </div>
-        <table className="table">
+        <table className="table mt-3">
           <thead>
-            <tr>
-              <th onClick={() => handleSort("serviceCode")}>Mã dịch vụ</th>
-              <th onClick={() => handleSort("serviceCode")}>Tên dịch vụ</th>
+            <tr className="dataFields">
+              <th
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSort("serviceCode")}
+              >
+                Mã dịch vụ <TbArrowsSort />
+              </th>
+              <th
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSort("name")}
+              >
+                Tên dịch vụ <TbArrowsSort />
+              </th>
               <th>Hình ảnh</th>
-              <th onClick={() => handleSort("serviceCode")}>Loại dịch vụ</th>
-              <th onClick={() => handleSort("serviceCode")}>Đánh giá</th>
-              <th onClick={() => handleSort("serviceCode")}>Giá tiền</th>
+              <th
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSort("type")}
+              >
+                Loại dịch vụ <TbArrowsSort />
+              </th>
+              <th
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSort("evaluate")}
+              >
+                Đánh giá <TbArrowsSort />
+              </th>
+              <th
+                style={{ cursor: "pointer" }}
+                onClick={() => handleSort("price")}
+              >
+                Giá tiền <TbArrowsSort />
+              </th>
               <th>Mô tả</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {filteredServices.map((service) => (
+            {getCurrentItems().map((service) => (
               <tr key={service._id}>
                 <td>{service.serviceCode}</td>
                 <td>{service.name}</td>
@@ -266,6 +367,32 @@ const AdminService: React.FC = () => {
             ))}
           </tbody>
         </table>
+
+        <div className="pagination mt-3 d-flex justify-content-center">
+          <button
+            className="btn btn-light me-2 border border-1"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <BiLeftArrow />
+          </button>
+          <button
+            className="btn btn-light me-2 border border-1"
+            onClick={() => handlePageChange(currentPage)}
+            disabled
+          >
+            {currentPage}
+          </button>
+          <button
+            className="btn btn-light border border-1"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={
+              currentPage === Math.ceil(filterServices.length / itemsPerPage)
+            }
+          >
+            <BiRightArrow />
+          </button>
+        </div>
       </div>
 
       {/* Modal chỉnh sửa hoặc thêm mới */}
@@ -380,6 +507,7 @@ const AdminService: React.FC = () => {
         </div>
       </div>
 
+      {/* Form edit sản phẩm */}
       <div
         className={`modal fade ${showModal ? "show" : ""}`}
         id="editModal"
@@ -523,6 +651,7 @@ const AdminService: React.FC = () => {
         </div>
       </div>
 
+      {/* Hàm kiểm tra ẩn hiện modal */}
       <div
         className={`modal-backdrop fade ${showModal ? "show" : ""}`}
         style={{ display: showModal ? "block" : "none" }}
