@@ -229,18 +229,25 @@ const AdminService: React.FC = () => {
     }
   };
 
-  //Hàm xóa
+  // Hàm xóa
   const handleDelete = async (id: string) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:4000/api/service/delete/${id}`
-      );
-      console.log(res);
-      fetchData();
+      if (confirmDelete()) {
+        const res = await axios.delete(
+          `http://localhost:4000/api/service/delete/${id}`
+        );
+        console.log(res);
+        fetchData();
+      }
     } catch (e) {
       console.error(e);
     }
   };
+
+  // Hàm xác nhận xóa
+  function confirmDelete() {
+    return window.confirm("Bạn có muốn xóa không??");
+  }
 
   useEffect(() => {
     fetchData();

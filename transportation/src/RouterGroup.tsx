@@ -35,12 +35,7 @@ const RouterGroup: React.FC = () => {
   useEffect(() => {
     // Kiểm tra đường dẫn hiện tại
     const currentPath = window.location.pathname;
-    if (
-      currentPath.startsWith("/NavAdmin") ||
-      currentPath.startsWith("/AdminService") ||
-      currentPath.startsWith("/ServiceType") ||
-      currentPath.startsWith("/Home")
-    ) {
+    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/Home") || currentPath.startsWith("/ServiceType")) {
       setShowElement(false);
     } else {
       // Nếu không, hiển thị phần tử

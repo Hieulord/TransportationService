@@ -12,19 +12,27 @@ interface ServiceTypeData {
 }
 
 const ServiceType: React.FC = () => {
-  const [services, setServices] = useState<ServiceTypeData[]>([]);
+  const [searchLetter, setSearchLetter] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceTypeData[]>([]);
   const [serviceTypeCode, setServiceTypeCode] = useState("");
   const [nameType, setNameType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
 
   //Phân Trang
   const getCurrentItems = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return serviceTypes.slice(startIndex, endIndex);
+    let filteredServiceTypes = serviceTypes;
+
+    // Lọc theo chữ cái đầu tiên của serviceTypeCode nếu có giá trị được nhập vào trường input
+    if (searchLetter.trim() !== "") {
+      filteredServiceTypes = filterByFirstLetter(searchLetter);
+    }
+
+    return filteredServiceTypes.slice(startIndex, endIndex);
   };
 
   const handlePageChange = (page: number) => {
@@ -45,6 +53,18 @@ const ServiceType: React.FC = () => {
     });
     setServiceTypes(sortedServiceTypes); // Update serviceTypes array with the sorted order
     setSortType((prevSortType) => (prevSortType === "asc" ? "desc" : "asc")); // Reverse the sort type
+  };
+
+  // Hàm lọc theo serviceTypeCode
+  const filterByFirstLetter = (letter: string) => {
+    const filteredServiceTypes = serviceTypes.filter((serviceType) =>
+      serviceType.serviceTypeCode.toLowerCase().startsWith(letter.toLowerCase())
+    );
+    return filteredServiceTypes;
+  };
+
+  const handleSearchLetterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchLetter(e.target.value);
   };
 
   //Edit
@@ -119,18 +139,25 @@ const ServiceType: React.FC = () => {
     }
   };
 
-  //Hàm xóa
+  // Hàm xóa
   const handleDelete = async (id: string) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:4000/api/serviceType/delete/${id}`
-      );
-      console.log(res);
-      fetchData();
+      if (confirmDelete()) {
+        const res = await axios.delete(
+          `http://localhost:4000/api/serviceType/delete/${id}`
+        );
+        console.log(res);
+        fetchData();
+      }
     } catch (e) {
       console.error(e);
     }
   };
+
+  // Hàm xác nhận xóa
+  function confirmDelete() {
+    return window.confirm("Bạn có muốn xóa không??");
+  }
 
   //Kiểm tra mã trùng
   const checkDuplicateServiceTypeCode = (code: string): boolean => {
@@ -151,7 +178,6 @@ const ServiceType: React.FC = () => {
       >
         <h1>𝕎𝕖𝕝𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝔸𝕕𝕞𝕚𝕟 𝕂𝕒𝕚𝕥𝕚𝕠𝕟.𝕁𝕜𝕖𝕪𝕒𝕟-𝕌ℕ𝕚𝕧𝕖𝕣 </h1>
       </header>
-
       <div className="container-fluid">
         <div className="row">
           <div
@@ -161,7 +187,6 @@ const ServiceType: React.FC = () => {
             <NavAdmin />
           </div>
           <div className="col-10">
-          <div className="container">
             <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
             <div className="d-inline-flex">
               <div>
@@ -172,6 +197,25 @@ const ServiceType: React.FC = () => {
                 >
                   Thêm loại dịch vụ
                 </button>
+              </div>
+              <div className="ms-3">
+                <input
+                  type="text"
+                  className="mt-1 border border-2 rounded-2 h-75"
+                  placeholder="Tìm kiếm..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <div className="ms-3">
+                <label htmlFor="serviceTypeCode">Lọc: </label>
+                <input
+                  type="text"
+                  className="mt-1 ms-2 border border-2 rounded-2 h-75"
+                  placeholder="Nhập mã loại dịch vụ..."
+                  value={searchLetter}
+                  onChange={handleSearchLetterChange}
+                />
               </div>
             </div>
             <table className="table mt-3">
@@ -217,176 +261,9 @@ const ServiceType: React.FC = () => {
                 ))}
               </tbody>
             </table>
-
-            <div className="pagination mt-3 d-flex justify-content-center">
-              <button
-                className="btn btn-light me-2 border border-1"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <BiLeftArrow />
-              </button>
-              <button
-                className="btn btn-light me-2 border border-1"
-                onClick={() => handlePageChange(currentPage)}
-                disabled
-              >
-                {currentPage}
-              </button>
-              <button
-                className="btn btn-light border border-1"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={
-                  currentPage === Math.ceil(serviceTypes.length / itemsPerPage)
-                }
-              >
-                <BiRightArrow />
-              </button>
-            </div>
-          </div>
           </div>
         </div>
       </div>
-
-      {/* Modal thêm loại dịch vụ */}
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex={-1}
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Thêm loại dịch vụ
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={closeModal}
-              />
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleSubmit}>
-                <div className="modal-body">
-                  <div className="form-group">
-                    <label htmlFor="serviceTypeCode">Mã loại dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="serviceTypeCode"
-                      value={serviceTypeCode}
-                      onChange={(e) => setServiceTypeCode(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="nameType">Tên loại dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="nameType"
-                      value={nameType}
-                      onChange={(e) => setNameType(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={closeModal}
-                  >
-                    Đóng
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Thêm
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Form edit sản phẩm */}
-      <div
-        className={`modal fade ${showModal ? "show" : ""}`}
-        id="editModal"
-        tabIndex={-1}
-        aria-labelledby="editModalLabel"
-        aria-hidden="true"
-        style={{ display: showModal ? "block" : "none" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="editModalLabel">
-                Sửa sản phẩm
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={closeModal}
-              />
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleEditSubmit}>
-                <div className="modal-body">
-                  <div className="form-group">
-                    <label htmlFor="serviceTypeCode">Mã dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="serviceTypeCode"
-                      value={editFormData.serviceTypeCode}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          serviceTypeCode: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="name">Tên dịch vụ:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="nameType"
-                      value={editFormData.nameType}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          nameType: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={closeModal}
-                  >
-                    Đóng
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Sửa
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Hàm kiểm tra ẩn hiện modal */}
       <div
         className={`modal-backdrop fade ${showModal ? "show" : ""}`}
