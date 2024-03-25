@@ -8,13 +8,14 @@ router.post(
   "/create",
   OrderController.createOrder
 );
-// router.put(
-//   "/update/:id",
-//   ServiceTypeController.updateServiceType
-// );
 
-// router.delete("/delete/:id", ServiceTypeController.delteServiceType);
-// router.get("/getAllServiceType", ServiceTypeController.getAllServiceType);
-// router.get("/getDetailServiceType/:id", ServiceTypeController.getDetailServiceType);
+router.put(
+  "/update/:id",
+  OrderController.updateOrder
+);
+
+router.delete("/delete/:id", OrderController.deleteOrder);
+router.get("/getAllOrder", OrderController.getAllOrder);
+router.get("/getDetailOrder/:id", OrderController.getDetailOrder);
 
 module.exports = router;

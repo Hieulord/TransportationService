@@ -24,9 +24,85 @@ const createOrder = async (req, res) => {
         error: error.message,
       });
     }
-  };
+};
+
+const updateOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const data = req.body;
+    if (!orderId) {
+      return res.status(200).json({
+        status: "Err",
+        message: "The orderId is required!!",
+      });
+    }
+    const respone = await OrderService.updateOrder(orderId, data);
+    return res.status(200).json(respone);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
+
+const deleteOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    if (!orderId) {
+      return res.status(200).json({
+        status: "Err",
+        message: "The orderId is required!!",
+      });
+    }
+    const respone = await OrderService.deleteOrder(orderId);
+    return res.status(200).json(respone);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
+
+const getAllOrder = async (req, res) => {
+  try {
+    const { limit, page, sort, filter } = req.query;
+    const respone = await OrderService.getAllOrder(
+      Number(limit) || 8,
+      Number(page) || 0,
+      sort,
+      filter
+    );
+    return res.status(200).json(respone);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
+
+const getDetailOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    if (!orderId) {
+      return res.status(200).json({
+        status: "Err",
+        message: "The service Type Id is required!!",
+      });
+    }
+    const respone = await OrderService.getDetailOrder(orderId);
+    return res.status(200).json(respone);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
   
 
 module.exports = {
   createOrder,
+  updateOrder,
+  deleteOrder,
+  getAllOrder,
+  getDetailOrder,
 };
