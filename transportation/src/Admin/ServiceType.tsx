@@ -12,7 +12,7 @@ interface ServiceTypeData {
 }
 
 const ServiceType: React.FC = () => {
-  const [searchLetter, setSearchLetter] = useState("");
+  const [services, setServices] = useState<ServiceTypeData[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [serviceTypes, setServiceTypes] = useState<ServiceTypeData[]>([]);
   const [serviceTypeCode, setServiceTypeCode] = useState("");
@@ -24,14 +24,7 @@ const ServiceType: React.FC = () => {
   const getCurrentItems = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    let filteredServiceTypes = serviceTypes;
-
-    // Lọc theo chữ cái đầu tiên của serviceTypeCode nếu có giá trị được nhập vào trường input
-    if (searchLetter.trim() !== "") {
-      filteredServiceTypes = filterByFirstLetter(searchLetter);
-    }
-
-    return filteredServiceTypes.slice(startIndex, endIndex);
+    return serviceTypes.slice(startIndex, endIndex);
   };
 
   const handlePageChange = (page: number) => {
@@ -52,18 +45,6 @@ const ServiceType: React.FC = () => {
     });
     setServiceTypes(sortedServiceTypes); // Update serviceTypes array with the sorted order
     setSortType((prevSortType) => (prevSortType === "asc" ? "desc" : "asc")); // Reverse the sort type
-  };
-
-  // Hàm lọc theo serviceTypeCode
-  const filterByFirstLetter = (letter: string) => {
-    const filteredServiceTypes = serviceTypes.filter((serviceType) =>
-      serviceType.serviceTypeCode.toLowerCase().startsWith(letter.toLowerCase())
-    );
-    return filteredServiceTypes;
-  };
-
-  const handleSearchLetterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchLetter(e.target.value);
   };
 
   //Edit
@@ -138,25 +119,18 @@ const ServiceType: React.FC = () => {
     }
   };
 
-  // Hàm xóa
+  //Hàm xóa
   const handleDelete = async (id: string) => {
     try {
-      if (confirmDelete()) {
-        const res = await axios.delete(
-          `http://localhost:4000/api/serviceType/delete/${id}`
-        );
-        console.log(res);
-        fetchData();
-      }
+      const res = await axios.delete(
+        `http://localhost:4000/api/serviceType/delete/${id}`
+      );
+      console.log(res);
+      fetchData();
     } catch (e) {
       console.error(e);
     }
   };
-
-  // Hàm xác nhận xóa
-  function confirmDelete() {
-    return window.confirm("Bạn có muốn xóa không??");
-  }
 
   //Kiểm tra mã trùng
   const checkDuplicateServiceTypeCode = (code: string): boolean => {
@@ -177,6 +151,7 @@ const ServiceType: React.FC = () => {
       >
         <h1>𝕎𝕖𝕝𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝔸𝕕𝕞𝕚𝕟 𝕂𝕒𝕚𝕥𝕚𝕠𝕟.𝕁𝕜𝕖𝕪𝕒𝕟-𝕌ℕ𝕚𝕧𝕖𝕣 </h1>
       </header>
+
       <div className="container-fluid">
         <div className="row">
           <div
@@ -186,99 +161,89 @@ const ServiceType: React.FC = () => {
             <NavAdmin />
           </div>
           <div className="col-10">
-            <div className="container">
-              <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
-              <div className="d-inline-flex">
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    Thêm loại dịch vụ
-                  </button>
-                </div>
-                <div className="ms-3">
-                  <input
-                    type="text"
-                    className="mt-1 border border-2 rounded-2 h-75"
-                    placeholder="Tìm kiếm..."
-                    value={searchLetter}
-                    onChange={handleSearchLetterChange}
-                  />
-                </div>
-              </div>
-              <table className="table mt-3">
-                <thead>
-                  <tr className="dataFields">
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("serviceTypeCode")}
-                    >
-                      Mã loại dịch vụ <TbArrowsSort />
-                    </th>
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("nameType")}
-                    >
-                      Tên loại dịch vụ <TbArrowsSort />
-                    </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {getCurrentItems().map((serviceType) => (
-                    <tr key={serviceType._id}>
-                      <td>{serviceType.serviceTypeCode}</td>
-                      <td>{serviceType.nameType}</td>
-                      <td>
-                        <button
-                          className="border border-0 bg-transparent"
-                          onClick={() => handleEdit(serviceType)}
-                        >
-                          <RiEditLine />
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="border border-0 bg-transparent"
-                          onClick={() => handleDelete(String(serviceType._id))}
-                        >
-                          <RiDeleteBin6Line />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div className="pagination mt-3 d-flex justify-content-center">
+          <div className="container">
+            <h2 className="mt-3 mb-3">Danh sách loại dịch vụ</h2>
+            <div className="d-inline-flex">
+              <div>
                 <button
-                  className="btn btn-light me-2 border border-1"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
+                  className="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
                 >
-                  <BiLeftArrow />
-                </button>
-                <button
-                  className="btn btn-light me-2 border border-1"
-                  onClick={() => handlePageChange(currentPage)}
-                  disabled
-                >
-                  {currentPage}
-                </button>
-                <button
-                  className="btn btn-light border border-1"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={
-                    currentPage ===
-                    Math.ceil(serviceTypes.length / itemsPerPage)
-                  }
-                >
-                  <BiRightArrow />
+                  Thêm loại dịch vụ
                 </button>
               </div>
             </div>
+            <table className="table mt-3">
+              <thead>
+                <tr className="dataFields">
+                  <th
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSort("serviceTypeCode")}
+                  >
+                    Mã loại dịch vụ <TbArrowsSort />
+                  </th>
+                  <th
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSort("nameType")}
+                  >
+                    Tên loại dịch vụ <TbArrowsSort />
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {getCurrentItems().map((serviceType) => (
+                  <tr key={serviceType._id}>
+                    <td>{serviceType.serviceTypeCode}</td>
+                    <td>{serviceType.nameType}</td>
+                    <td>
+                      <button
+                        className="border border-0 bg-transparent"
+                        onClick={() => handleEdit(serviceType)}
+                      >
+                        <RiEditLine />
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="border border-0 bg-transparent"
+                        onClick={() => handleDelete(String(serviceType._id))}
+                      >
+                        <RiDeleteBin6Line />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="pagination mt-3 d-flex justify-content-center">
+              <button
+                className="btn btn-light me-2 border border-1"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <BiLeftArrow />
+              </button>
+              <button
+                className="btn btn-light me-2 border border-1"
+                onClick={() => handlePageChange(currentPage)}
+                disabled
+              >
+                {currentPage}
+              </button>
+              <button
+                className="btn btn-light border border-1"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={
+                  currentPage === Math.ceil(serviceTypes.length / itemsPerPage)
+                }
+              >
+                <BiRightArrow />
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
