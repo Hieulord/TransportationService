@@ -1,11 +1,70 @@
-import avatarImage from "../Avatar/avatar-11.jpg";
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { RiDeleteBin6Line, RiEditLine } from "react-icons/ri";
-import { TbArrowsSort } from "react-icons/tb";
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import NavAdmin from "./NavAdmin";
+import React, { useEffect, useRef, useState } from "react";
+import Chart from "chart.js/auto";
 import axios from "axios";
+import NavAdmin from "./NavAdmin";
+import { Container, Row, Col } from "react-bootstrap";
+import { HiOutlineTrendingUp } from "react-icons/hi";
 const Home = () => {
+  const [data, setData] = useState({
+    thisWeek: [5, 10, 15, 20, 25],
+    lastWeek: [4, 8, 12, 16, 20],
+  });
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstance = useRef<Chart | null>(null); // Maintain reference to Chart instance
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("URL_TO_YOUR_DATA_ENDPOINT");
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const ctx = chartRef.current?.getContext("2d");
+    if (ctx) {
+      // Destroy existing chart instance before creating a new one
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+
+      chartInstance.current = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          datasets: [
+            {
+              label: "This Week",
+              data: data.thisWeek,
+              backgroundColor: "rgba(31, 59, 179, 0.2)",
+              borderColor: "rgba(31, 59, 179, 1)",
+              borderWidth: 1,
+            },
+            {
+              label: "Last Week",
+              data: data.lastWeek,
+              backgroundColor: "rgba(82, 205, 255, 0.2)",
+              borderColor: "rgba(82, 205, 255, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }, [data]);
+
   return (
     <>
       <header
@@ -16,90 +75,28 @@ const Home = () => {
       </header>
       <div className="container-fluid">
         <div className="row">
-          <div
-            className="col-2 d-flex justify-content align-items-start mt-2"
-            // style={{ backgroundColor: "#0b3d66" }}
-          >
+          <div className="col-2 d-flex justify-content align-items-start mt-2">
             <NavAdmin />
           </div>
-          <div className="col-10">
-            <div className="container">
-              <h1 className="mt-3 mb-3 text-center">xɪɴ ᴄʜàᴏ ǫᴜảɴ ᴛʀị ᴠɪêɴ</h1>
-              <div className="d-inline-flex">
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    Thêm sản phẩm
-                  </button>
-                </div>
-                <div className="ms-3 mt-1">
-                  <input
-                    className="border border-2 rounded-2"
-                    type="text"
-                    style={{ width: "300px" }}
-                    placeholder="Tìm kiếm..."
-                  />
-                </div>
-                <div className="ms-3 mt-2">
-                  <label htmlFor="typeFilter">Lọc theo loại dịch vụ:</label>
-                  <select
-                    className="ms-3 border border-2 rounded-2"
-                    style={{ width: "130px" }}
-                    id="typeFilter"
-                  >
-                    <option value="">Tất cả</option>
-                    <option value="Logistics">Logistics</option>
-                    <option value="Sea">Sea</option>
-                    <option value="Rail">Rail</option>
-                    <option value="Airlife">Airlife</option>
-                  </select>
-                </div>
-                <div className="ms-5 mt-1">
-                  <label htmlFor="priceFilter">Lọc theo giá tiền:</label>
-                  <input
-                    type="number"
-                    className="ms-3 border border-2 rounded-2"
-                    id="priceFilter"
-                  />
-                </div>
-              </div>
-              <table className="table mt-3">
-                <thead>
-                  <tr className="dataFields">
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => "serviceCode"}
-                    >
-                      Mã dịch vụ <TbArrowsSort />
-                    </th>
-                    <th style={{ cursor: "pointer" }} onClick={() => "name"}>
-                      Tên dịch vụ <TbArrowsSort />
-                    </th>
-                    <th>Hình ảnh</th>
-                    <th style={{ cursor: "pointer" }} onClick={() => "type"}>
-                      Loại dịch vụ <TbArrowsSort />
-                    </th>
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => "evaluate"}
-                    >
-                      Đánh giá <TbArrowsSort />
-                    </th>
-                    <th style={{ cursor: "pointer" }} onClick={() => "price"}>
-                      Giá tiền <TbArrowsSort />
-                    </th>
-                    <th>Mô tả</th>
-                    <th></th>
-                  </tr>
-                </thead>
-              </table>
 
-              <div className="pagination mt-3 d-flex justify-content-center"></div>
+          <div className="col-10">
+            <div className="container card-body">
+              <div className="text-center">
+                <h2 className="mt-3 mb-3">Hiệu Suất</h2>
+              </div>
+              <div className="chartjs-wrapper mt-5">
+                <canvas
+                  ref={chartRef}
+                  id="performaneLine"
+                  width="1112"
+                  height="300"
+                  className="chartjs-render-monitor"
+                ></canvas>
+              </div>
+              
             </div>
           </div>
+          
         </div>
       </div>
     </>

@@ -4,16 +4,7 @@ import { TbArrowsSort } from "react-icons/tb";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
-import AVT from "../Avatar/avatar-19.jpg";
-import {
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-  Button,
-  Dropdown,
-} from "react-bootstrap";
-import { FiSearch, FiBell, FiUser } from "react-icons/fi";
+
 interface ServiceData {
   _id: string;
   serviceCode: string;
