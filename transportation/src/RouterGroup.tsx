@@ -27,7 +27,11 @@ import RecruitingSalesStaff from "./Home/New newspaper/RecruitingSalesStaff";
 import { useQuery } from "@tanstack/react-query";
 import NavAdmin from "./Admin/NavAdmin";
 import AdminService from "./Admin/AdminService";
+<<<<<<< HEAD
+import Home from "./Admin/Home";
+=======
 import ServiceType from "./Admin/ServiceType";
+>>>>>>> 74e1c4ae8dd19df31a47042c85449112c5b6f776
 
 const RouterGroup: React.FC = () => {
   const [showElement, setShowElement] = useState(true); // State để kiểm soát hiển thị của phần tử
@@ -35,7 +39,11 @@ const RouterGroup: React.FC = () => {
   useEffect(() => {
     // Kiểm tra đường dẫn hiện tại
     const currentPath = window.location.pathname;
+<<<<<<< HEAD
+    if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/Home")) {
+=======
     if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/ServiceType") ) {
+>>>>>>> 74e1c4ae8dd19df31a47042c85449112c5b6f776
       setShowElement(false);
     } else {
       // Nếu không, hiển thị phần tử
@@ -70,7 +78,11 @@ const RouterGroup: React.FC = () => {
             <Route path="/" element={<Body />} />
             <Route path="/NavAdmin" element={<NavAdmin />} />
             <Route path="/AdminService" element={<AdminService />} />
+<<<<<<< HEAD
+            <Route path="/Home" element={<Home />} />
+=======
             <Route path="/ServiceType" element={<ServiceType />} />
+>>>>>>> 74e1c4ae8dd19df31a47042c85449112c5b6f776
             <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/Logistics" element={<Logistics />} />
             <Route path="/Sea" element={<Sea />} />

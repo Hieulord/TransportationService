@@ -14,14 +14,17 @@ const NavAdmin = () => {
             <ul className="navbar-nav" style={{ listStyleType: "none" }}>
               <li style={{ marginTop: "3px", fontWeight: "600" }}>
                 <a
-                  href="/NavAdmin"
+                  href="/Home"
                   className="text-decoration-none text-white fs-4"
                 >
                   Trang Chủ
                 </a>
               </li>
               <li style={{ marginTop: "3px", fontWeight: "600" }}>
-                <a href="/AdminService" className="text-decoration-none text-white fs-4">
+                <a
+                  href="/AdminService"
+                  className="text-decoration-none text-white fs-4"
+                >
                   Dịch Vụ
                 </a>
               </li>
