@@ -53,8 +53,8 @@ const NavAdmin = () => {
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link as={Link} to="/pages/billing">
-                        Thanh toán
+                      <Nav.Link as={Link} to="/Order">
+                        Danh sách đơn hàng
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
