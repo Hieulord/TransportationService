@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
-    orderCode: { type: String},
-    wayCode: { type: String},
-    receivingParty: { type: String},
+    orderCode: { type: String, unique: true},
+    wayCode: { type: String, unique: true},
+    receivingParty: { type: String, required: true},
     sendingParty: { type: String},
     deliveryAddress: { type: String},
     price: { type: Number},

@@ -4,12 +4,12 @@ const createOrder = async (req, res) => {
     try {
       // Kiểm tra các trường dữ liệu đầu vào
       const { orderCode, wayCode, receivingParty, sendingParty, deliveryAddress, price, moneyCollected, area } = req.body;
-      if (!orderCode || !wayCode || !receivingParty || !sendingParty || !deliveryAddress || !price || !moneyCollected || !area) {
-        return res.status(400).json({
-          message: "Các trường dữ liệu phải được nhập đầy đủ!",
-        });
-      }
-  
+      // if (!orderCode || !wayCode || !receivingParty || !sendingParty || !deliveryAddress || !price || !moneyCollected || !area) {
+      //   return res.status(400).json({
+      //     message: "Các trường dữ liệu phải được nhập đầy đủ!",
+      //   });
+      // }
+   
       // Gọi hàm để tạo đơn hàng từ OrderService
       console.log("Đang thực thi tạo đơn hàng...");
       const response = await OrderService.createOrder(req);

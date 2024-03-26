@@ -68,7 +68,7 @@ const Order: React.FC = () => {
 
   const searchServices = services.filter(
     (service) =>
-      service.orderCode.toLowerCase().includes(searchKeyword.toLowerCase()) //includes là kiểm tra xem 1 chuỗi có chứa 1 chuỗi con khác không
+      service.orderCode.toLowerCase().includes(searchKeyword.toLowerCase()) // Thay đổi từ "name" thành "orderCode"
   );
 
   function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -171,35 +171,42 @@ const Order: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-  
+
     try {
       // Kiểm tra serviceCode có trùng không
-      if (checkDuplicateServiceCode(orderCode) || checkDuplicateServiceCode(wayCode)) {
+      if (
+        checkDuplicateServiceCode(orderCode) ||
+        checkDuplicateServiceCode(wayCode)
+      ) {
         alert("Mã đơn hàng hoặc vận đơn đã tồn tại");
         return;
       }
-  
-      // Tạo FormData và thêm dữ liệu vào đó
-      const formData = new FormData();
-      formData.append("orderCode", orderCode);
-      formData.append("wayCode", wayCode);
-      formData.append("receivingParty", receivingParty);
-      formData.append("sendingParty", sendingParty);
-      formData.append("deliveryAddress", deliveryAddress);
-      formData.append("price", price.toString());
-      formData.append("moneyCollected", moneyCollected.toString());
-      formData.append("area", area);
-  
-      // Thực hiện gửi biểu mẫu với FormData
+
+      // Tạo object chứa dữ liệu để gửi đi
+      const requestData = {
+        orderCode,
+        wayCode,
+        receivingParty,
+        sendingParty,
+        deliveryAddress,
+        price: parseFloat(price),
+        moneyCollected: parseFloat(moneyCollected),
+        area,
+      };
+
+      // Thực hiện gửi biểu mẫu với dữ liệu JSON
       const response = await fetch("http://localhost:4000/api/order/create", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       });
-  
+
       if (!response.ok) {
         throw new Error("Có lỗi xảy ra khi gửi biểu mẫu");
       }
-  
+
       console.log(response);
       // Xóa các trường sau khi gửi thành công
       setOrderCode("");
@@ -218,7 +225,6 @@ const Order: React.FC = () => {
       alert("Đã xảy ra lỗi khi gửi biểu mẫu");
     }
   };
-  
 
   //In dữ liệu ra bảng
   const fetchData = async () => {
