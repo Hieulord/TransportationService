@@ -1,40 +1,40 @@
-const Order = require("../models/OrderModel");
+const Staff = require("../models/StaffModel");
 const bcrypt = require("bcrypt");
 
-const createOrder = (req) => {
+const createStaff = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const checkProduct = await Order.findOne({
-        orderCode: req.body.orderCode,
-        wayCode: req.body.wayCode,
+      const checkStaff = await Staff.findOne({
+        staffCode: req.body.staffCode,
       });
-      if (checkProduct !== null) {
+      if (checkStaff !== null) {
         resolve({
           status: "OK",
-          message: "The service code of product already exists.",
+          message: "The staff code of product already exists.",
         });
       } else {
-        const addProduct = await Order.create({
-          orderCode: req.body.orderCode,
-          wayCode: req.body.wayCode,
-          receivingParty: req.body.receivingParty,
-          sendingParty: req.body.sendingParty,
-          deliveryAddress: req.body.deliveryAddress,
-          price: req.body.price,
-          moneyCollected: req.body.moneyCollected,
+        const addStaff = await Staff.create({
+          staffCode: req.body.staffCode,
+          nameStaff: req.body.nameStaff,
+          gender: req.body.gender,
+          dateStaff: req.body.dateStaff,
+          email: req.body.email,
+          phone: req.body.phone,
+          address: req.body.address,
+          position: req.body.position,
           area: req.body.area,
         });
-        console.log("Tạo sản phẩm ");
-        console.log("Lưu sản phẩm");
-        if (addProduct) {
+        console.log("Tạo nhân viên ");
+        console.log("Lưu nhân viên");
+        if (addStaff) {
           resolve({
             status: "OK",
             message: "SUCCESS",
-            data: addProduct,
+            data: addStaff,
           });
           console.log("Ok con dê");
         } else {
-          console.log("bug kìa");
+          console.log("Bug kìa");
           reject("Failed to create product.");
         }
       }
@@ -45,23 +45,23 @@ const createOrder = (req) => {
   });
 };
 
-const updateOrder = (id, data) => {
+const updateStaff = (id, data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const checkOrder = await Order.findById(id);
-      if (!checkOrder) {
+      const checkStaff = await Staff.findById(id);
+      if (!checkStaff) {
         resolve({
           status: "OK",
-          message: "The Order is not defined!!",
+          message: "The Staff is not defined!!",
         });
       }
-      const updateOrder = await Order.findByIdAndUpdate(id, data, {
+      const updateStaffs = await Staff.findByIdAndUpdate(id, data, {
         new: true,
       });
       resolve({
         staus: "OK",
         message: "SUCCESS",
-        data: updateOrder,
+        data: updateStaffs,
       });
     } catch (e) {
       reject(e);
@@ -69,20 +69,20 @@ const updateOrder = (id, data) => {
   });
 };
 
-const deleteOrder = (id) => {
+const deleteStaff = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const checkOrder = await Order.findById(id);
-      if (!checkOrder) {
+      const checkStaff = await Staff.findById(id);
+      if (!checkStaff) {
         resolve({
           status: "OK",
-          message: "The Order is not defined!!",
+          message: "The Staff is not defined!!",
         });
       }
-      await Order.findByIdAndDelete(id);
+      await Staff.findByIdAndDelete(id);
       resolve({
         staus: "OK",
-        message: "Delete Order success",
+        message: "Delete Staff success",
       });
     } catch (e) {
       reject(e);
@@ -90,10 +90,10 @@ const deleteOrder = (id) => {
   });
 };
 
-const getAllOrder = (limit, page, sort, filter) => {
+const getAllStaff = (limit, page, sort, filter) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let query = Order.find();
+      let query = Staff.find();
 
       if (filter && filter.length === 2) {
         const [key, value] = filter;
@@ -105,7 +105,7 @@ const getAllOrder = (limit, page, sort, filter) => {
         query = query.sort({ [field]: direction === "asc" ? 1 : -1 });
       }
 
-      const totalProduct = await Order.countDocuments();
+      const totalProduct = await Staff.countDocuments();
       const allProduct = await query.limit(limit).skip(page * limit);
 
       resolve({
@@ -122,20 +122,20 @@ const getAllOrder = (limit, page, sort, filter) => {
   });
 };
 
-const getDetailOrder = (id) => {
+const getDetailStaff = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const order = await Order.findById(id);
-      if (!order) {
+      const staff = await Staff.findById(id);
+      if (!staff) {
         resolve({
           status: "OK",
-          message: "The order is not defined!!",
+          message: "The staff is not defined!!",
         });
       }
       resolve({
         staus: "OK",
         message: "Success",
-        data: order,
+        data: staff,
       });
     } catch (e) {
       reject(e);
@@ -144,9 +144,9 @@ const getDetailOrder = (id) => {
 };
 
 module.exports = {
-  createOrder,
-  updateOrder,
-  deleteOrder,
-  getAllOrder,
-  getDetailOrder,
+  createStaff,
+  updateStaff,
+  deleteStaff,
+  getAllStaff,
+  getDetailStaff,
 };

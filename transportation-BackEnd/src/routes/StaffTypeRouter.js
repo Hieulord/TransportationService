@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const StaffTypeController = require("../controllers/StaffTypeController");
 
-router.post(
+  router.post(
     "/create",
     StaffTypeController.createStaffType
   );
