@@ -8,8 +8,6 @@ import {
   FiLayout,
   FiMonitor,
   FiClipboard,
-  FiGitPullRequest,
-  FiDownload,
 } from "react-icons/fi"; // Importing icons from react-icons
 const NavAdmin = () => {
   return (
@@ -36,7 +34,7 @@ const NavAdmin = () => {
               </Nav.Item>
               <Accordion>
                 <Accordion.Header>
-                  <FiLayout className="nav-icon me-2" />{" "}
+                  <FiLayout className="nav-icon me-2" />
                   {/* Using FiLayout icon */}
                   Danh Sách
                 </Accordion.Header>
@@ -59,63 +57,42 @@ const NavAdmin = () => {
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link as={Link} to="/pages/pricing">
-                        Định giá
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link as={Link} to="/404">
-                        Lỗi 404
+                        Danh sách khách hàng
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>
                 </Accordion.Body>
               </Accordion>
               <Nav.Item>
-                <Nav.Link as={Link} to="/layouts/layout-vertical">
-                  <FiLayout className="nav-icon me-2" />{" "}
-                  {/* Using FiLayout icon */}
-                  Bố cục
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <div className="navbar-heading">THÀNH PHẦN UI</div>
+                <div className="navbar-heading">QUẢN LÝ NHÂN VIÊN</div>
               </Nav.Item>
               <Accordion>
                 <Accordion.Header>
-                  <FiMonitor className="nav-icon me-2" />{" "}
+                  <FiMonitor className="nav-icon me-2" />
                   {/* Using FiMonitor icon */}
-                  Các thành phần
+                  Danh sách
                 </Accordion.Header>
                 <Accordion.Body>
                   <Nav className="flex-column list-group">
-                    <Nav.Link as={Link} to="/components/accordions">
-                      đàn accordion
+                    <Nav.Link as={Link} to="/Staff">
+                      Danh sách nhân viên
+                    </Nav.Link>
+                  </Nav>
+                  <Nav className="flex-column list-group">
+                    <Nav.Link as={Link} to="/StaffType">
+                      Loại nhân viên
                     </Nav.Link>
                   </Nav>
                 </Accordion.Body>
               </Accordion>
               <Nav.Item>
-                <div className="navbar-heading">Tài liệu</div>
+                <div className="navbar-heading">QUẢN LÝ DỮ LIỆU</div>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link as={Link} to="/documentation">
-                  <FiClipboard className="nav-icon me-2" />{" "}
+                  <FiClipboard className="nav-icon me-2" />
                   {/* Using FiClipboard icon */}
-                  Tài liệu
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={Link} to="/changelog">
-                  <FiGitPullRequest className="nav-icon me-2" />{" "}
-                  {/* Using FiGitPullRequest icon */}
-                  Nhật ký thay đổi
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="https://codescandy.gumroad.com/l/dashui-nextjs">
-                  <FiDownload className="nav-icon me-2" />{" "}
-                  {/* Using FiDownload icon */}
-                  Tải xuống
+                  Danh sách tài khoản khách hàng
                 </Nav.Link>
               </Nav.Item>
             </Nav>
