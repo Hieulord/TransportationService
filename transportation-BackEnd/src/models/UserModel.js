@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, require: true },
     password: { type: String, require: true },
     isAdmin: { type: Boolean, default: false, require: true }, // Dùng để phân quyền
-    phone: { type: Number, require: true },
+    phone: { type: String, require: true },
     access_token: { type: String, require: true },
     refresh_token: { type: String, require: true },
   },
