@@ -15,13 +15,13 @@ const createUser = (newUser) => {
           message: "The email is already",
         });
       }
-      // const hash = bcrypt.hashSync(password, 10);
+      const hash = bcrypt.hashSync(password, 10);
       const createUser = await User.create({
         firstName,
         lastName,
         email,
         phone,
-        password,
+        password: hash,
         confirmPassword,
       });
       if (createUser) {
@@ -54,7 +54,7 @@ const loginUser = (userLogin) => {
 
       if (!comparePassword) {
         resolve({
-          staus: "OK",
+          status: "OK",
           message: "The password or user is incorrect!!",
         });
       }
@@ -70,7 +70,7 @@ const loginUser = (userLogin) => {
       });
 
       resolve({
-        staus: "OK",
+        status: "OK",
         message: "SUCCESS",
         access_token,
         refresh_token,
