@@ -5,31 +5,27 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
 
-interface OrderData {
+interface StaffData {
   _id: string;
-  orderCode: string;
-  wayCode: string;
-  receivingParty: string; // Thay đổi kiểu dữ liệu của trường image
-  sendingParty: string;
-  deliveryAddress: string;
-  price: number;
-  moneyCollected: number;
-  area: string;
+  firstName: string;
+  lastName: string;
+  isAdmin: boolean; // Đã thay đổi kiểu dữ liệu của trường isAdmin thành boolean
+  password: string;
+  email: string;
+  phone: string;
 }
 
-const Order: React.FC = () => {
+const User: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [services, setServices] = useState<OrderData[]>([]);
+  const [services, setServices] = useState<StaffData[]>([]);
 
-  const [orderCode, setOrderCode] = useState("");
-  const [wayCode, setWayCode] = useState("");
-  const [receivingParty, setReceivingParty] = useState("");
-  const [sendingParty, setSendingParty] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [price, setPrice] = useState("");
-  const [moneyCollected, setMoneyCollected] = useState("");
-  const [area, setArea] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false); // Khởi tạo isAdmin với giá trị ban đầu là false
+  const [password, setPassWord] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   // State cho phân trang
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +46,7 @@ const Order: React.FC = () => {
   // Sort để lưu trữ dạng sắp xếp hiện tại
   const [sortType, setSortType] = useState<"asc" | "desc">("asc");
 
-  const handleSort = (sortBy: keyof OrderData) => {
+  const handleSort = (sortBy: keyof StaffData) => {
     const sortedServices = [...services]; // Tạo một bản sao của danh sách dịch vụ
     sortedServices.sort((a, b) => {
       if (sortType === "asc") {
@@ -68,7 +64,7 @@ const Order: React.FC = () => {
 
   const searchServices = services.filter(
     (service) =>
-      service.orderCode.toLowerCase().includes(searchKeyword.toLowerCase()) // Thay đổi từ "name" thành "orderCode"
+      service.firstName.toLowerCase().includes(searchKeyword.toLowerCase()) // Thay đổi từ "name" thành "firstName"
   );
 
   function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -77,64 +73,49 @@ const Order: React.FC = () => {
 
   //Filter
   const [filterType, setFilterType] = useState<string>("");
-  const [filterPrice, setFilterPrice] = useState<number | null>(null);
 
   //Hàm kiểm tra bộ lọc
   const filterServices = searchServices.filter((service) => {
     // Kiểm tra nếu không có bộ lọc hoặc dịch vụ không phù hợp với bộ lọc
     if (
       (filterType === "" ||
-        service.area.toLowerCase() === filterType.toLowerCase()) && //toLowerCase là chuyển đổi chuỗi thành chữ thường
-      (filterPrice === null || service.price === filterPrice)
+        service.isAdmin === (filterType.toLowerCase() === "true"))
     ) {
       return true;
     }
     return false;
   });
 
-  //Lọc theo khu vực
+  //Lọc theo loại dịch vụ
   const handleTypeFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const area = e.target.value;
-    setFilterType(area);
-  };
-
-  //Lọc theo giá tiền
-  const handlePriceFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const price = e.target.value === "" ? null : parseInt(e.target.value);
-    setFilterPrice(price);
+    const isAdmin = e.target.value;
+    setFilterType(isAdmin);
   };
 
   //Edit
-  const [editFormData, setEditFormData] = useState<OrderData>({
+  const [editFormData, setEditFormData] = useState<StaffData>({
     _id: "",
-    orderCode: "",
-    wayCode: "",
-    receivingParty: "",
-    sendingParty: "",
-    deliveryAddress: "",
-    price: 0,
-    moneyCollected: 800,
-    area: "",
+    firstName: "",
+    lastName: "",
+    isAdmin: false, // Khởi tạo isAdmin trong editFormData với giá trị ban đầu là false
+    password: "",
+    email: "",
+    phone: "",
   });
 
   const handleEditSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const isDuplicateOrderCode = checkDuplicateServiceCode(
-        editFormData.orderCode
-      );
-      const isDuplicateWayCode = checkDuplicateServiceCode(
-        editFormData.wayCode
-      );
+      const isDuplicateEmail = checkDuplicateServiceCode(editFormData.email);
 
-      if (isDuplicateOrderCode || isDuplicateWayCode) {
-        alert("Mã đơn hàng hoặc vận đơn đã tồn tại");
+      if (isDuplicateEmail) {
+        alert("Email đã tồn tại");
         return;
       }
 
       const response = await axios.put(
-        `http://localhost:4000/api/order/update/${editFormData._id}`,
+        `http://localhost:4000/api/user/update-user/${editFormData._id}`,
         editFormData
       );
 
@@ -143,8 +124,8 @@ const Order: React.FC = () => {
         setShowModal(false); // Ẩn modal sau khi chỉnh sửa thành công
         fetchData(); // Lấy lại dữ liệu từ API để cập nhật danh sách
       } else {
-        console.error("Lỗi khi chỉnh sửa đơn hàng:", response.statusText);
-        alert("Đã xảy ra lỗi khi chỉnh sửa đơn hàng");
+        console.error("Lỗi khi chỉnh sửa tài khoản:", response.statusText);
+        alert("Đã xảy ra lỗi khi chỉnh sửa tài khoản");
       }
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
@@ -152,7 +133,7 @@ const Order: React.FC = () => {
     }
   };
 
-  const handleEdit = (service: OrderData) => {
+  const handleEdit = (service: StaffData) => {
     setEditFormData(service); // Cập nhật dữ liệu của editFormData
     setShowModal(true); // Hiển thị modal chỉnh sửa
   };
@@ -164,9 +145,7 @@ const Order: React.FC = () => {
     }
 
     // Kiểm tra xem serviceCode có tồn tại trong danh sách dịch vụ hay không
-    return services.some(
-      (service) => service.orderCode === code || service.wayCode === code
-    );
+    return services.some((service) => service.email === code);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -174,28 +153,23 @@ const Order: React.FC = () => {
 
     try {
       // Kiểm tra serviceCode có trùng không
-      if (
-        checkDuplicateServiceCode(orderCode) ||
-        checkDuplicateServiceCode(wayCode)
-      ) {
-        alert("Mã đơn hàng hoặc vận đơn đã tồn tại");
+      if (checkDuplicateServiceCode(email)) {
+        alert("Email đã tồn tại");
         return;
       }
 
       // Tạo object chứa dữ liệu để gửi đi
       const requestData = {
-        orderCode,
-        wayCode,
-        receivingParty,
-        sendingParty,
-        deliveryAddress,
-        price: parseFloat(price),
-        moneyCollected: parseFloat(moneyCollected),
-        area,
+        firstName,
+        lastName,
+        isAdmin,
+        password,
+        email,
+        phone,
       };
 
       // Thực hiện gửi biểu mẫu với dữ liệu JSON
-      const response = await fetch("http://localhost:4000/api/order/create", {
+      const response = await fetch("http://localhost:4000/api/user/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,14 +183,12 @@ const Order: React.FC = () => {
 
       console.log(response);
       // Xóa các trường sau khi gửi thành công
-      setOrderCode("");
-      setWayCode("");
-      setReceivingParty("");
-      setSendingParty("");
-      setDeliveryAddress("");
-      setPrice("");
-      setMoneyCollected("");
-      setArea("");
+      setFirstName("");
+      setLastName("");
+      setIsAdmin(false);
+      setPassWord("");
+      setEmail("");
+      setPhone("");
       setShowModal(false);
       fetchData();
       alert("Dữ liệu đã được lưu");
@@ -229,9 +201,7 @@ const Order: React.FC = () => {
   //In dữ liệu ra bảng
   const fetchData = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:4000/api/order/getAllOrder"
-      );
+      const res = await axios.get("http://localhost:4000/api/user/getAll");
       setServices(res.data.data);
     } catch (e) {
       console.error(e);
@@ -243,7 +213,7 @@ const Order: React.FC = () => {
     try {
       if (confirmDelete()) {
         const res = await axios.delete(
-          `http://localhost:4000/api/order/delete/${id}`
+          `http://localhost:4000/api/user/delete-user/${id}`
         );
         console.log(res);
         fetchData();
@@ -286,7 +256,7 @@ const Order: React.FC = () => {
           </div>
           <div className="col-10">
             <div className="container">
-              <h2 className="mt-3 mb-3">Danh sách đơn hàng</h2>
+              <h2 className="mt-3 mb-3">Danh sách tài khoản</h2>
               <div className="d-inline-flex">
                 <div>
                   <button
@@ -294,7 +264,7 @@ const Order: React.FC = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                   >
-                    Thêm đơn hàng
+                    Thêm tài khoản
                   </button>
                 </div>
                 <div className="ms-3 mt-1">
@@ -302,13 +272,15 @@ const Order: React.FC = () => {
                     className="border border-2 rounded-2"
                     type="text"
                     style={{ width: "300px" }}
-                    placeholder="Tìm kiếm mã ĐH..."
+                    placeholder="Tìm kiếm tên TK..."
                     value={searchKeyword}
                     onChange={handleSearchInputChange}
                   />
                 </div>
                 <div className="ms-3 mt-2">
-                  <label htmlFor="typeFilter">Lọc theo khu vực:</label>
+                  <label htmlFor="typeFilter">
+                    Lọc User (False) & Admin (True):
+                  </label>
                   <select
                     className="ms-3 border border-2 rounded-2"
                     style={{ width: "130px" }}
@@ -317,88 +289,62 @@ const Order: React.FC = () => {
                     onChange={handleTypeFilterChange}
                   >
                     <option value="">Tất cả</option>
-                    <option value="Khu vực A">Khu Vực A</option>
-                    <option value="Khu vực B">Khu Vực B</option>
-                    <option value="Khu vực C">Khu Vực C</option>
-                    <option value="Khu vực D">Khu vực D</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
                   </select>
-                </div>
-                <div className="ms-5 mt-1">
-                  <label htmlFor="priceFilter">Lọc theo giá tiền:</label>
-                  <input
-                    type="number"
-                    className="ms-3 border border-2 rounded-2"
-                    id="priceFilter"
-                    value={filterPrice || ""}
-                    onChange={handlePriceFilterChange}
-                  />
                 </div>
               </div>
               <table className="table mt-3">
-                <thead>
+                <thead className="text-nowrap">
                   <tr className="dataFields">
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("orderCode")}
+                      onClick={() => handleSort("firstName")}
                     >
-                      Mã đơn hàng <TbArrowsSort />
+                      Tên <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("wayCode")}
+                      onClick={() => handleSort("lastName")}
                     >
-                      Mã vận đơn <TbArrowsSort />
+                      Họ <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("receivingParty")}
+                      onClick={() => handleSort("isAdmin")}
                     >
-                      Bên nhận <TbArrowsSort />
+                      Quyền <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("sendingParty")}
+                      onClick={() => handleSort("password")}
                     >
-                      Bên gửi <TbArrowsSort />
+                      Mật khẩu <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("deliveryAddress")}
+                      onClick={() => handleSort("email")}
                     >
-                      Địa chỉ giao hàng <TbArrowsSort />
+                      Email <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("price")}
+                      onClick={() => handleSort("phone")}
                     >
-                      Giá dịch vụ <TbArrowsSort />
-                    </th>
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("moneyCollected")}
-                    >
-                      Tiền thu hộ <TbArrowsSort />
-                    </th>
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("area")}
-                    >
-                      Khu vực <TbArrowsSort />
+                      Số điện thoại <TbArrowsSort />
                     </th>
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-nowrap">
                   {getCurrentItems().map((service) => (
                     <tr key={service._id}>
-                      <td>{service.orderCode}</td>
-                      <td>{service.wayCode}</td>
-                      <td>{service.receivingParty}</td>
-                      <td>{service.sendingParty}</td>
-                      <td>{service.deliveryAddress}</td>
-                      <td>{service.price}</td>
-                      <td>{service.moneyCollected}</td>
-                      <td>{service.area}</td>
+                      <td>{service.firstName}</td>
+                      <td>{service.lastName}</td>
+                      <td>{service.isAdmin ? "True" : "False"}</td>
+                      <td>{service.password}</td>
+                      <td>{service.email}</td>
+                      <td>{service.phone}</td>
                       <td>
                         <button
                           className="border border-0 bg-transparent"
@@ -463,7 +409,7 @@ const Order: React.FC = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Thêm sản phẩm
+                Thêm tài khoản
               </h1>
               <button
                 type="button"
@@ -476,83 +422,75 @@ const Order: React.FC = () => {
               <form onSubmit={handleSubmit}>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label htmlFor="orderCode">Mã đơn hàng:</label>
+                    <label htmlFor="firstName">Tên :</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="orderCode"
-                      value={orderCode}
-                      onChange={(e) => setOrderCode(e.target.value)}
+                      id="firstName"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="wayCode">Mã vận đơn:</label>
+                    <label htmlFor="lastName">Họ :</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="wayCode"
-                      value={wayCode}
-                      onChange={(e) => setWayCode(e.target.value)}
+                      id="lastName"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="receivingParty">Bên nhận:</label>
+                    <label htmlFor="isAdmin">Quyền:</label>
+                    <div className="form-check">
+                      <input
+                        type="radio"
+                        id="true"
+                        name="isAdmin"
+                        checked={isAdmin === true}
+                        onChange={() => setIsAdmin(true)}
+                      />
+                      <label htmlFor="true">True</label>
+                      <input
+                        type="radio"
+                        id="false"
+                        name="isAdmin"
+                        checked={isAdmin === false}
+                        onChange={() => setIsAdmin(false)}
+                      />
+                      <label htmlFor="false">False</label>
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="password">Mật khẩu :</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="receivingParty"
-                      value={receivingParty}
-                      onChange={(e) => setReceivingParty(e.target.value)}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassWord(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="sendingParty">Bên gửi:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="sendingParty"
-                      value={sendingParty}
-                      onChange={(e) => setSendingParty(e.target.value)}
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="deliveryAddress">Địa chỉ giao hàng:</label>
+                    <label htmlFor="phone">Số điện thoại:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="deliveryAddress"
-                      value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="price">Giá dịch vụ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="moneyCollected">Tiền thu hộ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="moneyCollected"
-                      value={moneyCollected}
-                      onChange={(e) => setMoneyCollected(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="area">Khu vực:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="area"
-                      value={area}
-                      onChange={(e) => setArea(e.target.value)}
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                     />
                   </div>
                 </div>
@@ -587,7 +525,7 @@ const Order: React.FC = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="editModalLabel">
-                Sửa sản phẩm
+                Sửa tài khoản
               </h1>
               <button
                 type="button"
@@ -601,121 +539,108 @@ const Order: React.FC = () => {
               <form onSubmit={handleEditSubmit}>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label htmlFor="orderCode">Mã đơn hàng:</label>
+                    <label htmlFor="firstName">Tên:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="orderCode"
-                      value={editFormData.orderCode}
+                      name="firstName"
+                      value={editFormData.firstName}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          orderCode: e.target.value,
+                          firstName: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="wayCode">Mã vận đơn:</label>
+                    <label htmlFor="lastName">Họ:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="wayCode"
-                      value={editFormData.wayCode}
+                      name="lastName"
+                      value={editFormData.lastName}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          wayCode: e.target.value,
+                          lastName: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="receivingParty">Bên nhận:</label>
+                    <label htmlFor="isAdmin">Quyền:</label>
+                    <div className="form-check">
+                      <input
+                        type="radio"
+                        id="true"
+                        name="editIsAdmin"
+                        checked={editFormData.isAdmin === true}
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            isAdmin: true,
+                          })
+                        }
+                      />
+                      <label htmlFor="true">True</label>
+                      <input
+                        type="radio"
+                        id="false"
+                        name="editIsAdmin"
+                        checked={editFormData.isAdmin === false}
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            isAdmin: false,
+                          })
+                        }
+                      />
+                      <label htmlFor="false">False</label>
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="password">Mật khẩu:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="receivingParty"
-                      value={editFormData.receivingParty}
+                      name="password"
+                      value={editFormData.password}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          receivingParty: e.target.value,
+                          password: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="sendingParty">Bên gửi:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="sendingParty"
-                      value={editFormData.sendingParty}
+                      id="email"
+                      value={editFormData.email}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          sendingParty: e.target.value,
+                          email: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="deliveryAddress">Địa chỉ giao hàng:</label>
+                    <label htmlFor="phone">Số điện thoại:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="deliveryAddress"
-                      value={editFormData.deliveryAddress}
+                      id="phone"
+                      value={editFormData.phone}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          deliveryAddress: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="price">Giá dịch vụ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      value={editFormData.price}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          price: Number(e.target.value),
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="moneyCollected">Tiền thu hộ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="moneyCollected"
-                      value={editFormData.moneyCollected}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          moneyCollected: Number(e.target.value),
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="area">Khu vực:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="area"
-                      value={editFormData.area}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          area: e.target.value,
+                          phone: e.target.value,
                         })
                       }
                     />
@@ -730,7 +655,7 @@ const Order: React.FC = () => {
                     Đóng
                   </button>
                   <button type="submit" className="btn btn-primary">
-                    Sửa
+                    Lưu thay đổi
                   </button>
                 </div>
               </form>
@@ -738,14 +663,8 @@ const Order: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Hàm kiểm tra ẩn hiện modal */}
-      <div
-        className={`modal-backdrop fade ${showModal ? "show" : ""}`}
-        style={{ display: showModal ? "block" : "none" }}
-      ></div>
     </>
   );
 };
 
-export default Order;
+export default User;

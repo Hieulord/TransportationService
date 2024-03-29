@@ -3,12 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./navAdmin.css";
 import { Container, Navbar, Nav, Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {
-  FiHome,
-  FiLayout,
-  FiMonitor,
-  FiClipboard,
-} from "react-icons/fi"; // Importing icons from react-icons
+import { FiHome, FiLayout, FiMonitor, FiClipboard } from "react-icons/fi"; // Importing icons from react-icons
 const NavAdmin = () => {
   return (
     <>
@@ -56,7 +51,7 @@ const NavAdmin = () => {
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link as={Link} to="/pages/pricing">
+                      <Nav.Link as={Link} to="/Client">
                         Danh sách khách hàng
                       </Nav.Link>
                     </Nav.Item>
@@ -89,7 +84,7 @@ const NavAdmin = () => {
                 <div className="navbar-heading">QUẢN LÝ DỮ LIỆU</div>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to="/documentation">
+                <Nav.Link as={Link} to="/User">
                   <FiClipboard className="nav-icon me-2" />
                   {/* Using FiClipboard icon */}
                   Danh sách tài khoản khách hàng

@@ -28,6 +28,8 @@ import { useQuery } from "@tanstack/react-query";
 import NavAdmin from "./Admin/NavAdmin";
 import AdminService from "./Admin/AdminService";
 import Home from "./Admin/Home";
+import User from "./Admin/User";
+import Client from "./Admin/Client";
 import Staff from "./Admin/Staff";
 import StaffType from "./Admin/StaffType";
 import ServiceType from "./Admin/ServiceType";
@@ -40,7 +42,7 @@ const RouterGroup: React.FC = () => {
     // Kiểm tra đường dẫn hiện tại
     const currentPath = window.location.pathname;
     if (currentPath.startsWith("/NavAdmin") || currentPath.startsWith("/AdminService") || currentPath.startsWith("/ServiceType") || currentPath.startsWith("/Home") || currentPath.startsWith("/Order")
-    || currentPath.startsWith("/home") || currentPath.startsWith("/StaffType") || currentPath.startsWith("/Staff") ) {
+    || currentPath.startsWith("/home") || currentPath.startsWith("/StaffType") || currentPath.startsWith("/Staff") || currentPath.startsWith("/Client") || currentPath.startsWith("/User") ) {
       setShowElement(false);
     } else {
       // Nếu không, hiển thị phần tử
@@ -77,6 +79,8 @@ const RouterGroup: React.FC = () => {
             <Route path="/AdminService" element={<AdminService />} />
             <Route path="/Order" element={<Order />} />
             <Route path="/Home" element={<Home />} />
+            <Route path="/User" element={<User />} />
+            <Route path="/Client" element={<Client />} />
             <Route path="/Staff" element={<Staff />} />
             <Route path="/StaffType" element={<StaffType />} />
             <Route path="/ServiceType" element={<ServiceType />} />

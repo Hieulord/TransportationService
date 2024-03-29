@@ -195,7 +195,7 @@ const ServiceType: React.FC = () => {
                     className="border border-2 rounded-2"
                     type="text"
                     style={{ width: "300px" }}
-                    placeholder="Tìm kiếm..."
+                    placeholder="Tìm kiếm mã LDV..."
                     value={searchKeyword}
                     onChange={handleSearchInputChange}
                   />

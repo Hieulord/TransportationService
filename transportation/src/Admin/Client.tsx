@@ -5,31 +5,29 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
 
-interface OrderData {
+interface StaffData {
   _id: string;
-  orderCode: string;
-  wayCode: string;
-  receivingParty: string; // Thay đổi kiểu dữ liệu của trường image
-  sendingParty: string;
-  deliveryAddress: string;
-  price: number;
-  moneyCollected: number;
-  area: string;
+  clientCode: string;
+  nameClient: string;
+  genderClient: string; // Thay đổi kiểu dữ liệu của trường image
+  dateClient: string;
+  email: string;
+  phone: string;
+  address: string;
 }
 
-const Order: React.FC = () => {
+const Client: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [services, setServices] = useState<OrderData[]>([]);
+  const [services, setServices] = useState<StaffData[]>([]);
 
-  const [orderCode, setOrderCode] = useState("");
-  const [wayCode, setWayCode] = useState("");
-  const [receivingParty, setReceivingParty] = useState("");
-  const [sendingParty, setSendingParty] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [price, setPrice] = useState("");
-  const [moneyCollected, setMoneyCollected] = useState("");
-  const [area, setArea] = useState("");
+  const [clientCode, setClientCode] = useState("");
+  const [nameClient, setNameClient] = useState("");
+  const [genderClient, setGenderClient] = useState("");
+  const [dateClient, setDateClient] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   // State cho phân trang
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +48,7 @@ const Order: React.FC = () => {
   // Sort để lưu trữ dạng sắp xếp hiện tại
   const [sortType, setSortType] = useState<"asc" | "desc">("asc");
 
-  const handleSort = (sortBy: keyof OrderData) => {
+  const handleSort = (sortBy: keyof StaffData) => {
     const sortedServices = [...services]; // Tạo một bản sao của danh sách dịch vụ
     sortedServices.sort((a, b) => {
       if (sortType === "asc") {
@@ -68,7 +66,7 @@ const Order: React.FC = () => {
 
   const searchServices = services.filter(
     (service) =>
-      service.orderCode.toLowerCase().includes(searchKeyword.toLowerCase()) // Thay đổi từ "name" thành "orderCode"
+      service.clientCode.toLowerCase().includes(searchKeyword.toLowerCase()) // Thay đổi từ "name" thành "clientCode"
   );
 
   function handleSearchInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -77,64 +75,61 @@ const Order: React.FC = () => {
 
   //Filter
   const [filterType, setFilterType] = useState<string>("");
-  const [filterPrice, setFilterPrice] = useState<number | null>(null);
+  const [filterphone, setFilterphone] = useState<string>("");
 
   //Hàm kiểm tra bộ lọc
   const filterServices = searchServices.filter((service) => {
     // Kiểm tra nếu không có bộ lọc hoặc dịch vụ không phù hợp với bộ lọc
     if (
       (filterType === "" ||
-        service.area.toLowerCase() === filterType.toLowerCase()) && //toLowerCase là chuyển đổi chuỗi thành chữ thường
-      (filterPrice === null || service.price === filterPrice)
+        service.genderClient.toLowerCase() === filterType.toLowerCase()) && //toLowerCase là chuyển đổi chuỗi thành chữ thường
+      (filterphone === "" ||
+        service.address.toLowerCase() === filterphone.toLowerCase())
     ) {
       return true;
     }
     return false;
   });
 
-  //Lọc theo khu vực
+  //Lọc theo loại dịch vụ
   const handleTypeFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const area = e.target.value;
-    setFilterType(area);
+    const genderClient = e.target.value;
+    setFilterType(genderClient);
   };
 
-  //Lọc theo giá tiền
-  const handlePriceFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const price = e.target.value === "" ? null : parseInt(e.target.value);
-    setFilterPrice(price);
+  //Lọc theo số điện thoại
+  const handlephoneFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const address = e.target.value;
+    setFilterphone(address);
   };
 
   //Edit
-  const [editFormData, setEditFormData] = useState<OrderData>({
+  const [editFormData, setEditFormData] = useState<StaffData>({
     _id: "",
-    orderCode: "",
-    wayCode: "",
-    receivingParty: "",
-    sendingParty: "",
-    deliveryAddress: "",
-    price: 0,
-    moneyCollected: 800,
-    area: "",
+    clientCode: "",
+    nameClient: "",
+    genderClient: "",
+    dateClient: "",
+    email: "",
+    phone: "",
+    address: "",
   });
 
   const handleEditSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const isDuplicateOrderCode = checkDuplicateServiceCode(
-        editFormData.orderCode
-      );
-      const isDuplicateWayCode = checkDuplicateServiceCode(
-        editFormData.wayCode
+      const isDuplicateclientCode = checkDuplicateServiceCode(
+        editFormData.clientCode
       );
 
-      if (isDuplicateOrderCode || isDuplicateWayCode) {
-        alert("Mã đơn hàng hoặc vận đơn đã tồn tại");
+      if (isDuplicateclientCode) {
+        alert("Mã khách hàng đã tồn tại");
         return;
       }
 
       const response = await axios.put(
-        `http://localhost:4000/api/order/update/${editFormData._id}`,
+        `http://localhost:4000/api/client/update/${editFormData._id}`,
         editFormData
       );
 
@@ -143,8 +138,8 @@ const Order: React.FC = () => {
         setShowModal(false); // Ẩn modal sau khi chỉnh sửa thành công
         fetchData(); // Lấy lại dữ liệu từ API để cập nhật danh sách
       } else {
-        console.error("Lỗi khi chỉnh sửa đơn hàng:", response.statusText);
-        alert("Đã xảy ra lỗi khi chỉnh sửa đơn hàng");
+        console.error("Lỗi khi chỉnh sửa khách hàng:", response.statusText);
+        alert("Đã xảy ra lỗi khi chỉnh sửa khách hàng");
       }
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
@@ -152,7 +147,7 @@ const Order: React.FC = () => {
     }
   };
 
-  const handleEdit = (service: OrderData) => {
+  const handleEdit = (service: StaffData) => {
     setEditFormData(service); // Cập nhật dữ liệu của editFormData
     setShowModal(true); // Hiển thị modal chỉnh sửa
   };
@@ -164,9 +159,7 @@ const Order: React.FC = () => {
     }
 
     // Kiểm tra xem serviceCode có tồn tại trong danh sách dịch vụ hay không
-    return services.some(
-      (service) => service.orderCode === code || service.wayCode === code
-    );
+    return services.some((service) => service.clientCode === code);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -174,28 +167,24 @@ const Order: React.FC = () => {
 
     try {
       // Kiểm tra serviceCode có trùng không
-      if (
-        checkDuplicateServiceCode(orderCode) ||
-        checkDuplicateServiceCode(wayCode)
-      ) {
-        alert("Mã đơn hàng hoặc vận đơn đã tồn tại");
+      if (checkDuplicateServiceCode(clientCode)) {
+        alert("Mã khách hàng đã tồn tại");
         return;
       }
 
       // Tạo object chứa dữ liệu để gửi đi
       const requestData = {
-        orderCode,
-        wayCode,
-        receivingParty,
-        sendingParty,
-        deliveryAddress,
-        price: parseFloat(price),
-        moneyCollected: parseFloat(moneyCollected),
-        area,
+        clientCode,
+        nameClient,
+        genderClient,
+        dateClient,
+        email,
+        phone,
+        address,
       };
 
       // Thực hiện gửi biểu mẫu với dữ liệu JSON
-      const response = await fetch("http://localhost:4000/api/order/create", {
+      const response = await fetch("http://localhost:4000/api/client/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,14 +198,13 @@ const Order: React.FC = () => {
 
       console.log(response);
       // Xóa các trường sau khi gửi thành công
-      setOrderCode("");
-      setWayCode("");
-      setReceivingParty("");
-      setSendingParty("");
-      setDeliveryAddress("");
-      setPrice("");
-      setMoneyCollected("");
-      setArea("");
+      setClientCode("");
+      setNameClient("");
+      setGenderClient("");
+      setDateClient("");
+      setEmail("");
+      setPhone("");
+      setAddress("");
       setShowModal(false);
       fetchData();
       alert("Dữ liệu đã được lưu");
@@ -230,7 +218,7 @@ const Order: React.FC = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/api/order/getAllOrder"
+        "http://localhost:4000/api/client/getAllClient"
       );
       setServices(res.data.data);
     } catch (e) {
@@ -243,7 +231,7 @@ const Order: React.FC = () => {
     try {
       if (confirmDelete()) {
         const res = await axios.delete(
-          `http://localhost:4000/api/order/delete/${id}`
+          `http://localhost:4000/api/client/delete/${id}`
         );
         console.log(res);
         fetchData();
@@ -286,7 +274,7 @@ const Order: React.FC = () => {
           </div>
           <div className="col-10">
             <div className="container">
-              <h2 className="mt-3 mb-3">Danh sách đơn hàng</h2>
+              <h2 className="mt-3 mb-3">Danh sách khách hàng</h2>
               <div className="d-inline-flex">
                 <div>
                   <button
@@ -294,7 +282,7 @@ const Order: React.FC = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                   >
-                    Thêm đơn hàng
+                    Thêm khách hàng
                   </button>
                 </div>
                 <div className="ms-3 mt-1">
@@ -302,13 +290,13 @@ const Order: React.FC = () => {
                     className="border border-2 rounded-2"
                     type="text"
                     style={{ width: "300px" }}
-                    placeholder="Tìm kiếm mã ĐH..."
+                    placeholder="Tìm kiếm mã KH..."
                     value={searchKeyword}
                     onChange={handleSearchInputChange}
                   />
                 </div>
                 <div className="ms-3 mt-2">
-                  <label htmlFor="typeFilter">Lọc theo khu vực:</label>
+                  <label htmlFor="typeFilter">Lọc theo giới tính:</label>
                   <select
                     className="ms-3 border border-2 rounded-2"
                     style={{ width: "130px" }}
@@ -317,88 +305,79 @@ const Order: React.FC = () => {
                     onChange={handleTypeFilterChange}
                   >
                     <option value="">Tất cả</option>
-                    <option value="Khu vực A">Khu Vực A</option>
-                    <option value="Khu vực B">Khu Vực B</option>
-                    <option value="Khu vực C">Khu Vực C</option>
-                    <option value="Khu vực D">Khu vực D</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
                   </select>
                 </div>
                 <div className="ms-5 mt-1">
-                  <label htmlFor="priceFilter">Lọc theo giá tiền:</label>
+                  <label htmlFor="phoneFilter">Lọc theo số điện thoại:</label>
                   <input
-                    type="number"
+                    type="text"
                     className="ms-3 border border-2 rounded-2"
-                    id="priceFilter"
-                    value={filterPrice || ""}
-                    onChange={handlePriceFilterChange}
+                    id="phoneFilter"
+                    value={filterphone}
+                    onChange={handlephoneFilterChange}
                   />
                 </div>
               </div>
               <table className="table mt-3">
-                <thead>
+                <thead className="text-nowrap">
                   <tr className="dataFields">
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("orderCode")}
+                      onClick={() => handleSort("clientCode")}
                     >
-                      Mã đơn hàng <TbArrowsSort />
+                      Mã khách hàng <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("wayCode")}
+                      onClick={() => handleSort("nameClient")}
                     >
-                      Mã vận đơn <TbArrowsSort />
+                      Tên khách hàng <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("receivingParty")}
+                      onClick={() => handleSort("genderClient")}
                     >
-                      Bên nhận <TbArrowsSort />
+                      Giới tính <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("sendingParty")}
+                      onClick={() => handleSort("dateClient")}
                     >
-                      Bên gửi <TbArrowsSort />
+                      Ngày sinh <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("deliveryAddress")}
+                      onClick={() => handleSort("email")}
                     >
-                      Địa chỉ giao hàng <TbArrowsSort />
+                      Email <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("price")}
+                      onClick={() => handleSort("phone")}
                     >
-                      Giá dịch vụ <TbArrowsSort />
+                      Số điện thoại <TbArrowsSort />
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("moneyCollected")}
+                      onClick={() => handleSort("address")}
                     >
-                      Tiền thu hộ <TbArrowsSort />
-                    </th>
-                    <th
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("area")}
-                    >
-                      Khu vực <TbArrowsSort />
+                      Địa chỉ <TbArrowsSort />
                     </th>
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-nowrap">
                   {getCurrentItems().map((service) => (
                     <tr key={service._id}>
-                      <td>{service.orderCode}</td>
-                      <td>{service.wayCode}</td>
-                      <td>{service.receivingParty}</td>
-                      <td>{service.sendingParty}</td>
-                      <td>{service.deliveryAddress}</td>
-                      <td>{service.price}</td>
-                      <td>{service.moneyCollected}</td>
-                      <td>{service.area}</td>
+                      <td>{service.clientCode}</td>
+                      <td>{service.nameClient}</td>
+                      <td>{service.genderClient}</td>
+                      <td>{service.dateClient}</td>
+                      <td>{service.email}</td>
+                      <td>{service.phone}</td>
+                      <td>{service.address}</td>
                       <td>
                         <button
                           className="border border-0 bg-transparent"
@@ -463,7 +442,7 @@ const Order: React.FC = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Thêm sản phẩm
+                Thêm khách hàng
               </h1>
               <button
                 type="button"
@@ -476,83 +455,73 @@ const Order: React.FC = () => {
               <form onSubmit={handleSubmit}>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label htmlFor="orderCode">Mã đơn hàng:</label>
+                    <label htmlFor="clientCode">Mã khách hàng:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="orderCode"
-                      value={orderCode}
-                      onChange={(e) => setOrderCode(e.target.value)}
+                      id="clientCode"
+                      value={clientCode}
+                      onChange={(e) => setClientCode(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="wayCode">Mã vận đơn:</label>
+                    <label htmlFor="nameClient">Tên khách hàng:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="wayCode"
-                      value={wayCode}
-                      onChange={(e) => setWayCode(e.target.value)}
+                      id="nameClient"
+                      value={nameClient}
+                      onChange={(e) => setNameClient(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="receivingParty">Bên nhận:</label>
+                    <label htmlFor="genderClient">Giới tính:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="receivingParty"
-                      value={receivingParty}
-                      onChange={(e) => setReceivingParty(e.target.value)}
+                      id="genderClient"
+                      value={genderClient}
+                      onChange={(e) => setGenderClient(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="sendingParty">Bên gửi:</label>
+                    <label htmlFor="dateClient">Ngày sinh:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="sendingParty"
-                      value={sendingParty}
-                      onChange={(e) => setSendingParty(e.target.value)}
+                      id="dateClient"
+                      value={dateClient}
+                      onChange={(e) => setDateClient(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="deliveryAddress">Địa chỉ giao hàng:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="deliveryAddress"
-                      value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="price">Giá dịch vụ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="moneyCollected">Tiền thu hộ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="moneyCollected"
-                      value={moneyCollected}
-                      onChange={(e) => setMoneyCollected(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="area">Khu vực:</label>
+                    <label htmlFor="phone">Số điện thoại:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="area"
-                      value={area}
-                      onChange={(e) => setArea(e.target.value)}
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="address">Địa chỉ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
                     />
                   </div>
                 </div>
@@ -587,7 +556,7 @@ const Order: React.FC = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="editModalLabel">
-                Sửa sản phẩm
+                Sửa khách hàng
               </h1>
               <button
                 type="button"
@@ -601,121 +570,106 @@ const Order: React.FC = () => {
               <form onSubmit={handleEditSubmit}>
                 <div className="modal-body">
                   <div className="form-group">
-                    <label htmlFor="orderCode">Mã đơn hàng:</label>
+                    <label htmlFor="clientCode">Mã khách hàng:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="orderCode"
-                      value={editFormData.orderCode}
+                      name="clientCode"
+                      value={editFormData.clientCode}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          orderCode: e.target.value,
+                          clientCode: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="wayCode">Mã vận đơn:</label>
+                    <label htmlFor="nameClient">Tên khách hàng:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="wayCode"
-                      value={editFormData.wayCode}
+                      name="nameClient"
+                      value={editFormData.nameClient}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          wayCode: e.target.value,
+                          nameClient: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="receivingParty">Bên nhận:</label>
+                    <label htmlFor="genderClient">Giới tính:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="receivingParty"
-                      value={editFormData.receivingParty}
+                      name="genderClient"
+                      value={editFormData.genderClient}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          receivingParty: e.target.value,
+                          genderClient: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="sendingParty">Bên gửi:</label>
+                    <label htmlFor="dateClient">Ngày sinh:</label>
                     <input
                       type="text"
                       className="form-control"
-                      name="sendingParty"
-                      value={editFormData.sendingParty}
+                      name="dateClient"
+                      value={editFormData.dateClient}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          sendingParty: e.target.value,
+                          dateClient: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="deliveryAddress">Địa chỉ giao hàng:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="deliveryAddress"
-                      value={editFormData.deliveryAddress}
+                      id="email"
+                      value={editFormData.email}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          deliveryAddress: e.target.value,
+                          email: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="price">Giá dịch vụ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      value={editFormData.price}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          price: Number(e.target.value),
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="moneyCollected">Tiền thu hộ:</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="moneyCollected"
-                      value={editFormData.moneyCollected}
-                      onChange={(e) =>
-                        setEditFormData({
-                          ...editFormData,
-                          moneyCollected: Number(e.target.value),
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="area">Khu vực:</label>
+                    <label htmlFor="phone">Số điện thoại:</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="area"
-                      value={editFormData.area}
+                      id="phone"
+                      value={editFormData.phone}
                       onChange={(e) =>
                         setEditFormData({
                           ...editFormData,
-                          area: e.target.value,
+                          phone: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="address">Địa chỉ:</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="address"
+                      value={editFormData.address}
+                      onChange={(e) =>
+                        setEditFormData({
+                          ...editFormData,
+                          address: e.target.value,
                         })
                       }
                     />
@@ -748,4 +702,4 @@ const Order: React.FC = () => {
   );
 };
 
-export default Order;
+export default Client;

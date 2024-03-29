@@ -20,6 +20,7 @@ function SignUp() {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
@@ -105,6 +106,18 @@ function SignUp() {
                   name="email"
                   autoComplete="email"
                   value={formData.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone"
+                  name="phone"
+                  autoComplete="phone"
+                  value={formData.phone}
                   onChange={handleChange}
                 />
               </Grid>

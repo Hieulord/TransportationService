@@ -79,7 +79,7 @@ const Staff: React.FC = () => {
 
   //Filter
   const [filterType, setFilterType] = useState<string>("");
-  const [filterphone, setFilterphone] = useState<number | null>(null);
+  const [filterPosition, setFilterPosition] = useState<string>("");
 
   //Hàm kiểm tra bộ lọc
   const filterServices = searchServices.filter((service) => {
@@ -87,8 +87,8 @@ const Staff: React.FC = () => {
     if (
       (filterType === "" ||
         service.gender.toLowerCase() === filterType.toLowerCase()) && //toLowerCase là chuyển đổi chuỗi thành chữ thường
-      (filterphone === null ||
-        service.phone.toString() === filterphone.toString())
+      (filterPosition === "" ||
+        service.position.toLowerCase() === filterPosition.toLowerCase())
     ) {
       return true;
     }
@@ -103,8 +103,8 @@ const Staff: React.FC = () => {
 
   //Lọc theo số điện thoại
   const handlephoneFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const phone = e.target.value === "" ? null : parseInt(e.target.value);
-    setFilterphone(phone);
+    const position = e.target.value;
+    setFilterPosition(position);
   };
 
   //Edit
@@ -215,6 +215,7 @@ const Staff: React.FC = () => {
       setEmail("");
       setPhone("");
       setAddress("");
+      setPosition("");
       setArea("");
       setShowModal(false);
       fetchData();
@@ -301,7 +302,7 @@ const Staff: React.FC = () => {
                     className="border border-2 rounded-2"
                     type="text"
                     style={{ width: "300px" }}
-                    placeholder="Tìm kiếm..."
+                    placeholder="Tìm kiếm mã NV..."
                     value={searchKeyword}
                     onChange={handleSearchInputChange}
                   />
@@ -326,7 +327,7 @@ const Staff: React.FC = () => {
                     type="text"
                     className="ms-3 border border-2 rounded-2"
                     id="phoneFilter"
-                    value={filterphone || ""}
+                    value={filterPosition}
                     onChange={handlephoneFilterChange}
                   />
                 </div>

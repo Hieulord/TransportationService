@@ -195,7 +195,7 @@ const StaffType: React.FC = () => {
                     className="border border-2 rounded-2"
                     type="text"
                     style={{ width: "300px" }}
-                    placeholder="Tìm kiếm..."
+                    placeholder="Tìm kiếm mã LNV..."
                     value={searchKeyword}
                     onChange={handleSearchInputChange}
                   />

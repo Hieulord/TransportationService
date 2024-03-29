@@ -284,7 +284,7 @@ const AdminService: React.FC = () => {
                     className="border border-2 rounded-2"
                     type="text"
                     style={{ width: "300px" }}
-                    placeholder="Tìm kiếm..."
+                    placeholder="Tìm kiếm tên DV..."
                     value={searchKeyword}
                     onChange={handleSearchInputChange}
                   />
