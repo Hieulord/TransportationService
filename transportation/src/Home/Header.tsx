@@ -97,7 +97,7 @@ function Header() {
       </section>
 
       <section>
-        <div className="container">
+        <div className="container text-nowrap">
           <div className="row">
             <div className="wrapper mt-2 p-0">
               <ul className="main-menu">
@@ -120,12 +120,22 @@ function Header() {
                     Trang Chủ
                   </RouterLink>
                 </li>
+
                 <li
                   id="menu-item-76"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
                   <RouterLink to="/Introduce" className="RouterLink">
                     Giới Thiệu
+                  </RouterLink>
+                </li>
+
+                <li
+                  id="menu-item-76"
+                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
+                >
+                  <RouterLink to="/ServiceProduct" className="RouterLink">
+                    Sản Phẩm
                   </RouterLink>
                 </li>
 
@@ -139,7 +149,8 @@ function Header() {
                   <ul className="sub-menu">
                     <li
                       id="menu-item-7"
-                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7"
+                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7 mt-2"
+                      style={{ width: "140%" }}
                     >
                       <RouterLink to="/Logistics" className="RouterLink">
                         Vận Chuyển Bộ Logistics
@@ -147,7 +158,8 @@ function Header() {
                     </li>
                     <li
                       id="menu-item-14"
-                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-14"
+                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-14 mt-2"
+                      style={{ width: "140%" }}
                     >
                       <RouterLink to="/Sea" className="RouterLink">
                         Vận Chuyển Đường Biển
@@ -155,7 +167,8 @@ function Header() {
                     </li>
                     <li
                       id="menu-item-16"
-                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-16"
+                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-16 mt-2"
+                      style={{ width: "140%" }}
                     >
                       <RouterLink to="/Fly" className="RouterLink">
                         Vận Chuyển Đường Hàng Không
@@ -163,7 +176,8 @@ function Header() {
                     </li>
                     <li
                       id="menu-item-17"
-                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-17"
+                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-17 mt-2"
+                      style={{ width: "140%" }}
                     >
                       <RouterLink to="/Rail" className="RouterLink">
                         Vận Chuyển Đường Sắt

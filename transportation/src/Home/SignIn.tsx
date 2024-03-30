@@ -18,7 +18,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 function SignIn() {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const requestData = {
@@ -28,20 +28,39 @@ function SignIn() {
 
     try {
       const response = await axios.post(
-       `${process.env.REACT_APP_API_KEY}/user/sign-in`,
+        `${process.env.REACT_APP_API_KEY}/user/sign-in`,
         requestData
-      );
+      ); // Sử dụng axios instance đã cấu hình
 
-      console.log(response.data); // handle successful response here
-      const { access_token } = response.data; // Assuming your API returns access_token upon successful login
+      console.log(response.data);
 
-      // Save access_token to localStorage or sessionStorage
-      localStorage.setItem("access_token", access_token);
+      // Kiểm tra isAdmin trong cơ sở dữ liệu
+      const isAdmin = await checkIsAdmin(response.data.email);
 
-      // Redirect to home page
-      navigate("/");
+      if (isAdmin === true) {
+        navigate("/home"); // Nếu là admin, chuyển hướng đến trang home
+      } else {
+        navigate("/"); // Nếu không phải admin, chuyển hướng đến trang body
+      }
     } catch (error) {
-      console.error("Error:", error); // handle error response here
+      console.error("Error:", error);
+    }
+  };
+
+  const checkIsAdmin = async (email: string) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_KEY}/user/get-details-by-email`,
+        {
+          params: {
+            email: email,
+          },
+        }
+      );
+      return response.data.isAdmin;
+    } catch (error) {
+      console.error("Error:", error);
+      return false;
     }
   };
 

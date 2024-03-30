@@ -32,8 +32,10 @@ import User from "./Admin/User";
 import Client from "./Admin/Client";
 import Staff from "./Admin/Staff";
 import StaffType from "./Admin/StaffType";
+import ServiceProduct from "./Home/ServiceProduct";
 import ServiceType from "./Admin/ServiceType";
 import Order from "./Admin/Order";
+import Detail from "./Home/Detail";
 
 const RouterGroup: React.FC = () => {
   const [showElement, setShowElement] = useState(true); // State để kiểm soát hiển thị của phần tử
@@ -83,6 +85,8 @@ const RouterGroup: React.FC = () => {
             <Route path="/Client" element={<Client />} />
             <Route path="/Staff" element={<Staff />} />
             <Route path="/StaffType" element={<StaffType />} />
+            <Route path="/Detail/:id" element={<Detail />} />
+            <Route path="/ServiceProduct" element={<ServiceProduct />} />
             <Route path="/ServiceType" element={<ServiceType />} />
             <Route path="/ServiceComponent" element={<ServiceComponent />} />
             <Route path="/Logistics" element={<Logistics />} />

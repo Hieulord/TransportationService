@@ -78,8 +78,8 @@ const User: React.FC = () => {
   const filterServices = searchServices.filter((service) => {
     // Kiểm tra nếu không có bộ lọc hoặc dịch vụ không phù hợp với bộ lọc
     if (
-      (filterType === "" ||
-        service.isAdmin === (filterType.toLowerCase() === "true"))
+      filterType === "" ||
+      service.isAdmin === (filterType.toLowerCase() === "true")
     ) {
       return true;
     }
@@ -317,12 +317,6 @@ const User: React.FC = () => {
                     </th>
                     <th
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleSort("password")}
-                    >
-                      Mật khẩu <TbArrowsSort />
-                    </th>
-                    <th
-                      style={{ cursor: "pointer" }}
                       onClick={() => handleSort("email")}
                     >
                       Email <TbArrowsSort />
@@ -342,7 +336,6 @@ const User: React.FC = () => {
                       <td>{service.firstName}</td>
                       <td>{service.lastName}</td>
                       <td>{service.isAdmin ? "True" : "False"}</td>
-                      <td>{service.password}</td>
                       <td>{service.email}</td>
                       <td>{service.phone}</td>
                       <td>
@@ -451,7 +444,9 @@ const User: React.FC = () => {
                         checked={isAdmin === true}
                         onChange={() => setIsAdmin(true)}
                       />
-                      <label htmlFor="true">True</label>
+                      <label className="ms-2 me-2" htmlFor="true">
+                        True
+                      </label>
                       <input
                         type="radio"
                         id="false"
@@ -459,7 +454,9 @@ const User: React.FC = () => {
                         checked={isAdmin === false}
                         onChange={() => setIsAdmin(false)}
                       />
-                      <label htmlFor="false">False</label>
+                      <label className="ms-2 me-2" htmlFor="false">
+                        False
+                      </label>
                     </div>
                   </div>
 
@@ -583,7 +580,7 @@ const User: React.FC = () => {
                           })
                         }
                       />
-                      <label htmlFor="true">True</label>
+                      <label className="ms-2 me-2" htmlFor="true">True</label>
                       <input
                         type="radio"
                         id="false"
@@ -596,7 +593,7 @@ const User: React.FC = () => {
                           })
                         }
                       />
-                      <label htmlFor="false">False</label>
+                      <label className="ms-2 me-2" htmlFor="false">False</label>
                     </div>
                   </div>
 

@@ -11,6 +11,7 @@ router.get(
   "/get-details/:id",
   userController.getDetailUser
 );
+router.get("/get-details-by-email", userController.getDetailUserByEmail);
 router.post("/refresh-token", userController.refreshToken);
 
 module.exports = router;

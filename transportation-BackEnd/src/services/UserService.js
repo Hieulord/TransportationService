@@ -160,6 +160,22 @@ const getDetailUser = (id) => {
   });
 };
 
+const getDetailUserByEmail = async (req, res) => {
+  try {
+    const { email } = req.query; // Lấy email từ query parameters
+    const user = await User.findOne({ email: email }); // Tìm kiếm người dùng dựa trên email
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
@@ -168,4 +184,5 @@ module.exports = {
   deleteUser,
   getAllUser,
   getDetailUser,
+  getDetailUserByEmail
 };
