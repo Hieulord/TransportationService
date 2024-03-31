@@ -85,7 +85,9 @@ const Contact: React.FC = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a style={{ textDecoration: 'none'}}  href="/">Trang chủ</a>
+                    <a style={{ textDecoration: "none" }} href="/">
+                      Trang chủ
+                    </a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Liên Hệ Chúng Tôi
@@ -214,7 +216,7 @@ const Contact: React.FC = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary ms-2"
                     onClick={handleClear}
                   >
                     <FiRefreshCcw /> Làm lại

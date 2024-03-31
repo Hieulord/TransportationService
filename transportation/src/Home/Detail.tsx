@@ -67,52 +67,63 @@ const Detail: React.FC = () => {
         <div className="col text-decoration-none">
           <b className="fs-3" style={{ fontWeight: "500" }}>
             {serviceDetail.name}
-          </b>
-          <p className="mt-2">
-            Mã dịch vụ: <b>{serviceDetail.serviceCode}</b>
-          </p>
+          </b>{" "}
+          <hr />
+          {/* Mô tả */}
           <p>
-            Mô tả: <span>{serviceDetail.description}</span>
+            <span>{serviceDetail.description}</span>
           </p>
-
+          <p className="mt-2">
+            <b>Mã dịch vụ:</b> <span>{serviceDetail.serviceCode}</span>
+          </p>
           <div className="d-flex flex-nowrap">
             <p>
-              Đánh Giá: <b>{serviceDetail.evaluate}</b>
+              <b>Đánh Giá:</b> <span>{serviceDetail.evaluate}</span>
             </p>
             <p className="ms-3">
-              Giá Dịch Vụ: <b>{serviceDetail.price}</b> <span>đ</span>
+              <b>Giá Dịch Vụ:</b> <span>{serviceDetail.price}</span>{" "}
+              <span>đ</span>
             </p>
           </div>
-
-          <button className="contactButton">
-            <Link className="text-decoration-none text-white" to="/Contact">
-              Contact Us
-            </Link>
-            <div className="iconButton">
-              <FaArrowRightLong />
+          <div className="d-flex flex-nowrap">
+            <button className="contactButton">
+              <Link className="text-decoration-none text-white" to="/Contact">
+                Liên Hệ Chúng Tôi
+              </Link>
+              <div className="iconButton">
+                <FaArrowRightLong />
+              </div>
+            </button>
+            <div className="icon mt-2 ms-5 fs-5">
+              <a
+                href="https://www.facebook.com"
+                className="social-link-iconFacebook"
+              >
+                <FaFacebookF />
+              </a>{" "}
+              &nbsp;
+              <a
+                href="https://twitter.com"
+                className="social-link-iconTwitter ms-3"
+              >
+                <FaTwitter />
+              </a>{" "}
+              &nbsp;
+              <a
+                href="https://www.youtube.com"
+                className="social-link-iconYoutube ms-3"
+              >
+                <FaYoutube />
+              </a>{" "}
+              &nbsp;
+              <a
+                href="https://www.pinterest.com"
+                className="social-link-iconPinterest ms-3"
+              >
+                <FaPinterestP />
+              </a>{" "}
+              &nbsp;
             </div>
-          </button>
-
-          <div className="icon mt-3 fs-4">
-            <a
-              href="https://www.facebook.com"
-              className="social-link-icon text-black"
-            >
-              <FaFacebookF />
-            </a>{" "}
-            &nbsp;
-            <a href="https://twitter.com" className="text-black ms-3">
-              <FaTwitter />
-            </a>{" "}
-            &nbsp;
-            <a href="https://www.youtube.com" className="text-black ms-3">
-              <FaYoutube />
-            </a>{" "}
-            &nbsp;
-            <a href="https://www.pinterest.com" className="text-black ms-3">
-              <FaPinterestP />
-            </a>{" "}
-            &nbsp;
           </div>
         </div>
       </div>

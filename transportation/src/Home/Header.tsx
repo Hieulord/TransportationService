@@ -196,13 +196,13 @@ function Header() {
                   <ul className="sub-menu">
                     <li
                       id="menu-item-19"
-                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-19"
+                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-19 mt-2"
                     >
                       <a href="/News">Tin Tức</a>
                     </li>
                     <li
                       id="menu-item-20"
-                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-20"
+                      className="menu-item menu-item-type-post_type menu-item-object-page menu-item-20 mt-2"
                     >
                       <a href="/Recruitment">Tuyển Dụng</a>
                     </li>

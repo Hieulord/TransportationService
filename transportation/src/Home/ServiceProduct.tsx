@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./serviceProduct.css";
 import axios from "axios";
 
 interface Service {
@@ -42,7 +43,7 @@ const ServiceProduct: React.FC = () => {
             >
               <div
                 key={service._id}
-                className="card m-0"
+                className="card m-0 mt-3 ms-5"
                 style={{ width: "18rem" }}
               >
                 <img
@@ -55,9 +56,6 @@ const ServiceProduct: React.FC = () => {
                   <h5 className="card-title text-center fs-4">
                     {service.name}
                   </h5>
-                  <p className="card-text">
-                    <b>Đánh Giá:</b> {service.evaluate}
-                  </p>
                   <p className="card-text">
                     <b>Giá Dịch Vụ:</b> {service.price}
                   </p>
