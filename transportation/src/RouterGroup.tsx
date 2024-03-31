@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
 import SignIn from "./Home/SignIn";
 import SignUp from "./Home/SignUp";
 import Body from "./Home/Body";
@@ -24,7 +23,6 @@ import Acv from "./Home/New newspaper/Acv";
 import AirplaneTaxReduction from "./Home/New newspaper/AirplaneTaxReduction";
 import WarehousePlayer from "./Home/New newspaper/WarehousePlayer";
 import RecruitingSalesStaff from "./Home/New newspaper/RecruitingSalesStaff";
-import { useQuery } from "@tanstack/react-query";
 import NavAdmin from "./Admin/NavAdmin";
 import AdminService from "./Admin/AdminService";
 import Home from "./Admin/Home";
@@ -39,7 +37,7 @@ import Detail from "./Home/Detail";
 
 const RouterGroup: React.FC = () => {
   const [showElement, setShowElement] = useState(true); // State để kiểm soát hiển thị của phần tử
-
+  
   useEffect(() => {
     // Kiểm tra đường dẫn hiện tại
     const currentPath = window.location.pathname;
@@ -51,23 +49,7 @@ const RouterGroup: React.FC = () => {
       setShowElement(true);
     }
   });
-  // useEffect(() => {
-  //   fetchApi();
-  // }, []);
-  const fetchApi = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_KEY}/service/getAllProduct`
-      );
-      return res.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const query = useQuery({ queryKey: ["todos"], queryFn: fetchApi });
-  console.log("query", query);
-
+  
   return (
     <>
       <Router>

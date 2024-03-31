@@ -152,23 +152,6 @@ const refreshToken = async (req, res) => {
   }
 };
 
-const getDetailUserByEmail = async (req, res) => {
-  try {
-    const userId = req.params.id;
-    if (!userId) {
-      return res.status(200).json({
-        status: "Err",
-        message: "The userId is required!!",
-      });
-    }
-    const respone = await UserService.getDetailUser(userId);
-    return res.status(200).json(respone);
-  } catch (e) {
-    return res.status(404).json({
-      message: e,
-    });
-  }
-};
 
 module.exports = {
   createUser,
@@ -178,5 +161,4 @@ module.exports = {
   getAllUser,
   getDetailUser,
   refreshToken,
-  getDetailUserByEmail
 };

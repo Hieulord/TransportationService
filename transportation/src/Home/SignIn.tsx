@@ -1,6 +1,6 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook from React Router
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,10 +16,23 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function SignIn() {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Check if user is already logged in, then redirect to home
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setLoading(true);
+    setError(null);
+
     const formData = new FormData(event.currentTarget);
     const requestData = {
       email: formData.get("email"),
@@ -30,37 +43,23 @@ function SignIn() {
       const response = await axios.post(
         `${process.env.REACT_APP_API_KEY}/user/sign-in`,
         requestData
-      ); // Sử dụng axios instance đã cấu hình
+      );
 
       console.log(response.data);
 
-      // Kiểm tra isAdmin trong cơ sở dữ liệu
-      const isAdmin = await checkIsAdmin(response.data.email);
+      // Check isAdmin from response data
+      const isAdmin = response.data.isAdmin;
 
-      if (isAdmin === true) {
-        navigate("/home"); // Nếu là admin, chuyển hướng đến trang home
+      if (isAdmin) {
+        navigate("/home");
       } else {
-        navigate("/"); // Nếu không phải admin, chuyển hướng đến trang body
+        navigate("/");
       }
     } catch (error) {
+      // setError("");
       console.error("Error:", error);
-    }
-  };
-
-  const checkIsAdmin = async (email: string) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_KEY}/user/get-details-by-email`,
-        {
-          params: {
-            email: email,
-          },
-        }
-      );
-      return response.data.isAdmin;
-    } catch (error) {
-      console.error("Error:", error);
-      return false;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -117,9 +116,15 @@ function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
               Sign In
             </Button>
+            {error && (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            )}
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
