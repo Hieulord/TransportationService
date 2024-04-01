@@ -123,6 +123,7 @@ const ServiceType: React.FC = () => {
         console.log(response);
         setShowModal(false);
         fetchData();
+        alert("Dữ liệu đã được lưu");
       }
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
