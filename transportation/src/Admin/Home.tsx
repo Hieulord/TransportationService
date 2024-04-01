@@ -12,6 +12,7 @@ import {
   FaChartPie,
 } from "react-icons/fa";
 import { Line } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 import { Style } from "@mui/icons-material";
 
 const notificationContent = (
@@ -174,17 +175,14 @@ const Home = () => {
                 </Nav.Item>
               </Navbar>
             </div>
-
             <div className="row">
-              <div className="col-lg-8">
-                <div className="border" style={{ maxWidth: "100%" }}>
-                  {/* Thêm lớp h-100 để thẻ card có chiều cao bằng với chiều cao của hàng */}
-                  <div className="card-body d-flex justify-content-between align-items-center">
-                    <div className="ms-3">
-                      {/* Thêm lớp w-100 để các phần tử bên trong thẻ card có chiều rộng bằng với thẻ card */}
-                      <h5 className=" text-primary">
+              <div className="col-lg-9">
+                <div className="h-100">
+                  <div className="card-body d-flex align-items-center">
+                    <div className="ms-3 w-100">
+                      <h1 className="text-primary">
                         Xin chúc mừng Jkeyan.UNIver! 🎉
-                      </h5>
+                      </h1>
                       <p className="text">
                         Hôm nay bạn đã bán được thêm 72% cổ phần cty🤩.
                         <br />
@@ -209,7 +207,55 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              <div className="col-lg-3">
+                <div className="bg-primary card-rounded h-100 p-4">
+                  <h4 className="card-title card-title-dash text-white mb-4">
+                    Tổng doanh thu tháng
+                  </h4>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <p className="status-summary-ight-white mb-1">
+                        Tháng 3
+                      </p>
+                      <h2 className="text-info">357</h2>
+                    </div>
+                    <div className="col-sm-8">
+                      <div className="status-summary-chart-wrapper pb-4">
+                        <Pie data={chartData} options={options} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* <div className="row">
+              <div className="col-lg-9">
+                <div className="bg-light p-4">
+                  <h5 className="text-primary">
+                    Xin chúc mừng Jkeyan.UNIver! 🎉
+                  </h5>
+                  <p className="text">
+                    Hôm nay bạn đã bán được thêm 72% cổ phần cty🤩.
+                    <br />
+                    Kiểm tra huy hiệu nâng cao mới vừa được cập tại trong hồ sơ
+                    của bạn.
+                  </p>
+                  <button type="button" className="btn btn-primary btn-sm mt-4">
+                    Xem huy hiệu
+                  </button>
+                  <div className="text-md-end">
+                    <img
+                      src={AVT}
+                      height="175"
+                      className="john-illustration"
+                      alt="John Illustration"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+            </div> */}
 
             <div className="text-center">
               <h3
@@ -262,26 +308,6 @@ const Home = () => {
                     <div className="ms-3">
                       <p className="mb-2">Total Revenue</p>
                       <h6 className="mb-0">$1234</h6>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-primary card-rounded">
-                  <div className="card-body pb-0">
-                    <h4 className="card-title card-title-dash text-white mb-4">
-                      Status Summary
-                    </h4>
-                    <div className="row">
-                      <div className="col-sm-4">
-                        <p className="status-summary-ight-white mb-1">
-                          Closed Value
-                        </p>
-                        <h2 className="text-info">357</h2>
-                      </div>
-                      <div className="col-sm-8">
-                        <div className="status-summary-chart-wrapper pb-4">
-                          <Line data={chartData} options={options} />
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>

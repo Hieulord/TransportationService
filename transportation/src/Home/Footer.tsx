@@ -60,22 +60,28 @@ const Footer: React.FC = () => {
             </h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a
+                  href="/Logistics"
+                  className="nav-link fw-normal p-0 text-white-50"
+                >
                   Vận tải đường bộ logistic
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a href="/Sea" className="nav-link fw-normal p-0 text-white-50">
                   Vận chuyển đường biển
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a href="/Fly" className="nav-link fw-normal p-0 text-white-50">
                   Giao thông đường hàng không
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a
+                  href="/Rail"
+                  className="nav-link fw-normal p-0 text-white-50"
+                >
                   Vận tải đường sắt
                 </a>
               </li>
@@ -86,27 +92,34 @@ const Footer: React.FC = () => {
             <h5 className="py-3 text-uppercase text-white">Đường dẫn nhanh</h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
-                  Địa điểm của chúng tôi
-                </a>
-              </li>
-              <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a
+                  href="/Introduce"
+                  className="nav-link fw-normal p-0 text-white-50"
+                >
                   Về chúng tôi
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a
+                  href="/ServiceComponent"
+                  className="nav-link fw-normal p-0 text-white-50"
+                >
                   Phòng trưng bày của chúng tôi
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
-                  Chính sách bảo mật
+                <a
+                  href="/Newss"
+                  className="nav-link fw-normal p-0 text-white-50"
+                >
+                  Tin tức
                 </a>
               </li>
               <li className="nav-item mb-3">
-                <a href="#" className="nav-link fw-normal p-0 text-white-50">
+                <a
+                  href="/Contact"
+                  className="nav-link fw-normal p-0 text-white-50"
+                >
                   Liên hệ chúng tôi
                 </a>
               </li>
@@ -118,19 +131,25 @@ const Footer: React.FC = () => {
             <ul className="nav flex-column">
               <li className="nav-item d-flex mb-4">
                 <FaMapMarkerAlt className="me-2 text-white-50 mt-1" />{" "}
-                <a href="#" className="nav-link p-0 text-white-50">
-                  163 Elm Drive, New York, Mỹ
+                <a
+                  href="https://s.net.vn/E0oa"
+                  className="nav-link p-0 text-white-50"
+                >
+                  163 Elm Drive,Quận 1, HCM
                 </a>
               </li>
               <li className="nav-item d-flex mb-4">
                 <FaPhoneAlt className="me-2 text-white-50 mt-1" />{" "}
-                <a href="#" className="nav-link p-0 text-white-50">
+                <a href="tel:0257415214" className="nav-link p-0 text-white-50">
                   (+089) 234-516-6123
                 </a>
               </li>
               <li className="nav-item d-flex mb-4">
                 <FaEnvelope className="me-2 text-white-50 mt-1" />{" "}
-                <a href="#" className="nav-link p-0 text-white-50">
+                <a
+                  href="https://mail.google.com/"
+                  className="nav-link p-0 text-white-50"
+                >
                   info@yourdomain.com
                 </a>
               </li>
