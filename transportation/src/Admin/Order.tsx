@@ -4,6 +4,7 @@ import { TbArrowsSort } from "react-icons/tb";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import NavAdmin from "./NavAdmin";
 import axios from "axios";
+import { start } from "repl";
 
 interface OrderData {
   _id: string;
@@ -37,7 +38,7 @@ const Order: React.FC = () => {
 
   // Hàm lấy dữ liệu cho trang hiện tại
   const getCurrentItems = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
+    var startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return filterServices.slice(startIndex, endIndex); //Phương thức slice dùng để cắt mảng
   };
@@ -232,7 +233,9 @@ const Order: React.FC = () => {
       const res = await axios.get(
         "http://localhost:4000/api/order/getAllOrder"
       );
+      console.log("chay");
       setServices(res.data.data);
+      console.log(res);
     } catch (e) {
       console.error(e);
     }
@@ -438,10 +441,10 @@ const Order: React.FC = () => {
                 <button
                   className="btn btn-light border border-1"
                   onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={
-                    currentPage ===
-                    Math.ceil(filterServices.length / itemsPerPage)
-                  }
+                  // disabled={
+                  //   currentPage ===
+                  //   Math.ceil(filterServices.length / itemsPerPage)
+                  // }
                 >
                   <BiRightArrow />
                 </button>

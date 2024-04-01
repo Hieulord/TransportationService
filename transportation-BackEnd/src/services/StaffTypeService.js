@@ -82,7 +82,7 @@ const deleteStaffType = (id) => {
   });
 };
 
-const getAllStaffType = (limit, page, sort, filter) => {
+const getAllStaffType = (sort, filter) => {
   return new Promise(async (resolve, reject) => {
     try {
       let query = StaffType.find();
@@ -97,16 +97,12 @@ const getAllStaffType = (limit, page, sort, filter) => {
         query = query.sort({ [field]: direction === "asc" ? 1 : -1 });
       }
 
-      const totalProduct = await StaffType.countDocuments();
-      const allProduct = await query.limit(limit).skip(page * limit);
+      const allProduct = await query;
 
       resolve({
         status: "OK",
         message: "Success",
         data: allProduct,
-        total: totalProduct,
-        pageProduct: Number(page + 1),
-        totalPage: Math.ceil(totalProduct / limit),
       });
     } catch (e) {
       reject(e);
