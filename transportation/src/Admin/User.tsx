@@ -33,7 +33,7 @@ const User: React.FC = () => {
 
   // Hàm lấy dữ liệu cho trang hiện tại
   const getCurrentItems = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
+    var startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return filterServices.slice(startIndex, endIndex); //Phương thức slice dùng để cắt mảng
   };
@@ -258,15 +258,6 @@ const User: React.FC = () => {
             <div className="container">
               <h2 className="mt-3 mb-3">Danh sách tài khoản</h2>
               <div className="d-inline-flex">
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    Thêm tài khoản
-                  </button>
-                </div>
                 <div className="ms-3 mt-1">
                   <input
                     className="border border-2 rounded-2"
@@ -580,7 +571,9 @@ const User: React.FC = () => {
                           })
                         }
                       />
-                      <label className="ms-2 me-2" htmlFor="true">True</label>
+                      <label className="ms-2 me-2" htmlFor="true">
+                        True
+                      </label>
                       <input
                         type="radio"
                         id="false"
@@ -593,7 +586,9 @@ const User: React.FC = () => {
                           })
                         }
                       />
-                      <label className="ms-2 me-2" htmlFor="false">False</label>
+                      <label className="ms-2 me-2" htmlFor="false">
+                        False
+                      </label>
                     </div>
                   </div>
 

@@ -124,12 +124,25 @@ const deleteUser = (id) => {
   });
 };
 
-const getAllUser = () => {
+const getAllUser = (sort, filter) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const allUser = await User.find();
+      let query = User.find();
+
+      if (filter && filter.length === 2) {
+        const [key, value] = filter;
+        query = query.where(key, { $regex: value });
+      }
+
+      if (sort && sort.length === 2) {
+        const [direction, field] = sort;
+        query = query.sort({ [field]: direction === "asc" ? 1 : -1 });
+      }
+
+      const allUser = await query;
+
       resolve({
-        staus: "OK",
+        status: "OK",
         message: "Success",
         data: allUser,
       });
