@@ -7,6 +7,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import RouterGroup from "./RouterGroup";
+import "./i18n/i18n";
+
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

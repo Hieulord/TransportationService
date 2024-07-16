@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import "./header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaPhone } from "react-icons/fa6";
@@ -11,8 +12,16 @@ import {
 } from "react-icons/fa";
 import { Link as RouterLink } from "react-router-dom"; // Đổi tên thành RouterLink
 import { Breadcrumbs, Link as MuiLink } from "@mui/material"; // Đổi tên thành MuiLink
+import { locales } from "../i18n/i18n";
 
 function Header() {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = locales[i18n.language as keyof typeof locales];
+
+  const changeLanguage = (lng: 'en' | 'vi') => {
+    i18n.changeLanguage(lng);
+  }
+  console.log(currentLanguage); // Dòng này để kiểm tra xem ngôn ngữ có hoạt động đúng không
   return (
     <>
       <section
@@ -67,26 +76,28 @@ function Header() {
                 <MuiLink
                   underline="hover"
                   color="white"
-                  href="/"
+                  href="#"
                   sx={{
                     "&:hover": {
                       textDecoration: "none",
                       color: "red",
                     },
                   }}
+                  onClick={() => changeLanguage('en')}
                 >
                   EN
                 </MuiLink>
                 <MuiLink
                   underline="hover"
                   color="white"
-                  href="/"
+                  href="#"
                   sx={{
                     "&:hover": {
                       textDecoration: "none",
                       color: "red",
                     },
                   }}
+                  onClick={() => changeLanguage('vi')}
                 >
                   VN
                 </MuiLink>
@@ -117,7 +128,7 @@ function Header() {
                   className="ms-3 menu-item menu-item-type-post_type menu-item-object-page menu-item-75 mt-2"
                 >
                   <RouterLink to="/" className="RouterLink">
-                    Trang Chủ
+                    {t("header.home page")}
                   </RouterLink>
                 </li>
 
@@ -126,7 +137,7 @@ function Header() {
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
                   <RouterLink to="/Introduce" className="RouterLink">
-                    Giới Thiệu
+                    {t("header.introduce")}
                   </RouterLink>
                 </li>
 
@@ -135,7 +146,7 @@ function Header() {
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-76 mt-2"
                 >
                   <RouterLink to="/ServiceProduct" className="RouterLink">
-                    Sản Phẩm
+                  {t("header.product")}
                   </RouterLink>
                 </li>
 
@@ -144,7 +155,7 @@ function Header() {
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18 mt-2"
                 >
                   <RouterLink to="/ServiceComponent" className="RouterLink">
-                    Dịch Vụ Vận Chuyển
+                    {t("header.shipping services")}
                   </RouterLink>
                   <ul className="sub-menu">
                     <li
@@ -153,7 +164,7 @@ function Header() {
                       style={{ width: "140%" }}
                     >
                       <RouterLink to="/Logistics" className="RouterLink">
-                        Vận Chuyển Bộ Logistics
+                      {t("header.services logistics")}
                       </RouterLink>
                     </li>
                     <li
@@ -162,7 +173,7 @@ function Header() {
                       style={{ width: "140%" }}
                     >
                       <RouterLink to="/Sea" className="RouterLink">
-                        Vận Chuyển Đường Biển
+                      {t("header.services sea")}
                       </RouterLink>
                     </li>
                     <li
@@ -171,7 +182,7 @@ function Header() {
                       style={{ width: "140%" }}
                     >
                       <RouterLink to="/Fly" className="RouterLink">
-                        Vận Chuyển Đường Hàng Không
+                      {t("header.services air")}
                       </RouterLink>
                     </li>
                     <li
@@ -180,7 +191,7 @@ function Header() {
                       style={{ width: "140%" }}
                     >
                       <RouterLink to="/Rail" className="RouterLink">
-                        Vận Chuyển Đường Sắt
+                      {t("header.services railway")}
                       </RouterLink>
                     </li>
                   </ul>
@@ -191,20 +202,20 @@ function Header() {
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-21 mt-2"
                 >
                   <RouterLink to="/Newss" className="RouterLink">
-                    Tin Tức
+                    {t("header.new")}
                   </RouterLink>
                   <ul className="sub-menu">
                     <li
                       id="menu-item-19"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-19 mt-2"
                     >
-                      <a href="/News">Tin Tức</a>
+                      <a href="/News">{t("header.new")}</a>
                     </li>
                     <li
                       id="menu-item-20"
                       className="menu-item menu-item-type-post_type menu-item-object-page menu-item-20 mt-2"
                     >
-                      <a href="/Recruitment">Tuyển Dụng</a>
+                      <a href="/Recruitment">{t("header.recruitment")}</a>
                     </li>
                   </ul>
                 </li>
@@ -214,16 +225,16 @@ function Header() {
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-77 mt-2"
                 >
                   <RouterLink to="/Contact" className="RouterLink">
-                    Liên hệ chúng tôi
+                    {t("header.contact us")}
                   </RouterLink>
                 </li>
                 <li className="mt-3 ms-5">
                   <Breadcrumbs aria-label="breadcrumb" className="mt-1">
                     <RouterLink to="/SignIn" className="RouterLink">
-                      Đăng Nhập
+                      {t("header.sign in")}
                     </RouterLink>
                     <RouterLink to="/SignUp" className="RouterLink">
-                      Đăng Ký
+                      {t("header.sign up")}
                     </RouterLink>
                   </Breadcrumbs>
                 </li>

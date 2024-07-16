@@ -3,8 +3,11 @@ import { Image } from "react-bootstrap";
 import Banner from "../images/banner-1.jpg";
 
 import Qa from "../images/van-chuyen-duong-bien.jpg";
+import { useTranslation } from 'react-i18next';
+
 
 const Introduce = () => {
+  const { t } = useTranslation();
   return (
     <>
       <div
@@ -22,10 +25,10 @@ const Introduce = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <a style={{ textDecoration: 'none'}}  href="/">Trang chủ</a>
+                    <a style={{ textDecoration: 'none'}}  href="/">{t('header.home page')}</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    Giới Thiệu
+                    {t('header.introduce')}
                   </li>
                 </ol>
               </nav>
@@ -38,7 +41,7 @@ const Introduce = () => {
         <section style={{ maxWidth: "800px" }}>
           <section className="content">
             <div className="container mt-3 text-primary">
-              <h1>Giới Thiệu</h1>
+              <h1>{t('header.introduce')}</h1>
             </div>
           </section>
         </section>
